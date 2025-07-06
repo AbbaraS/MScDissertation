@@ -17,5 +17,7 @@ Takotsubo-Syndrome/*
 
 # Ignore checkpoints folder inside code_app
 Takotsubo-Syndrome/code_app/checkpoints/
+Takotsubo-Syndrome/code_model/figures/
 
 Suleima/plots/
+Suleima/pt_files/
