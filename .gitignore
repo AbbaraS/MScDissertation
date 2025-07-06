@@ -1,0 +1,21 @@
+**/data/
+__pycache__/
+zipped/
+
+# Ignore everything inside Takotsubo-Syndrome/
+Takotsubo-Syndrome/*
+
+# But keep these subfolders:
+!Takotsubo-Syndrome/code_app/
+!Takotsubo-Syndrome/code_misc_scripts/
+!Takotsubo-Syndrome/code_model/
+
+# Un-ignore contents
+!Takotsubo-Syndrome/code_app/**/*
+!Takotsubo-Syndrome/code_misc_scripts/**/*
+!Takotsubo-Syndrome/code_model/**/*
+
+# Ignore checkpoints folder inside code_app
+Takotsubo-Syndrome/code_app/checkpoints/
+
+Suleima/plots/

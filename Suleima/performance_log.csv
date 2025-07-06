@@ -1,0 +1,2 @@
+timestamp,auc_score,normal_precision,normal_recall,normal_f1,takotsubo_precision,takotsubo_recall,takotsubo_f1,accuracy,macro_precision,macro_recall,macro_f1,weighted_precision,weighted_recall,weighted_f1,uncalibrated_brier,calibrated_brier
+2025-06-30 21:22,0.7917,0.7857,0.9167,0.8462,0.9000,0.7500,0.8182,0.8333,0.8429,0.8333,0.8322,0.8429,0.8333,0.8322,0.1913,0.1896
