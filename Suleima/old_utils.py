@@ -14,10 +14,6 @@ import scipy.ndimage
 from skimage import measure
 import imageio
 
-
-
-
-
 import os
 import pandas as pd
 import numpy as np

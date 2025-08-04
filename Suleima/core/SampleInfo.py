@@ -1,4 +1,5 @@
 import nibabel as nib
+
 class SampleInfo:
     def __init__(self, patient_id, path):
         self.patient_id = patient_id
