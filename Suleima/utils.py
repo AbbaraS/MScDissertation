@@ -473,6 +473,20 @@ def resample_shape(volume, target_shape = (64, 64, 64), is_label=False):
 
 # === In Use ===
 
+class DataInfo:
+    def __init__(self, patient_id, cropped=False, original_shape=None, new_shape=None, original_spacing=None, new_spacing=None, original_orientation=None, new_orientation=None, origin=None):
+        self.patient_id = patient_id
+        self.cropped = cropped
+        self.original_shape = original_shape
+        self.new_shape = new_shape
+        self.original_spacing = original_spacing
+        self.new_spacing = new_spacing
+        self.original_orientation = original_orientation
+        self.new_orientation = new_orientation
+        self.origin = origin
+
+
+
 def update_info_csv(case):
     metadata_path = f"data/CSVs/{case}_info.csv"
     output_dir = f"data/Outputs/{case}"	
@@ -543,43 +557,66 @@ def update_info_csv(case):
     df.to_csv(metadata_path, index=False)
     print(f"Metadata CSV saved at: {metadata_path}")
 
-def get_OG_file_paths(input_folder): 
+def get_segments_paths(segment_dir): 
     # Define the paths to the original files
     return {
-        "CT": os.path.join(input_folder, "ct_image.nii.gz"),
-        "LV": os.path.join(input_folder, "heart_ventricle_left.nii.gz"),
-        "RV": os.path.join(input_folder, "heart_ventricle_right.nii.gz"),
-        "LA": os.path.join(input_folder, "heart_atrium_left.nii.gz"),
-        "RA": os.path.join(input_folder, "heart_atrium_right.nii.gz"),
-        "MYO" : os.path.join(input_folder, "heart_myocardium.nii.gz"),
+        #"CT": os.path.join(segment_dir, "OG_CT.nii.gz"),
+        "LV": "heart_ventricle_left.nii.gz",
+        "RV": "heart_ventricle_right.nii.gz",
+        "LA": "heart_atrium_left.nii.gz",
+        "RA": "heart_atrium_right.nii.gz",
+        "MYO" : "heart_myocardium.nii.gz",
     }
     #return OG_file_paths
+    
+def get_resampled_paths(resampled_dir):
+	# Define the paths to the resampled files
+	return {
+		"CT":       os.path.join(resampled_dir, "resampled_ct.nii.gz"),
+		"LV":       os.path.join(resampled_dir, "resampled_lv.nii.gz"),
+		"RV":       os.path.join(resampled_dir, "resampled_rv.nii.gz"),
+		"LA":       os.path.join(resampled_dir, "resampled_la.nii.gz"),
+		"RA":       os.path.join(resampled_dir, "resampled_ra.nii.gz"),
+		"MYO":      os.path.join(resampled_dir, "resampled_myo.nii.gz"),
+		"Mask":     os.path.join(resampled_dir, "resampled_mask.nii.gz"),
+	}
 
-def get_cropped_file_paths(output_folder):
-    # Define the paths to the cropped files
+def get_cropped_paths(cropped_dir):
+    # Define the paths to the resampled files
     return {
-        "CT":       os.path.join(output_folder, "cropped_ct.nii.gz"),
-        "LV":       os.path.join(output_folder, "cropped_lv.nii.gz"),
-        "RV":       os.path.join(output_folder, "cropped_rv.nii.gz"),
-        "LA":       os.path.join(output_folder, "cropped_la.nii.gz"),
-        "RA":       os.path.join(output_folder, "cropped_ra.nii.gz"),
-        "MYO":      os.path.join(output_folder, "cropped_myo.nii.gz"),
-        "Mask":     os.path.join(output_folder, "cropped_mask.nii.gz"),
+        "CT":       os.path.join(cropped_dir, "cropped_ct.nii.gz"),
+        "LV":       os.path.join(cropped_dir, "cropped_lv.nii.gz"),
+        "RV":       os.path.join(cropped_dir, "cropped_rv.nii.gz"),
+        "LA":       os.path.join(cropped_dir, "cropped_la.nii.gz"),
+        "RA":       os.path.join(cropped_dir, "cropped_ra.nii.gz"),
+        "MYO":      os.path.join(cropped_dir, "cropped_myo.nii.gz"),
+        "Mask":     os.path.join(cropped_dir, "cropped_mask.nii.gz"),
     }
-    #return cropped_file_paths
 
-def load_nifti_files(file_paths_dict):
+
+def load_nifti():
     result = {}
-    for name, path in file_paths_dict.items():
-        if os.path.exists(path):
-            nib_obj = nib.load(path)
-            result[name] = {
-                "name": name,
-                "path": path,
-                "obj": nib_obj,  				# Nibabel object
-                "data": nib_obj.get_fdata()  	# Get the data as a NumPy array
-            }
+    if os.path.exists(path):
+        nib_obj = nib.load(path)
+        result[name] = {
+            "name": name,
+            "path": path,
+            "obj": nib_obj,  				# Nibabel object
+            "data": nib_obj.get_fdata(),  	# Get the data as a NumPy array
+            "header": nib_obj.header, 	# Nibabel header
+            "spacing_unit": nib_obj.header.get_xyzt_units(),
+            "intent" : nib_obj.header.get_intent(),
+            "Qform": nib_obj.header.get_qform(),
+            "Sform": nib_obj.header.get_sform(),
+            "descrip": nib_obj.header.get('descrip', 'none'),  # Description of the image
+            "affine": nib_obj.affine,      # Affine transformation matrix
+            "voxel": nib_obj.header.get_zooms(),  # Voxel spacing
+            "shape XYZ": nib_obj.shape          # Shape of the data
+        }
     return result
+
+
+
 
 # === Old Code ===
 
