@@ -207,57 +207,15 @@ def crop_trim_resample_heart(input_folder, output_folder):
 
 	nib.save(nib.Nifti1Image(combined_mask, ct_affine), resampled_file_path["Mask"])
 
-def process_case(group):
-	# folder paths
-	# TAKO = "TTS"
-	# NORMAL = "Normal"
-	
-	import shutil
-	
-	base_dicom_root = f"../Takotsubo-Syndrome/data/Inputs/{group}" 
-	base_group_root = f"data/cases/" 
-	old_path= f"data/Inputs/{group}"
-	print(f"Processing {group}")
-	if not os.path.exists(base_group_root):
-		os.makedirs(base_group_root, exist_ok=True)
-	
-	for folder in os.listdir(old_path):
-		if folder.startswith('.'):
-			continue
-		new_path = os.path.join(base_group_root, f"{group}_{folder}")
-		print(f"Moving {folder} to {new_path}")
-		#shutil.move(os.path.join(old_path, folder), new_path)
-  
-  
-	
+def process_case(root_dir):
+	for caseID in os.listdir(root_dir):
+		print(f"Patient ID: {caseID}")
+		case_dir = os.path.join(root_dir, caseID)
 
-	for patientID in os.listdir(base_dicom_root):
-		print(f"Patient ID: {patientID}")
-		
-		dicom_dir = os.path.join(base_dicom_root, patientID, "DICOM")
-		patient_dir = os.path.join(base_group_root, patientID)
-		segments_dir = os.path.join(base_group_root, patientID, "Segments")
-		cropped_dir = os.path.join(base_group_root, patientID, "Cropped")
-		resampled_dir = os.path.join(base_group_root, patientID, "Resampled")
-		ctSlices_dir = os.path.join(base_group_root, patientID, "CT_Slices")
-		segmentSlices_dir = os.path.join(base_group_root, patientID, "Segment_Slices")
-		pngSlices_dir = os.path.join(base_group_root, patientID, "PNG_Slices")
 
-		if not os.path.exists(dicom_dir):
+		if not os.path.exists(root_dir):
 			continue
 
-		# Create input/output folders if they don't exist
-		os.makedirs(patient_dir, exist_ok=True)
-		os.makedirs(segments_dir, exist_ok=True)
-		os.makedirs(cropped_dir, exist_ok=True)
-		os.makedirs(resampled_dir, exist_ok=True)
-		os.makedirs(ctSlices_dir, exist_ok=True)
-		os.makedirs(segmentSlices_dir, exist_ok=True)
-		os.makedirs(pngSlices_dir, exist_ok=True)
-
-		#OG_paths = get_segments_paths(segments_dir)
-		#cropped_paths = get_resampled_paths(output_folder)
-		
 		try:
 			# === Step 1 (DONE) - Convert DICOM to NIfTI ===
 			#if not os.path.exists(os.path.join(patient_dir, "OG_CT.nii.gz")):
