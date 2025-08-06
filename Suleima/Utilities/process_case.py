@@ -1,4 +1,4 @@
-from Suleima.old_utils import *
+from Suleima.Utilities.old_utils import *
 from SampleInfos import SampleInfo 
 from Suleima.core.SamplePath import SamplePath
 

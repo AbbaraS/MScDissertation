@@ -1,5 +1,5 @@
-from imports import *
-from Suleima.old_utils import get_cropped_paths, \
+from Suleima.Utilities.imports import *
+from Suleima.Utilities.old_utils import get_cropped_paths, \
 	load_nifti,\
 	get_segments_paths, \
 	get_resampled_paths
@@ -218,27 +218,27 @@ def process_case(root_dir):
 
 		try:
 			# === Step 1 (DONE) - Convert DICOM to NIfTI ===
-			#if not os.path.exists(os.path.join(patient_dir, "OG_CT.nii.gz")):
-			#    dicom2nifti.convert_dicom.dicom_series_to_nifti(dicom_dir, os.path.join(patient_dir, "OG_CT.nii.gz"),)
+			if not os.path.exists(os.path.join(patient_dir, "OG_CT.nii.gz")):
+			    dicom2nifti.convert_dicom.dicom_series_to_nifti(dicom_dir, os.path.join(patient_dir, "OG_CT.nii.gz"),)
 			
 			# === Step 2 (DONE) - Segment with TotalSegmentator ===
-			#if not all(os.path.exists(f) for f in OG_paths.values()):
-			#    _ = totalsegmentator(
-			#        input_path=dicom_dir, 
-			#        output_path=segments_dir,
-			#        license_number="aca_BWYHC6UQQFDU8A",
-			#        task="heartchambers_highres", 
-			#        body_seg=True,
-			#        preview=True,
-			#        
-			#    )
+			if not all(os.path.exists(f) for f in OG_paths.values()):
+			    _ = totalsegmentator(
+			        input_path=dicom_dir, 
+			        output_path=segments_dir,
+			        license_number="aca_BWYHC6UQQFDU8A",
+			        task="heartchambers_highres", 
+			        body_seg=True,
+			        preview=True,
+			        
+			    )
 			
-		#    # === Step 3 (DONE) - Crop, trim, and resample heart ===
-		#    if not all(os.path.exists(f) for f in cropped_paths.values()):
-		#        crop_trim_resample_heart(input_folder, output_folder)
-		#        
-		#    # === Step 4 - Slice CT and masks ===
-		#    if len(os.listdir(os.path.join(output_folder, "nii_slices"))) < 18:
+		    # === Step 3 (DONE) - Crop, trim, and resample heart ===
+		    if not all(os.path.exists(f) for f in cropped_paths.values()):
+		        crop_trim_resample_heart(input_folder, output_folder)
+		        
+		    # === Step 4 - Slice CT and masks ===
+		    if len(os.listdir(os.path.join(output_folder, "nii_slices"))) < 18:
 		#        slice_CT(output_folder)
 #
 		except Exception as e:

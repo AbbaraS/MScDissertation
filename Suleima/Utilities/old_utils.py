@@ -590,7 +590,7 @@ def get_cropped_paths(cropped_dir):
     }
 
 
-def load_nifti():
+def load_nifti(path):
     result = {}
     if os.path.exists(path):
         nib_obj = nib.load(path)
