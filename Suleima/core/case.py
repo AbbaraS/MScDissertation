@@ -58,36 +58,6 @@ class NiftiVolume:
 		obj.case = case
 		return obj
 
-	def show_scrollable(self, axis=2):
-		"""Displays a scrollable image viewer for the 3D volume along a given axis."""
-		data = np.moveaxis(self.data, axis, 0)
-
-		class IndexTracker:
-			def __init__(self, ax, data):
-				self.ax = ax
-				self.data = data
-				self.slices = data.shape[0]
-				self.ind = self.slices // 2
-
-				self.im = ax.imshow(self.data[self.ind, :, :], cmap="gray")
-				self.update()
-
-			def on_scroll(self, event):
-				if event.button == 'up':
-					self.ind = (self.ind + 1) % self.slices
-				elif event.button == 'down':
-					self.ind = (self.ind - 1) % self.slices
-				self.update()
-
-			def update(self):
-				self.im.set_data(self.data[self.ind, :, :])
-				self.ax.set_title(f"Slice {self.ind+1}/{self.slices}")
-				self.im.axes.figure.canvas.draw()
-
-		fig, ax = plt.subplots(1, 1)
-		tracker = IndexTracker(ax, data)
-		fig.canvas.mpl_connect('scroll_event', tracker.on_scroll)
-		plt.show()
 
 ############################################
 # CARDIAC CT CLASS
@@ -118,7 +88,7 @@ class CardiacCT:
 	def log_message(self, msg):
 		timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		entry = f"[{timestamp}] {msg}"
-		print(entry)
+		#print(entry)
 		self.log.append(entry)
 		with open(os.path.join(self.casePath, "info.txt"), "a") as f:
 			f.write(entry + "\n")
@@ -127,10 +97,10 @@ class CardiacCT:
 		path = os.path.join(self.casePath, filename)
 		try:
 			vol = NiftiVolume(path, case=self)
-			self.log_message(f"Loaded {filename}: shape={vol.shape}, spacing={vol.spacing}")
+			#self.log_message(f"Loaded {filename}: shape={vol.shape}, spacing={vol.spacing}")
 			return vol
 		except FileNotFoundError:
-			self.log_message(f"Missing: {filename}")
+			#self.log_message(f"Missing: {filename}")
 			self.missing.append(filename)
 			return None
 
@@ -170,7 +140,7 @@ class CardiacCT:
 		if not self.croppedCT_exists():
 			bbox = self.get_bounding_box()
 			if bbox is None:
-				self.log_message("No bounding box could be determined.")
+				#self.log_message("No bounding box could be determined.")
 				return
 
 			self.croppedCT = self.crop_volume(self.fullCT, bbox, "croppedCT.nii.gz")
@@ -179,7 +149,7 @@ class CardiacCT:
 				cropped = self.crop_volume(vol, bbox, f"cropped/{name}.nii.gz")
 				self.croppedsegs[name] = cropped
 		else:
-			self.log_message("Cropped volumes exist. Skipping cropping.")
+			#self.log_message("Cropped volumes exist. Skipping cropping.")
 			self.croppedCT = self.load_nifti("croppedCT.nii.gz")
 			self.croppedsegs = self.load_segments("cropped")
 		
@@ -201,7 +171,7 @@ class CardiacCT:
 			# Save combined mask
 			nib.save(combined_img, path)
 
-			self.log_message(f"Combined mask saved in {path}")
+			#self.log_message(f"Combined mask saved in {path}")
 			return NiftiVolume(path, case=self)
 		else:
 			self.log_message("No segments found to combine.")
@@ -252,7 +222,7 @@ class CardiacCT:
 			for name, vol in self.croppedsegs.items():
 				self.resampledsegs[name] = self.resample_volume(vol, target_spacing, target_shape, f"resampled/{name}.nii.gz", linear=False)
 		else:
-			self.log_message("Resampled volumes exist. Skipping resampling.")
+			#self.log_message("Resampled volumes exist. Skipping resampling.")
 			self.resampledCT = self.load_nifti("resampledCT.nii.gz")
 			self.resampledsegs = self.load_segments("resampled")
 
@@ -262,7 +232,6 @@ class CardiacCT:
 		else:
 			self.resampled_mask = self.load_nifti("resampled/heart_mask.nii.gz")
 
-  
 	def resample_volume(self, vol, spacing, shape, filename, linear=True):
 		img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
 		img.SetSpacing([float(s) for s in vol.spacing[::-1]])  # explicit float conversion
@@ -293,7 +262,40 @@ class CardiacCT:
 		vol.save()
 		return vol
 
+	def get_LV_indices(self):
+		lv = self.resampledsegs["LV"].data
+		sagittal_indices = np.where(np.any(lv > 0, axis=(1, 2)))[0]
+		coronal_indices = np.where(np.any(lv > 0, axis=(0, 2)))[0]
+		axial_indices = np.where(np.any(lv > 0, axis=(0, 1)))[0]
+		return {
+			"sag": sagittal_indices,
+			"cor": coronal_indices,
+			"axi": axial_indices
+		}
 
-  
+	def get_three_slices_within(indices):
+		indices = sorted(indices)
+		if len(indices) < 3:
+			return list(indices)
+		return [
+			indices[len(indices) // 4],
+			indices[len(indices) // 2],
+			indices[3 * len(indices) // 4]
+		]
+	#view = ['sag', 'cor', 'axi']
+	def select_slices(self):
+		lv_indices = self.get_LV_indices()
+		print(f"LV indices: {lv_indices['sag']}")
+		slices = {
+			"sagittal": self.get_three_slices_within(lv_indices["sag"]),
+			"coronal": self.get_three_slices_within(lv_indices["cor"]),
+			"axial": self.get_three_slices_within(lv_indices["axi"])
+		}
+		self.log_message(f"Selected slices: {slices}")
+
+		
+
+
+
   
   

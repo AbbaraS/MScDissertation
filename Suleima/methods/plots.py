@@ -6,10 +6,6 @@ from matplotlib.colors import ListedColormap
 from ipywidgets import interact
 
 
-
-
-
-
 def scrollable_ct_mask(ct, mask):
 	"""
 	Displays a scrollable CT image with an overlay of the heart chamber mask.
