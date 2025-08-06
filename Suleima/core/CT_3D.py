@@ -129,11 +129,11 @@ class CardiacCT:
 			return None
 
 	# === ORIGINAL (totalseg) ===
-	def load_LV_totalseg(self): return self.load_segment("LV", "heart_ventricle_left.nii.gz", "original")
-	def load_LA_totalseg(self): return self.load_segment("LA", "heart_atrium_left.nii.gz", "original")
-	def load_RV_totalseg(self): return self.load_segment("RV", "heart_ventricle_right.nii.gz", "original")
-	def load_RA_totalseg(self): return self.load_segment("RA", "heart_atrium_right.nii.gz", "original")
-	def load_MYO_totalseg(self): return self.load_segment("MYO", "heart_myocardium.nii.gz", "original")
+	def load_LV_totalseg(self): return self.load_segment("LV",   "heart_ventricle_left.nii.gz"    , "original")
+	def load_LA_totalseg(self): return self.load_segment("LA",   "heart_atrium_left.nii.gz"       , "original")
+	def load_RV_totalseg(self): return self.load_segment("RV",   "heart_ventricle_right.nii.gz"   , "original")
+	def load_RA_totalseg(self): return self.load_segment("RA",   "heart_atrium_right.nii.gz"      , "original")
+	def load_MYO_totalseg(self): return self.load_segment("MYO", "heart_myocardium.nii.gz"        , "original")
 
 	# === CROPPED ===
 	def load_LV_cropped(self): return self.load_segment("LV", "LV.nii.gz", "cropped")
