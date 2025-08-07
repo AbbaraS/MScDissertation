@@ -1,9 +1,46 @@
 from totalsegmentator.python_api import totalsegmentator
 import subprocess
 import os
+from core.Case import *
 
 
-from core.CT_3D import *
+
+
+
+def crop_volumes(case):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def segmenting_volumes1(case: CardiacCT, skipSegmentation=False):
     """
