@@ -13,52 +13,52 @@ def create_segments(folder):
         print(f"Renamed {old_path} to {new_path}")
     else:
         print(f"{old_path} does not exist.")
-        
+
     segments_dir = os.path.join(folder, "segments")
     os.makedirs(segments_dir, exist_ok=True)
-    
-    
+
+
     for file in os.listdir(folder):
         full_path = os.path.join(folder, file)
-        
+
         if os.path.isdir(full_path) or file == "fullCT.nii.gz":
             continue
-        
+
         new_file_path = os.path.join(segments_dir, file)
         shutil.move(full_path, new_file_path)
         print(f"Moved {full_path} to {new_file_path}")
-        
+
 def createCNTRLresampled(old_patient):
     '''
-    all files in folder starting with cropped_ should be renamed/moved based on the following patterns: 
-    
+    all files in folder starting with cropped_ should be renamed/moved based on the following patterns:
+
     example normal_cases/{old_patient}/:
     AAP 50415783_61F
     rename/move cropped_ct:
-    from          f"data/Outputs/normal_cases/AAP 50415783_61F/cropped_ct.nii.gz"  
+    from          f"data/Outputs/normal_cases/AAP 50415783_61F/cropped_ct.nii.gz"
     to            f"data/cases/CNTRL_AAP_50415783_61F/resampledCT.nii.gz"
-    
+
     all other files starting with cropped_ should be renamed/moved based on the following pattern:
     from          f"data/Outputs/normal_cases/AAP 50415783_61F/cropped_la.nii.gz"
     to           f"data/cases/CNTRL_AAP_50415783_61F/resampled/resampledLA.nii.gz"
-    
+
     from         f"data/Outputs/normal_cases/AAP 50415783_61F/cropped_lv.nii.gz"
     to           f"data/cases/CNTRL_AAP_50415783_61F/resampled/resampledLV.nii.gz"
     etc.
     '''
-    
+
     source_dir = f"data/Outputs/normal_cases/{old_patient}/"
     patient_clean = old_patient.replace(" ", "_")
-    
+
     dest_base = f"data/cases/CNTRL_{patient_clean}"
     dest_resampled = os.path.join(dest_base, "resampled")
-    
+
     os.makedirs(dest_resampled, exist_ok=True)
-    
+
     for filename in os.listdir(source_dir):
         if not filename.startswith("cropped_") or not filename.endswith(".nii.gz"):
             continue
-        
+
         src_path = os.path.join(source_dir, filename)
         if filename == "cropped_ct.nii.gz":
             dst_path = os.path.join(dest_base, "resampledCT.nii.gz")
@@ -70,17 +70,17 @@ def createCNTRLresampled(old_patient):
 
 def createTTSresampled(old_patient):
     '''
-    all files in folder starting with cropped_ should be renamed/moved based on the following patterns: 
+    all files in folder starting with cropped_ should be renamed/moved based on the following patterns:
     example takotsubo_cases/{old_patient}/:
     source_dir = data/Outputs/takotsubo_cases/AD 12191953/
     rename/move cropped_ct:
     from          f"data/Outputs/takotsubo_cases/AD 12191953/cropped_ct.nii.gz"
     to            f"data/cases/TTS_AD_12191953_51F/resampledCT.nii.gz"
-    
+
     all other files starting with cropped_ should be renamed/moved based on the following pattern:
     from          f"data/Outputs/takotsubo_cases/AD 12191953/cropped_lv.nii.gz"
     to            f"data/cases/TTS_AD_12191953_51F/resampled/resampledLV.nii.gz"
-    
+
     from         f"data/Outputs/takotsubo_cases/AD 12191953/cropped_rv.nii.gz"
     to           f"data/cases/TTS_AD_12191953_51F/resampled/resampledRV.nii.gz"
     etc.
@@ -89,19 +89,19 @@ def createTTSresampled(old_patient):
     TTS_metadata = pd.read_csv("data/takotsubo_cases_metadata.csv")
     TTS_metadata['PatientID'] = TTS_metadata['PatientID'].str.strip()
     TTS_metadata['Gender'] = TTS_metadata['Gender'].map({0: 'M', 1: 'F'})
-    
+
     patient_key = old_patient.strip()
-    
+
     match = TTS_metadata[TTS_metadata['PatientID'] == patient_key]
     if match.empty:
         print(f"⚠️ No metadata found for: {old_patient}")
         return
     age = int(match['Age'].values[0])
     gender = match['Gender'].values[0]
-    
+
     patient_clean = old_patient.replace(" ", "_")
     new_name = f"TTS_{patient_clean}_{age}{gender}"
-    
+
     dest_base = os.path.join("data/cases", new_name)
     dest_resampled = os.path.join(dest_base, "resampled")
     os.makedirs(dest_resampled, exist_ok=True)
@@ -122,26 +122,26 @@ def createTTSresampled(old_patient):
 
         shutil.move(src_path, dst_path)
         print(f"Moved {src_path} → {dst_path}")
-        
+
 def rename_takotsubo_cases(old_patient):
     source_dir = f"data/Outputs/takotsubo_cases/{old_patient}/"
     TTS_metadata = pd.read_csv("data/takotsubo_cases_metadata.csv")
     TTS_metadata['PatientID'] = TTS_metadata['PatientID'].str.strip()
     TTS_metadata['Gender'] = TTS_metadata['Gender'].map({0: 'M', 1: 'F'})
-    
+
     patient_key = old_patient.strip()
-    
+
     match = TTS_metadata[TTS_metadata['PatientID'] == patient_key]
     if match.empty:
         print(f"⚠️ No metadata found for: {old_patient}")
         return
     age = int(match['Age'].values[0])
-    gender = match['Gender'].values[0] 
-    
+    gender = match['Gender'].values[0]
+
     patient_clean = old_patient.replace(" ", "_")
     new_name = f"{patient_clean}_{age}{gender}"
     target_dir = f"data/Outputs/takotsubo_cases/{new_name}/"
-    
+
     if not os.path.exists(source_dir):
         print(f"❌ Source folder not found: {source_dir}")
         return
@@ -152,7 +152,7 @@ def rename_takotsubo_cases(old_patient):
 
     shutil.move(source_dir, target_dir)
     print(f"✅ Renamed {source_dir} → {target_dir}")
-    
+
 def rename_normal_cases(old_patient):
     source_dir = f"data/Outputs/normal_cases/{old_patient}/"
     patient_clean = old_patient.replace(" ", "_")
@@ -168,7 +168,7 @@ def rename_normal_cases(old_patient):
     shutil.move(source_dir, target_dir)
     print(f"✅ Renamed {source_dir} → {target_dir}")
 
-def move_Outputs_slices(case, patient): 
+def move_Outputs_slices(case, patient):
     '''
     case = "data/Outputs/takotsubo_cases/" or "data/Outputs/normal_cases/"
     if case == "data/Outputs/takotsubo_cases/":
@@ -181,10 +181,10 @@ def move_Outputs_slices(case, patient):
         pass
 
     files in  {case}/{patient}/   should be moved following this pattern:
-    
-    
+
+
     ## CT SLICES: ctX_   &&    ctY_   &&    ctZ_
-    from        
+    from
                 {case}/{patient}/nii_slices/ctX_{idx}.nii.gz
                 {case}/{patient}/nii_slices/ctY_{idx}.nii.gz
                 {case}/{patient}/nii_slices/ctZ_{idx}.nii.gz
@@ -195,7 +195,7 @@ def move_Outputs_slices(case, patient):
 
 
     ## MASK SLICES: maskX_   &&    maskY_   &&    maskZ_
-    from 
+    from
                 {case}/{patient}/nii_slices/maskX_{idx}.nii.gz
                 {case}/{patient}/nii_slices/maskY_{idx}.nii.gz
                 {case}/{patient}/nii_slices/maskZ_{idx}.nii.gz
@@ -206,7 +206,7 @@ def move_Outputs_slices(case, patient):
 
 
     ## PNG SLICES: pngX_   &&    pngY_   &&    pngZ_
-    from 
+    from
                 {case}/{patient}/png_slices/{ct or mask}X_{idx}.png
                 {case}/{patient}/png_slices/{ct or mask}Y_{idx}.png
                 {case}/{patient}/png_slices/{ct or mask}Z_{idx}.png
@@ -214,9 +214,9 @@ def move_Outputs_slices(case, patient):
                 data/cases/{CASE}_{patient}/pngSlices/{ct or mask}X_{idx}.png
                 data/cases/{CASE}_{patient}/pngSlices/{ct or mask}Y_{idx}.png
                 data/cases/{CASE}_{patient}/pngSlices/{ct or mask}Z_{idx}.png
-    
+
     '''
-    
+
     if case == "data/Outputs/takotsubo_cases/":
         CASE = "TTS"
     elif case == "data/Outputs/normal_cases/":
@@ -224,7 +224,7 @@ def move_Outputs_slices(case, patient):
     else:
         print(f"❌ Unknown case type: {case}")
         return
-    
+
     new_root = os.path.join("data/cases", f"{CASE}_{patient}")
 
     # === 1. CT Slices ===
@@ -262,7 +262,7 @@ def move_Outputs_slices(case, patient):
             dst = os.path.join(png_target_dir, file)
             shutil.move(src, dst)
             print(f"✅ Moved PNG slice: {src} → {dst}")
-    
+
 
 
 
@@ -274,8 +274,8 @@ for old_patient in os.listdir(output_takotsubo_cases):
     if old_patient.startswith('.'):
         continue
     print(f"Processing {old_patient}")
-    
-    
+
+
     #move_Outputs_slices(output_takotsubo_cases, old_patient)
     #move_Outputs_slices(output_normal_cases, old_patient)
     #rename_takotsubo_cases(old_patient)
@@ -283,16 +283,53 @@ for old_patient in os.listdir(output_takotsubo_cases):
     #rename_normal_cases(old_patient)
     #createCNTRLresampled(old_patient)
     #create_segments(old_patient)
-    
 
 
-## NEW STRUCTURE:    
-base_root = "data/cases/"
+
+## NEW STRUCTURE:
+base_root = "data/cases_done/"
+new_root = "data/cases/"
 for caseID in os.listdir(base_root):
     if caseID.startswith('.'):
         continue
-    folder_path = os.path.join(base_root, caseID)
-    
-    
+    from_path = os.path.join(base_root, caseID)
+    to_path = os.path.join(new_root, caseID)
+    os.makedirs(to_path, exist_ok=True)
+    # copy: (cases_done/caseID/fullCT.nii.gz,
+    		# cases_done/caseID/segments/ <segment_files> )
+    # to: (cases/caseID/fullCT.nii.gz,
+    		# cases/caseID/segments/ <segment_files> )
 
+
+
+
+import os
+import shutil
+base_root = "data/cases_done/"
+new_root = "data/cases/"
+
+for caseID in os.listdir(base_root):
+    if caseID.startswith('.'):
+        continue
+
+    from_path = os.path.join(base_root, caseID)
+    to_path = os.path.join(new_root, caseID)
+
+    os.makedirs(to_path, exist_ok=True)
+
+    # === Copy fullCT.nii.gz ===
+    src_ct = os.path.join(from_path, "fullCT.nii.gz")
+    dst_ct = os.path.join(to_path, "fullCT.nii.gz")
+    if os.path.exists(src_ct):
+        shutil.copy2(src_ct, dst_ct)
+    else:
+        print(f"[WARNING] Missing fullCT.nii.gz in {caseID}")
+
+    # === Copy segments folder ===
+    src_segments = os.path.join(from_path, "segments")
+    dst_segments = os.path.join(to_path, "segments")
+    if os.path.exists(src_segments):
+        shutil.copytree(src_segments, dst_segments, dirs_exist_ok=True)
+    else:
+        print(f"[WARNING] Missing segments folder in {caseID}")
 

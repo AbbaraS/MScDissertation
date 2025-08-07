@@ -19,7 +19,8 @@ class Log:
 
 
 		# Final decision to print
-		if do_print:
+		#if do_print:
+		if self.also_print is True:
 			print(entry)
 
 # Global variable to hold the active logger
