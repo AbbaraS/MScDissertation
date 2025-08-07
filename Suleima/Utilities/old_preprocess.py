@@ -206,7 +206,7 @@ def crop_trim_resample_heart(input_folder, output_folder):
 	combined_mask[cropped_file["RA"]["data"] > 0] = 5   # RA 
 
 	nib.save(nib.Nifti1Image(combined_mask, ct_affine), resampled_file_path["Mask"])
-
+'''
 def process_case(root_dir):
 	for caseID in os.listdir(root_dir):
 		print(f"Patient ID: {caseID}")
@@ -219,28 +219,27 @@ def process_case(root_dir):
 		try:
 			# === Step 1 (DONE) - Convert DICOM to NIfTI ===
 			if not os.path.exists(os.path.join(patient_dir, "OG_CT.nii.gz")):
-			    dicom2nifti.convert_dicom.dicom_series_to_nifti(dicom_dir, os.path.join(patient_dir, "OG_CT.nii.gz"),)
+				dicom2nifti.convert_dicom.dicom_series_to_nifti(dicom_dir, os.path.join(patient_dir, "OG_CT.nii.gz"),)
 			
 			# === Step 2 (DONE) - Segment with TotalSegmentator ===
 			if not all(os.path.exists(f) for f in OG_paths.values()):
-			    _ = totalsegmentator(
-			        input_path=dicom_dir, 
-			        output_path=segments_dir,
-			        license_number="aca_BWYHC6UQQFDU8A",
-			        task="heartchambers_highres", 
-			        body_seg=True,
-			        preview=True,
-			        
-			    )
+				_ = totalsegmentator(
+					input_path=dicom_dir, 
+					output_path=segments_dir,
+					license_number="aca_BWYHC6UQQFDU8A",
+					task="heartchambers_highres", 
+					body_seg=True,
+					preview=True,
+		   
+				)
 			
-		    # === Step 3 (DONE) - Crop, trim, and resample heart ===
-		    if not all(os.path.exists(f) for f in cropped_paths.values()):
-		        crop_trim_resample_heart(input_folder, output_folder)
-		        
-		    # === Step 4 - Slice CT and masks ===
-		    if len(os.listdir(os.path.join(output_folder, "nii_slices"))) < 18:
-		#        slice_CT(output_folder)
-#
+			# === Step 3 (DONE) - Crop, trim, and resample heart ===
+			if not all(os.path.exists(f) for f in cropped_paths.values()):
+				crop_trim_resample_heart(input_folder, output_folder)
+    
+				
+			# === Step 4 - Slice CT and masks ===
+			#if len(os.listdir(os.path.join(output_folder, "nii_slices"))) < 18:
 		except Exception as e:
 			print(f"Failed for {patientID}: {e}")
-		
+'''

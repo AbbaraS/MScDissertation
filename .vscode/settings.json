@@ -1,0 +1,17 @@
+{
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"editor.indentSize": "tabSize",
+	"editor.detectIndentation": false,
+	"editor.autoIndent": "full",
+	"editor.stickyTabStops": true,
+	"files.trimTrailingWhitespace": true,
+	"editor.trimWhitespaceOnDelete": true,
+	"editor.trimAutoWhitespace": false,
+	"pythonIndent.trimLinesWithOnlyWhitespace": false,
+	"pythonIndent.useTabOnHangingIndent": true,
+	"pythonIndent.keepHangingBracketOnLine": true,
+	"editor.formatOnSave": true,
+	"editor.acceptSuggestionOnEnter": "off",
+	"editor.mouseWheelZoom": true
+}
