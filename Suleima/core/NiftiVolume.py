@@ -53,7 +53,7 @@ class NiftiVolume:
 		if not save_path:
 			raise ValueError("No path specified and no internal path to save to.")
 		nib.save(self.obj, save_path)
-		log(f"Saved: {save_path}", False)
+		#log(f"Saved: {save_path}", False)
 
 	@classmethod
 	def init_from_array(cls, array, affine, header, path):
@@ -69,7 +69,7 @@ class NiftiVolume:
 
 		try:
 			nib.save(img.obj, path)
-			log(f"Saved NIfTI to: {path}", False)
+			#log(f"Saved NIfTI to: {path}", False)
 		except Exception as e:
 			log(f"Failed to save NIfTI to {path}: {e}")
 		return img

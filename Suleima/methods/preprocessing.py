@@ -23,6 +23,7 @@ def bounding_box(segments: dict):
 		log("No valid segment masks found for bounding box computation.")
 		return None
 
+
 	# Combine all masks to form a unified foreground region
 	combined = np.any(np.stack(masks), axis=0)
 
@@ -65,6 +66,8 @@ def crop(case: Case):
 				case.fullCT.affine,
 				case.fullCT.header,
 				path)
+			log(f"CoppedCT saved.")
+
 			assignments = {
 				"LV": case.LVtotalseg,
 				"LA": case.LAtotalseg,
@@ -80,15 +83,14 @@ def crop(case: Case):
 					os.path.join(case.casePath, "cropped", f"{key}.nii.gz")
 				)
 				setattr(case, f"{key}cropped", cropped)
-				cropped.save()
-			log("Cropped CT and segments.", False)
+				log(f"{key}cropped saved.")
+			#log("Cropped CT and segments.", False)
 			if case.cropped_mask is None:
 				mask = case.create_mask(case.croppedsegs, os.path.join(case.casePath, "cropped", "heart_mask.nii.gz"))
 				case.cropped_mask = mask
-				mask.save()
-				log("Created cropped heart mask.")
-	else:
-		case.croppedCT.save()
+				log("cropped_mask saved.")
+	#else:
+	#	case.croppedCT.save()
 
 def resample(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 	try:
@@ -102,7 +104,7 @@ def resample(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 				linear=True
 			)
 			#case.resampledCT.save()
-			log("Resampled CT.")
+			log("resampledCT saved.")
 
 		if case.resampled_mask is None:
 			# Map segment names to property names
@@ -124,23 +126,17 @@ def resample(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 					linear=False
 				)
 				setattr(case, name_to_attr[name], resampled_vol)
-				resampled_vol.save()
-				log(f"Resampled {name} segment.")
+
+				log(f"{name_to_attr[name]} saved.")
 
 			# Create and save resampled mask
 			case.resampled_mask = case.create_mask(
 				case.resampledsegs,
 				os.path.join(case.casePath, "resampled", "heart_mask.nii.gz")
 			)
-			case.resampled_mask.save()
-			log("Created resampled heart mask.")
+			log("resampled_mask saved.")
 	except Exception as e:
 		log(f"Error resampling: {e}", False)
-
-
-
-#view = ['sag', 'cor', 'axi']
-
 
 def get_three_slices_within(indices):
 	"""Pick ~25%, 50%, 75% positions within a sorted list of indices (unique)."""
@@ -162,15 +158,12 @@ def get_three_slices_within(indices):
 	q3 = indices[(3 * len(indices)) // 4]
 	return [int(q1), int(q2), int(q3)]
 
-
 def volume_slicer(vol):
 	"""Return callables for sagittal (X), coronal (Y), axial (Z) slices for RAS-oriented volumes."""
 	sagittal = lambda i: vol[i, :, :]   # X
 	coronal  = lambda i: vol[:, i, :]   # Y
 	axial    = lambda i: vol[:, :, i]   # Z
 	return [sagittal, coronal, axial]
-
-
 
 def sliceVol(case):
 	"""
@@ -245,16 +238,17 @@ def sliceVol(case):
 
 def save_slices(case, results):
 	for axis, data in results.items():
+		idxes = data["indices"]
 		ct_slices = data["ct"]
 		mask_slices = data["mask"]
 		ct_affine = case.resampledCT.affine
 		ct_header = case.resampledCT.header
 		mask_affine = case.resampled_mask.affine
 		mask_header = case.resampled_mask.header
-		for i, (ct_slice, mask_slice) in enumerate(zip(ct_slices, mask_slices)):
-			log(f"Saving CT & mask slice {axis}_{i}")
-			ct_filename = f"data/cases/{case.caseID}/ctSlices/{axis}_{i}.nii.gz"
-			mask_filename = f"data/cases/{case.caseID}/maskSlices/{axis}_{i}.nii.gz"
+		for i, (idx, ct_slice, mask_slice) in enumerate(zip(idxes, ct_slices, mask_slices)):
+			log(f"Saving CT & mask slice {axis}_{idx}")
+			ct_filename = f"data/cases/{case.caseID}/ctSlices/{axis}_{idx}.nii.gz"
+			mask_filename = f"data/cases/{case.caseID}/maskSlices/{axis}_{idx}.nii.gz"
 			_=NiftiVolume.init_from_array(ct_slice, ct_affine, ct_header, ct_filename)
 			_=NiftiVolume.init_from_array(mask_slice, mask_affine, mask_header, mask_filename)
 

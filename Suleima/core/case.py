@@ -62,7 +62,6 @@ class Case:
 		path = os.path.join(self.casePath, "fullCT.nii.gz")
 		if not self.CT_exists("full"):
 			log("Full CT not found.")
-
 			return None
 		self._fullCT = NiftiVolume(path)
 		return self._fullCT
@@ -70,7 +69,6 @@ class Case:
 	def fullCT(self, value):
 		if isinstance(value, NiftiVolume):
 			self._fullCT = value
-			#value.save()
 		else:
 			raise ValueError(f"fullCT must be a NiftiVolume object. Got {type(value)}")
 
@@ -89,7 +87,7 @@ class Case:
 		return self._LVtotalseg
 
 	@LVtotalseg.setter
-	def LVtotalseg(self, value):
+	def set_LVtotalseg(self, value):
 		if isinstance(value, NiftiVolume):
 			self._LVtotalseg = value
 			 #value.save()
@@ -129,7 +127,7 @@ class Case:
 		return self._RVtotalseg
 
 	@RVtotalseg.setter
-	def RVtotalseg(self, value):
+	def set_RVtotalseg(self, value):
 		if isinstance(value, NiftiVolume):
 			self._RVtotalseg = value
 			 #value.save()
@@ -591,13 +589,26 @@ class Case:
 			else:
 				raise KeyError(f"Unknown segment key: {key}")
 
-	def log_message(self, msg):
-		timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-		entry = f"[{timestamp}] {msg}"
-		#print(entry)
-		self.log.append(entry)
-		with open(os.path.join(self.casePath, "info.txt"), "a") as f:
-			f.write(entry + "\n")
+	def load(self):
+		"""Load the case data."""
+		self.fullCT = self.load_volume("fullCT.nii.gz")
+		self.croppedCT = self.load_volume("croppedCT.nii.gz")
+		self.resampledCT = self.load_volume("resampledCT.nii.gz")
+		self.totalsegs = {k: v for k, v in {
+				"LV": self.load_volume("segments/heart_ventricle_left.nii.gz"),
+				"LA": self.load_volume("segments/heart_atrium_left.nii.gz"),
+				"RV": self.load_volume("segments/heart_ventricle_right.nii.gz"),
+				"RA": self.load_volume("segments/heart_atrium_right.nii.gz"),
+				"MYO": self.load_volume("segments/heart_myocardium.nii.gz")
+			}.items() if v is not None}
+
+	def load_volume(self, p):
+		'''Load a volume from the case directory.'''
+		path = os.path.join(self.casePath, p)
+		if not os.path.exists(path):
+			log(f"volume not found.")
+			return None
+		return NiftiVolume(path)
 
 	def CT_exists(self, type="full"):
 		# types = ['full', 'cropped', 'resampled']
@@ -621,6 +632,26 @@ class Case:
 			log("No segments found to combine.")
 			return None
 
+	def onehot_mask(self, segments, path):
+		"""Create a one-hot encoded mask from the segmentation volumes."""
+		if not segments:
+			log("No segments found for one-hot encoding.")
+			return None
+
+		# Get the shape from one of the segmentations
+		shape = segments["LV"].shape
+		num_classes = len(segments)
+		print(f"classes: {num_classes}")
+		# Create an empty one-hot encoded array
+		onehot = np.zeros((*shape, num_classes), dtype=np.uint8)
+
+		# Fill the one-hot encoded array
+		for i, (key, seg) in enumerate(segments.items()):
+			onehot[..., i] = (seg.data > 0).astype(np.uint8)
+
+		# Save the one-hot encoded mask
+		onehot_vol = NiftiVolume.init_from_array(onehot, segments["LV"].affine, segments["LV"].header, path)
+		return onehot_vol
 
 	def resample_volume(self, vol, spacing, shape, filename, linear=True):
 		img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
