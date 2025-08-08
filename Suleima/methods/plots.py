@@ -47,7 +47,7 @@ def scrollable_ct_mask(ct, mask):
 
 
 
-def scrollable_ct_mask_compare(case1, case2):
+def scrollable_ct_mask_compare(view, caseID1, ct_img1, mask_img1, caseID2, ct_img2, mask_img2):
 	"""
 	Displays two scrollable CT+mask images side by side for comparison.
 
@@ -57,8 +57,8 @@ def scrollable_ct_mask_compare(case1, case2):
 	- ct2, mask2: Second case's CT and mask NiftiVolume objects
 	- caseID2: ID for the second case
 	"""
-	caseID1, ct_img1, mask_img1 = case1.caseID, case1.resampledCT.data, case1.LVresampled.data
-	caseID2, ct_img2, mask_img2 = case2.caseID, case2.resampledCT.data, case2.LVresampled.data
+	#caseID1, ct_img1, mask_img1 = case1.caseID, case1.croppedCT.data, case1.LVcropped.data
+	#caseID2, ct_img2, mask_img2 = case2.caseID, case2.croppedCT.data, case2.LVcropped.data
 
 	# Define colormap and legend
 	colors = ['black', 'red', 'blue', 'green', 'yellow', 'magenta']  # label 0 to 5
@@ -71,7 +71,7 @@ def scrollable_ct_mask_compare(case1, case2):
 		Patch(color=colors[5], label='Myocardium')
 	]
 
-	def display_slice(slice_index):
+	def display_axial(slice_index):
 		fig, axes = plt.subplots(1, 2, figsize=(12, 6))
 
 		# First case
@@ -90,9 +90,53 @@ def scrollable_ct_mask_compare(case1, case2):
 		fig.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.05))
 		plt.show()
 
-	interact(display_slice, slice_index=(0, min(ct_img1.shape[2], ct_img2.shape[2]) - 1))
 
 
+	def display_sagittal(slice_index):
+		fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+
+		# First case
+		axes[0].imshow(ct_img1[slice_index, :, :], cmap='gray', origin='lower')
+		axes[0].imshow(mask_img1[slice_index, :, :], cmap=cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
+		axes[0].set_title(f"{caseID1}\nSlice {slice_index+1}/{ct_img1.shape[0]}")
+		axes[0].axis("off")
+
+		# Second case
+		axes[1].imshow(ct_img2[slice_index, :, :], cmap='gray', origin='lower')
+		axes[1].imshow(mask_img2[slice_index, :, :], cmap=cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
+		axes[1].set_title(f"{caseID2}\nSlice {slice_index+1}/{ct_img2.shape[0]}")
+		axes[1].axis("off")
+
+		# Legend below both plots
+		fig.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.05))
+		plt.show()
+
+
+	def display_coronal(slice_index):
+		fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+
+		# First case
+		axes[0].imshow(ct_img1[:, slice_index, :], cmap='gray', origin='lower')
+		axes[0].imshow(mask_img1[:, slice_index, :], cmap=cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
+		axes[0].set_title(f"{caseID1}\nSlice {slice_index+1}/{ct_img1.shape[1]}")
+		axes[0].axis("off")
+
+		# Second case
+		axes[1].imshow(ct_img2[:, slice_index, :], cmap='gray', origin='lower')
+		axes[1].imshow(mask_img2[:, slice_index, :], cmap=cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
+		axes[1].set_title(f"{caseID2}\nSlice {slice_index+1}/{ct_img2.shape[1]}")
+		axes[1].axis("off")
+
+		# Legend below both plots
+		fig.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.05))
+		plt.show()
+
+
+	if view == "X": interact(display_sagittal, slice_index=(0, min(ct_img1.shape[0], ct_img2.shape[0]) - 1))
+	elif view == "Y": interact(display_coronal, slice_index=(0, min(ct_img1.shape[1], ct_img2.shape[1]) - 1))
+	elif view == "Z": interact(display_axial, slice_index=(0, min(ct_img1.shape[2], ct_img2.shape[2]) - 1))
+	else:
+		print("Invalid view. Choose 'X', 'Y', or 'Z'.")
 
 
 

@@ -36,13 +36,13 @@ from scipy.stats import median_abs_deviation
 '''
 
 
-def intensity_stats(case: Case):
-	img = case.resampledCT
+def intensity_stats(img: NiftiVolume):
+
 	if img is None:
-		log("No resampled CT for intensity statistics.")
+		log("No vol for intensity statistics.")
 		return
 	data = img.data
-	log(f"resampled intensity stats:  {{\nmin: {data.min()}, \nmax: {data.max()}, \nmean: {data.mean()}, \nstd: {data.std()}, \np0.5: {np.percentile(data, 0.5)}, \np99.5: {np.percentile(data, 99.5)}\n	 }}")
+	#log(f"resampled intensity stats:  {{\nmin: {data.min()}, \nmax: {data.max()}, \nmean: {data.mean()}, \nstd: {data.std()}, \np0.5: {np.percentile(data, 0.5)}, \np99.5: {np.percentile(data, 99.5)}\n	 }}")
 	return {
         "min": np.min(data),
         "max": np.max(data),
@@ -58,7 +58,7 @@ def plot_intensity_distribution(df):
 	upper_limit = Q3 + 1.5 * IQR
 	lower_limit = Q1 - 1.5 * IQR
 	outliers = df[(df["p99.5"] > upper_limit) | (df["p0.5"] < lower_limit)]
-	loginfo(outliers, "data/intensity_outliers.csv")
+	#loginfo(outliers, "data/intensity_outliers.csv")
 	plt.figure(figsize=(10,40))
 	for _, row in df.iterrows():
 		plt.plot([row["p0.5"], row["p99.5"]], [row["caseID"], row["caseID"]], 'o-', alpha=0.7)
@@ -67,9 +67,21 @@ def plot_intensity_distribution(df):
 	plt.title("CT Intensity Ranges (0.5–99.5 percentile)")
 	plt.show()
 
-def intensity_analysis(df):
+def find_outliers(df):
 	median_range = np.median(df["p99.5"] - df["p0.5"])
 	mad_range = median_abs_deviation(df["p99.5"] - df["p0.5"])
 	threshold = median_range + 3 * mad_range
 	med_p99 = np.median(df["p99.5"])
 	med_p0 = np.median(df["p0.5"])
+	df["is_outlier"] = (
+		(df["p0.5"] < med_p0 - 500) |
+		(df["p99.5"] > med_p99 + 500)
+	)
+	return df[df["is_outlier"]].reset_index(drop=True)
+
+def detect_outliers(df):
+	Q1, Q3 = df["p99.5"].quantile([0.25, 0.75])
+	IQR = Q3 - Q1
+	upper_limit = Q3 + 1.5 * IQR
+	lower_limit = Q1 - 1.5 * IQR
+	return df[(df["p99.5"] > upper_limit) | (df["p0.5"] < lower_limit)]

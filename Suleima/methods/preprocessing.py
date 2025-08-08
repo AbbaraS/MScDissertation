@@ -85,13 +85,13 @@ def crop(case: Case):
 				log(f"{key}cropped saved.")
 			#log("Cropped CT and segments.", False)
 			if case.cropped_mask is None:
-				mask = case.create_mask(case.croppedsegs, os.path.join(case.casePath, "cropped", "heart_mask.nii.gz"))
+				mask = case.create_binary_mask(case.croppedsegs, os.path.join(case.casePath, "cropped", "heart_mask.nii.gz"))
 				case.cropped_mask = mask
 				log("cropped_mask saved.")
 	#else:
 	#	case.croppedCT.save()
 
-def resample(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
+def resample_old(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 	try:
 		croppedCT = case.croppedCT
 		if case.resampledCT is None:
@@ -129,7 +129,7 @@ def resample(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 				log(f"{name_to_attr[name]} saved.")
 
 			# Create and save resampled mask
-			case.resampled_mask = case.create_mask(
+			case.resampled_mask = case.create_binary_mask(
 				case.resampledsegs,
 				os.path.join(case.casePath, "resampled", "heart_mask.nii.gz")
 			)
@@ -140,17 +140,62 @@ def resample(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 
 
 
+def sitk_img(vol: NiftiVolume):
+	img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
+	img.SetDirection(tuple(vol.affine[:3, :3].flatten()))
+	img.SetOrigin(tuple(vol.affine[:3, 3]))
+	img.SetSpacing(tuple(np.sqrt((vol.affine[:3, :3]**2).sum(axis=0))))
+	return img
+
+def clip_HU(vol: NiftiVolume, hu_clip=(-1000.0, 2500.0)):
+	img = sitk_img(vol)
+	img = sitk.Cast(img, sitk.sitkFloat32) # ensure floating point to avoid overflow surprises on clamp
+	img = sitk.Clamp(img, lowerBound=float(hu_clip[0]), upperBound=float(hu_clip[1]))
+	return img
 
 
+def resample_spacing(vol: NiftiVolume):
+	# keeps same shape + physical extent & field of view
+	# spacing becomes [1.0, 1.0, 1.0]
+	target_spacing=np.array([1.0]*3, dtype=np.float32)
+	interp = sitk.sitkLinear
+	img = clip_HU(vol)
+	img_size = np.array(img.GetSize())
+	img_spacing = np.array(img.GetSpacing())
+	# derive new voxel counts to keep physical extent constant
+	# (167, 136, 41) x (0.68, 0.68, 2.0)
+	phys_size = img_size * img_spacing          # mm per axis
+	new_size = np.maximum(np.round(phys_size / target_spacing), 1).astype(int)
 
 
+	resample = sitk.ResampleImageFilter()
+	resample.SetSize(new_size.tolist())
+	resample.SetOutputSpacing(target_spacing.tolist())
+	resample.SetOutputDirection(img.GetDirection())
+	resample.SetOutputOrigin(img.GetOrigin())
+	resample.SetInterpolator(interp)
+	img = resample.Execute(img)
+	print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
+	return img
 
+def resample_shape(vol: NiftiVolume):
+	interp = sitk.sitkLinear
+	img = resample_spacing(vol)
+	target_shape=(64,64,64)
+	cur_size = np.array(img.GetSize(), dtype=np.int64)
+	cur_spacing = np.array(img.GetSpacing(), dtype=np.float32)
 
-
-
-
-
-
+	cur_phys = cur_size * cur_spacing
+	out_size = np.array(target_shape, dtype=int)
+	out_spacing = (cur_phys / out_size).astype(np.float32)
+	rs2 = sitk.ResampleImageFilter()
+	rs2.SetSize(out_size.tolist())
+	rs2.SetOutputSpacing(out_spacing.tolist())
+	rs2.SetOutputDirection(img.GetDirection())
+	rs2.SetOutputOrigin(img.GetOrigin())
+	rs2.SetInterpolator(interp)
+	img = rs2.Execute(img)
+	print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
 
 
 

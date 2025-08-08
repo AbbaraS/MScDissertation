@@ -28,7 +28,7 @@ class Case:
 		self._normalisedCT = None
 		self._cropped_mask = None
 		self._resampled_mask = None
-
+		self._label_mask	= None
 		# Segments
 		self._LVtotalseg = None
 		self._LAtotalseg = None
@@ -592,6 +592,26 @@ class Case:
 			else:
 				raise KeyError(f"Unknown segment key: {key}")
 
+
+	@property
+	def label_mask(self):
+		if self._label_mask is not None:
+			return self._label_mask
+		path = os.path.join(self.casePath, "label_mask.nii.gz")
+		if not os.path.exists(path):
+			log("label_mask not found.")
+			return None
+		self._label_mask = NiftiVolume(path)
+		return self._label_mask
+	@label_mask.setter
+	def label_mask(self, value):
+		if isinstance(value, NiftiVolume):
+			self._label_mask = value
+		else:
+			raise ValueError(f"label_mask must be a NiftiVolume object. Got {type(value)}")
+
+
+
 	def load(self):
 		"""Load the case data."""
 		self.fullCT = self.load_volume("fullCT.nii.gz")
@@ -623,7 +643,7 @@ class Case:
 		return os.path.exists(os.path.join(self.casePath, folder, f"{name}.nii.gz"))
 
 
-	def create_mask(self, segments, path):
+	def create_binary_mask(self, segments, path):
 		if segments:
 			seg_arrays = [seg.data.astype(bool) for seg in segments.values()]
 			array = np.any(seg_arrays, axis=0).astype(np.uint8)
@@ -634,6 +654,19 @@ class Case:
 		else:
 			log("No segments found to combine.")
 			return None
+
+	def create_label_mask(self, segments, path):
+		if segments and self.croppedCT is not None:
+			mask = np.zeros_like(self.croppedCT.data, dtype=np.uint8)
+			for name, val in segments.items():
+				# LV: 1, LA: 2, RV: 3, RA: 4, MYO: 5
+				print(f"ct shape: {self.croppedCT.data.shape} - segment {name} shape: {val.shape}")
+				label = {"LV": 1, "LA": 2, "RV": 3, "RA": 4, "MYO": 5}.get(name, 0)
+				mask[val.data > 0] = label
+			NiftiVolume.init_from_array(mask, self.croppedCT.affine, self.croppedCT.header, path)
+		else:
+			log("No segments found to create label mask.")
+
 
 	def onehot_mask(self, segments, path):
 		"""Create a one-hot encoded mask from the segmentation volumes."""
@@ -697,26 +730,5 @@ class Case:
 
 	#def HU_normalisation(self):
 
-	def resample1(self, linear=True):
-		vol = self.croppedCT
-		spacing=[1.0]*3
-		shape=(64,64,64)
 
-		img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
-		img.SetDirection(tuple(vol.affine[:3, :3].flatten()))   				# Set orientation
-		img.SetOrigin(tuple(vol.affine[:3, 3]))                  				# Set origin
-		img.SetSpacing(tuple(np.sqrt((vol.affine[:3, :3]**2).sum(axis=0))))
-
-		img_size = np.array(img.GetSize())
-		img_spacing = np.array(img.GetSpacing())
-
-		resample = sitk.ResampleImageFilter()
-		resample.SetInterpolator(sitk.sitkLinear if linear else sitk.sitkNearestNeighbor)
-
-		resample.SetSize(np.round(img_size * (img_spacing / np.array(spacing))).astype(int).tolist())
-		resample.SetOutputSpacing(spacing)
-		resample.SetOutputDirection(img.GetDirection())
-		resample.SetOutputOrigin(img.GetOrigin())
-		resam_img = resample.Execute(img)
-		arr = sitk.GetArrayFromImage(resam_img).transpose(2,1,0)
 
