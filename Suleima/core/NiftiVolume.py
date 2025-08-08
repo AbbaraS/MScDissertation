@@ -2,7 +2,7 @@ import nibabel as nib
 import os
 from core.Log import log
 from nibabel.orientations import aff2axcodes
-
+from core.globals import *
 
 
 class NiftiVolume:
@@ -44,6 +44,10 @@ class NiftiVolume:
 	@property
 	def origin(self):
 		return self.affine[:3, 3]
+
+	@property
+	def exists(self):
+		return self.path is not None and os.path.exists(self.path)
 
 	def save(self, path=None):
 		"""

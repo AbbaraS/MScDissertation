@@ -1,12 +1,11 @@
 
 
-from core.Log import log
+from core.Log import *
 
 import os
 import numpy as np
 import SimpleITK as sitk
 import scipy.ndimage
-from datetime import datetime
 from core.NiftiVolume import NiftiVolume
 
 ############################################
@@ -26,6 +25,7 @@ class Case:
 		self._fullCT = None
 		self._croppedCT = None
 		self._resampledCT = None
+		self._normalisedCT = None
 		self._cropped_mask = None
 		self._resampled_mask = None
 
@@ -53,6 +53,9 @@ class Case:
 		os.makedirs(os.path.join(self.casePath, "ctSlices"), exist_ok=True)
 		os.makedirs(os.path.join(self.casePath, "maskSlices"), exist_ok=True)
 		os.makedirs(os.path.join(self.casePath, "pngSlices"), exist_ok=True)
+
+
+		set_log(caseID)
 	# ==== Full CT ====
 
 	@property
@@ -654,6 +657,8 @@ class Case:
 		return onehot_vol
 
 	def resample_volume(self, vol, spacing, shape, filename, linear=True):
+		print(f"vol.data.shape: {vol.data.shape} - ")
+
 		img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
 		img.SetSpacing([float(s) for s in vol.spacing[::-1]])  # explicit float conversion
 		resample = sitk.ResampleImageFilter()
@@ -663,6 +668,7 @@ class Case:
 		orig_spacing = np.array(img.GetSpacing())
 		new_size = np.round(orig_size * (orig_spacing / np.array(spacing[::-1]))).astype(int).tolist()
 		resample.SetSize(new_size)
+		print(f" img.GetDirection(): {img.GetDirection()}")
 		resample.SetOutputDirection(img.GetDirection())
 		resample.SetOutputOrigin(img.GetOrigin())
 		new_img = resample.Execute(img)
@@ -672,8 +678,9 @@ class Case:
 		affine = np.eye(4)
 		affine[:3, :3] = np.array(new_img.GetDirection()).reshape(3,3) * np.array(new_img.GetSpacing())[:, None]
 		affine[:3, 3] = new_img.GetOrigin()
-		path = os.path.join(self.casePath, filename)
-		return NiftiVolume.init_from_array(arr, affine, vol.header, path)
+		#print(f"resampled orientation: {}")
+		#path = os.path.join(self.casePath, filename)
+		#return NiftiVolume.init_from_array(arr, affine, vol.header, path)
 
 
 	def crop_volume(self, vol, bbox, filename):
@@ -688,7 +695,28 @@ class Case:
 		return cropped_vol
 
 
+	#def HU_normalisation(self):
 
+	def resample1(self, linear=True):
+		vol = self.croppedCT
+		spacing=[1.0]*3
+		shape=(64,64,64)
 
+		img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
+		img.SetDirection(tuple(vol.affine[:3, :3].flatten()))   				# Set orientation
+		img.SetOrigin(tuple(vol.affine[:3, 3]))                  				# Set origin
+		img.SetSpacing(tuple(np.sqrt((vol.affine[:3, :3]**2).sum(axis=0))))
 
+		img_size = np.array(img.GetSize())
+		img_spacing = np.array(img.GetSpacing())
+
+		resample = sitk.ResampleImageFilter()
+		resample.SetInterpolator(sitk.sitkLinear if linear else sitk.sitkNearestNeighbor)
+
+		resample.SetSize(np.round(img_size * (img_spacing / np.array(spacing))).astype(int).tolist())
+		resample.SetOutputSpacing(spacing)
+		resample.SetOutputDirection(img.GetDirection())
+		resample.SetOutputOrigin(img.GetOrigin())
+		resam_img = resample.Execute(img)
+		arr = sitk.GetArrayFromImage(resam_img).transpose(2,1,0)
 

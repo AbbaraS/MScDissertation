@@ -3,7 +3,7 @@ from Suleima.Utilities.old_utils import get_cropped_paths, \
 	load_nifti,\
 	get_segments_paths, \
 	get_resampled_paths
-		 
+
 
 
 
@@ -19,7 +19,7 @@ def get_three_slices_within(indices):
 		indices[len(indices) // 2],
 		indices[3 * len(indices) // 4]
 	]
-	
+
 def slice_CT(output_folder):
 	cropped_paths = get_resampled_paths(output_folder)
 	slices_dir = os.path.join(output_folder, "nii_slices")
@@ -41,7 +41,7 @@ def slice_CT(output_folder):
 		[sagittal_indices, coronal_indices, axial_indices],
 		[lambda i: ct_np[i, :, :], lambda i: ct_np[:, i, :], lambda i: ct_np[:, :, i]],
 		[lambda i: mask_np[i, :, :], lambda i: mask_np[:, i, :], lambda i: mask_np[:, :, i]]):
-		
+
 		for idx in get_three_slices_within(indices):
 			ct_slice = ct_slicer(idx)
 			mask_slice = mask_slicer(idx)
@@ -63,11 +63,11 @@ def trim_empty_slices(volume):
 	z_min, z_max = np.where(z_nonzero)[0][[0, -1]]
 	return (x_min, x_max+1), (y_min, y_max+1), (z_min, z_max+1)
 
-def resample_volume_shape(volume_np, 
-						  spacing, 
+def resample_volume_shape(volume_np,
+						  spacing,
 						  new_spacing=[1.0, 1.0, 1.0],
-						  target_shape=(64, 64, 64), 
-						  is_label=False, 
+						  target_shape=(64, 64, 64),
+						  is_label=False,
 						  reference_image=None,
 						  original_affine=None):
 	"""
@@ -101,12 +101,12 @@ def resample_volume_shape(volume_np,
 	# Recover affine (nibabel-style)
 	direction = np.array(resampled.GetDirection()).reshape(3, 3)
 	spacing_arr = np.array(resampled.GetSpacing())
-	
+
 	if original_affine is not None:
 		origin = original_affine[:3, 3]  # use original origin
 	else:
 		origin = np.array(resampled.GetOrigin())
-	
+
 	affine = np.eye(4)
 	affine[:3, :3] = direction * spacing_arr[:, None]
 	affine[:3, 3] = origin
@@ -137,13 +137,13 @@ def crop_trim_resample_heart(input_folder, output_folder):
 	binary_mask = ((lv + rv + la + ra + myo) > 0).astype(np.uint8)   # (sum of positive labels across all masks)  & turn the summed array into a binary mask
 	x_min, y_min, z_min = np.array(np.where(binary_mask)).min(axis=1)
 	x_max, y_max, z_max = np.array(np.where(binary_mask)).max(axis=1)
-	
-	# calculate crop boundaries (3D bounding box) 
+
+	# calculate crop boundaries (3D bounding box)
 	# identify min and max voxel coordinates where heart structures are present
 	x0, x1 = max(x_min, 0), min(x_max, og_ct_data.shape[0])
 	y0, y1 = max(y_min, 0), min(y_max, og_ct_data.shape[1])
 	z0, z1 = max(z_min, 0), min(z_max, og_ct_data.shape[2])
-	
+
 	# crop volumes with bounding box coordinates
 	ct_crop = og_ct_data[x0:x1, y0:y1, z0:z1]
 	lv_crop = lv[x0:x1, y0:y1, z0:z1]
@@ -151,14 +151,14 @@ def crop_trim_resample_heart(input_folder, output_folder):
 	la_crop = la[x0:x1, y0:y1, z0:z1]
 	ra_crop = ra[x0:x1, y0:y1, z0:z1]
 	myo_crop = myo[x0:x1, y0:y1, z0:z1]
-	
+
 	# Further trim empty slices
 	# binary_mask = (sum of positive labels across all masks)  & turn the summed array back into a binary mask
 	binary_mask = ((lv_crop + rv_crop + la_crop + ra_crop + myo_crop) > 0).astype(np.uint8)
 	x_has_empty = not np.all(np.any(binary_mask, axis=(1, 2)))
 	y_has_empty = not np.all(np.any(binary_mask, axis=(0, 2)))
 	z_has_empty = not np.all(np.any(binary_mask, axis=(0, 1)))
-	
+
 	print(f"cropped CT shape: {ct_crop.shape}")
 	if x_has_empty or y_has_empty or z_has_empty:
 		x_rng, y_rng, z_rng = trim_empty_slices(binary_mask)
@@ -168,12 +168,12 @@ def crop_trim_resample_heart(input_folder, output_folder):
 		la_crop = la_crop[x_rng[0]:x_rng[1], y_rng[0]:y_rng[1], z_rng[0]:z_rng[1]]
 		ra_crop = ra_crop[x_rng[0]:x_rng[1], y_rng[0]:y_rng[1], z_rng[0]:z_rng[1]]
 		myo_crop = myo_crop[x_rng[0]:x_rng[1], y_rng[0]:y_rng[1], z_rng[0]:z_rng[1]]
-		
+
 		print(f"trimmed CT shape: {ct_crop.shape}")
 	else:
 		print("skipping trim step.")
-	
-	
+
+
 	#print("Original CT crop shape:", ct_crop.shape, "max:", ct_crop.max(), "min:", ct_crop.min())
 	# === Resample each ===
 	ct_res, ct_affine, ct_sitk = resample_volume_shape(ct_crop, og_ct_voxel, is_label=False, original_affine=og_affine)
@@ -183,7 +183,7 @@ def crop_trim_resample_heart(input_folder, output_folder):
 	la_res, _, _ = resample_volume_shape(la_crop, og_ct_voxel, is_label=True, reference_image=ct_sitk)
 	ra_res, _, _ = resample_volume_shape(ra_crop, og_ct_voxel, is_label=True, reference_image=ct_sitk)
 	myo_res, _, _ = resample_volume_shape(myo_crop, og_ct_voxel, is_label=True, reference_image=ct_sitk)
-	
+
 	resampled_file_path = get_resampled_paths(output_folder)
 	# Save NIfTI
 	nib.save(nib.Nifti1Image(ct_res, ct_affine), resampled_file_path["CT"])
@@ -192,20 +192,21 @@ def crop_trim_resample_heart(input_folder, output_folder):
 	nib.save(nib.Nifti1Image(la_res, ct_affine), resampled_file_path["LA"])
 	nib.save(nib.Nifti1Image(ra_res, ct_affine), resampled_file_path["RA"])
 	nib.save(nib.Nifti1Image(myo_res, ct_affine), resampled_file_path["MYO"])
-	
+
 	cropped_file = load_nifti(resampled_file_path)
-	
-	# === Load cropped masks and CT scan === 
+
+	# === Load cropped masks and CT scan ===
 	cropped_data =  cropped_file["CT"]["data"]
 
 	combined_mask = np.zeros_like(cropped_data, dtype=np.uint8)
-	combined_mask[cropped_file["LV"]["data"] > 0] = 1   # LV 
-	combined_mask[cropped_file["RV"]["data"] > 0] = 2   # RV 
-	combined_mask[cropped_file["MYO"]["data"] > 0] = 3  # Myo 
-	combined_mask[cropped_file["LA"]["data"] > 0] = 4   # LA 
-	combined_mask[cropped_file["RA"]["data"] > 0] = 5   # RA 
+	combined_mask[cropped_file["LV"]["data"] > 0] = 1   # LV
+	combined_mask[cropped_file["RV"]["data"] > 0] = 2   # RV
+	combined_mask[cropped_file["MYO"]["data"] > 0] = 3  # Myo
+	combined_mask[cropped_file["LA"]["data"] > 0] = 4   # LA
+	combined_mask[cropped_file["RA"]["data"] > 0] = 5   # RA
 
 	nib.save(nib.Nifti1Image(combined_mask, ct_affine), resampled_file_path["Mask"])
+
 '''
 def process_case(root_dir):
 	for caseID in os.listdir(root_dir):
@@ -220,24 +221,24 @@ def process_case(root_dir):
 			# === Step 1 (DONE) - Convert DICOM to NIfTI ===
 			if not os.path.exists(os.path.join(patient_dir, "OG_CT.nii.gz")):
 				dicom2nifti.convert_dicom.dicom_series_to_nifti(dicom_dir, os.path.join(patient_dir, "OG_CT.nii.gz"),)
-			
+
 			# === Step 2 (DONE) - Segment with TotalSegmentator ===
 			if not all(os.path.exists(f) for f in OG_paths.values()):
 				_ = totalsegmentator(
-					input_path=dicom_dir, 
+					input_path=dicom_dir,
 					output_path=segments_dir,
 					license_number="aca_BWYHC6UQQFDU8A",
-					task="heartchambers_highres", 
+					task="heartchambers_highres",
 					body_seg=True,
 					preview=True,
-		   
+
 				)
-			
+
 			# === Step 3 (DONE) - Crop, trim, and resample heart ===
 			if not all(os.path.exists(f) for f in cropped_paths.values()):
 				crop_trim_resample_heart(input_folder, output_folder)
-    
-				
+
+
 			# === Step 4 - Slice CT and masks ===
 			#if len(os.listdir(os.path.join(output_folder, "nii_slices"))) < 18:
 		except Exception as e:
