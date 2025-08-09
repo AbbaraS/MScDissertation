@@ -81,8 +81,6 @@ def gaussian_if_downsampling_axes(img: sitk.Image, target_spacing):
 	return out
 	# then use ct_pre = gaussian_if_downsampling_axes(ct_img, spacing_arr)
 
-
-
 def resample_centered(ct_img: sitk.Image,
 					   heart_mask: sitk.Image,
 					   size=(64,64,64),
@@ -94,8 +92,8 @@ def resample_centered(ct_img: sitk.Image,
 	ls = sitk.LabelShapeStatisticsImageFilter()
 	ls.Execute(heart_mask > 0)
 	if not ls.HasLabel(1):
-		log("_resample_centered: Heart mask is empty after union/alignment.")
-		raise ValueError("_resample_centered: Heart mask is empty after union/alignment.")
+		log("resample_centered: Heart mask is empty after union/alignment.")
+		raise ValueError("resample_centered: Heart mask is empty after union/alignment.")
 	c_phys = np.array(ls.GetCentroid(1), float)  # (X,Y,Z) mm
 
 	# 2) output geometry: keep orientation of CT
@@ -105,8 +103,8 @@ def resample_centered(ct_img: sitk.Image,
 	spacing_arr = np.array(spacing, float)
 	half_extent = (N - 1.0) * spacing_arr / 2.0
 	origin_out = c_phys - D @ half_extent
-	log(f"_resample_centered: ( N {N} - 1.0) * spacing_arr {spacing_arr} / 2.0  = half_extent {half_extent}")
-	log(f"_resample_centered: \nc_phys {c_phys} - D {D} @ half_extent ---> origin_out = \n{origin_out}")
+	log(f"resample_centered: ( N {N} - 1.0) * spacing_arr {spacing_arr} / 2.0  = half_extent {half_extent}")
+	log(f"resample_centered: \nc_phys {c_phys} - D {D} @ half_extent ---> origin_out = \n{origin_out}")
 
 	# 3) anti-alias only if downsampling
 	#ct_pre = gaussian_if_downsampling(ct_img, tuple(spacing_arr))
@@ -160,18 +158,18 @@ def adaptive_resample_centered(ct_img: sitk.Image,
 		touches_b = touches_border(mask_out, pad_vox=pad_vox)
 
 		if not touches_b:
-			log(f"_adaptive_resample_centered: attempt {attempt} PASS | touches_border: {touches_b} spacing_used={spacing_used}, origin_used={origin_used}")
+			log(f"adaptive_resample_centered: attempt {attempt} PASS | touches_border: {touches_b} spacing_used={spacing_used}, origin_used={origin_used}")
 			return ct_out, mask_out, spacing_used, origin_used
 
 		# Failed the border check:
-		log(f"_adaptive_resample_centered: attempt {attempt} FAIL | touches_border: {touches_b} spacing_used={spacing_used}, origin_used={origin_used}")
+		log(f"adaptive_resample_centered: attempt {attempt} FAIL | touches_border: {touches_b} spacing_used={spacing_used}, origin_used={origin_used}")
 
 		# If more attempts remain, grow spacing for the *next* attempt
 		if attempt < total_attempts:
 			spacing = spacing * float(growth)  # enlarge FOV and retry
 
 	# Rare: return the last (failed) attempt result
-	log(f"_adaptive_resample_centered: exhausted retries; returning last attempt with spacing={last[2]}")
+	log(f"adaptive_resample_centered: exhausted retries; returning last attempt with spacing={last[2]}")
 	return last
 
 def process_case_centroid_FOV(case_path,
@@ -200,17 +198,23 @@ def process_case_centroid_FOV(case_path,
 	ct_path = case_path / "fullCT.nii.gz"
 	seg_dir = case_path / "segments"
 	out_dir = case_path / outdir_name
+	ct_out_path   = out_dir / "ct_centered.nii.gz"
+	heart_mask_path = out_dir / "heartmask_centered.nii.gz"
+	lv_mask_path    = out_dir / "lv_mask.nii.gz"
+	myo_mask_path   = out_dir / "myo_mask.nii.gz"
+	meta_path     = out_dir / "centered_meta.json"
 	out_dir.mkdir(parents=True, exist_ok=True)
 
 	# --- load CT & TS masks ---
 	ct_img = load_ct(ct_path)
 	ct_img = sitk.Cast(ct_img, sitk.sitkFloat32)
-	parts = load_available_totalseg_masks(seg_dir)
-	if not parts:
+
+	totalseg_parts = load_available_totalseg_masks(seg_dir)
+	if not totalseg_parts:
 		raise FileNotFoundError(f"No TotalSegmentator masks found in: {seg_dir}")
 
 	# --- build binary heart mask aligned to CT ---
-	heart_mask = make_heart_mask_from_binaries(ct_img, parts)  # uses union_binary_masks -> alignment+NN
+	heart_mask = make_heart_mask_from_binaries(ct_img, totalseg_parts)  # uses union_binary_masks -> alignment+NN
 	heart_mask = sitk.Cast(heart_mask, sitk.sitkUInt8)
 	# --- extents (mm) + centroid (mm) ---
 	(Hx, Hy, Hz), c_phys = heart_extents_mm(heart_mask, percentile=percentile)
@@ -225,14 +229,10 @@ def process_case_centroid_FOV(case_path,
 		size=size,
 		pad_vox=pad_vox,
 		growth=growth,
-		max_tries=max_tries
-	)
+		max_tries=max_tries)
 
 	ct_out = ensure_float32(ct_out)
 	# --- save outputs ---
-	ct_out_path   = out_dir / "ct_centered.nii.gz"
-	mask_out_path = out_dir / "heartmask_centered.nii.gz"
-	meta_path     = out_dir / "centered_meta.json"
 
 
 	'''
@@ -242,9 +242,23 @@ def process_case_centroid_FOV(case_path,
 	lower_HU, upper_HU = -1000.0, 1200.0
 	ct_clipped = sitk.Clamp(ct_out, lowerBound=lower_HU, upperBound=upper_HU)
 
+
+	lv_mask, myo_mask, heart_mask = make_lv_myo_masks_from_binaries(
+			reference_ct=ct_clipped,
+			totalseg_parts=totalseg_parts,
+			lv_keys=("left_ventricle",),
+			myo_keys=("myocardium",),
+			clean_islands=True,
+			min_voxels=50,
+			constrain_to_heart=True,
+			precomputed_heart=None  )
+
 	#sitk.WriteImage(ct_clipped,   str(ct_out_path), True)
 	#sitk.WriteImage(mask_out, str(mask_out_path), True)
-
+	# Save (uint8, 0/1)
+	sitk.WriteImage(heart_mask, str(heart_mask_path), useCompression=True)
+	sitk.WriteImage(lv_mask,    str(lv_mask_path),    useCompression=True)
+	sitk.WriteImage(myo_mask,   str(myo_mask_path),   useCompression=True)
 	'''
 	Global z‑score normalization (train‑set statistics only).
 	Compute μ, σ on the training set only (after clipping).
@@ -266,7 +280,7 @@ def process_case_centroid_FOV(case_path,
 		"inputs": {
 			"ct_path": str(ct_path),
 			"segments_dir": str(seg_dir),
-			"used_structures": [k for k in parts.keys()]
+			"used_structures": [k for k in totalseg_parts.keys()]
 		}
 	}
 	#with open(meta_path, "w") as f:
@@ -274,7 +288,7 @@ def process_case_centroid_FOV(case_path,
 
 	return {
 		"ct_out_path": ct_out_path,
-		"mask_out_path": mask_out_path,
+		"mask_out_path": totalseg_parts,
 		"meta_path": meta_path,
 		"spacing_final": spacing_used,
 		"origin_final": origin_used,

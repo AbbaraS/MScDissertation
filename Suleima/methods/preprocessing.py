@@ -17,7 +17,6 @@ def ensure_float32(img: sitk.Image) -> sitk.Image:
 def ensure_uint8(img: sitk.Image) -> sitk.Image:
 	return sitk.Cast(img, sitk.sitkUInt8)
 
-
 def same_geometry(a: sitk.Image, b: sitk.Image) -> bool:
 	#log("same_geometry")
 	return (a.GetSize()      == b.GetSize() and
@@ -101,8 +100,7 @@ def make_lv_myo_masks_from_binaries(
 	clean_islands=True,
 	min_voxels=50,
 	constrain_to_heart=True,
-	precomputed_heart: sitk.Image | None = None,
-) -> tuple[sitk.Image, sitk.Image, sitk.Image]:
+	precomputed_heart: sitk.Image | None = None,) -> tuple[sitk.Image, sitk.Image, sitk.Image]:
 	"""
 	Returns (lv_mask, myo_mask, heart_mask) as uint8 binaries aligned to reference_ct.
 	- Enforces MYO ∩ LV = ∅  (myocardium excludes LV cavity)
@@ -150,13 +148,6 @@ def make_lv_myo_masks_from_binaries(
 	heart_mask = ensure_uint8(heart_mask); heart_mask.CopyInformation(reference_ct)
 
 	return lv_mask, myo_mask, heart_mask
-
-
-
-
-
-
-
 
 def centroid_phys_from_mask_xyz(mask_xyz: np.ndarray, affine: np.ndarray) -> np.ndarray:
 	"""
@@ -254,8 +245,6 @@ def heart_extents_mm(mask_img: sitk.Image, percentile=99.0) -> tuple:
 	log(f"heart_extents_mm: (Hx, Hy, Hz), c_phys --> ({Hx}, {Hy}, {Hz}), {c_phys}")
 	return (Hx, Hy, Hz), c_phys
 
-
-
 def spacing_from_extents(H,
 						 size=(64,64,64),
 						 margin=0.15,
@@ -302,38 +291,7 @@ def touches_border(mask_resampled: sitk.Image, pad_vox=2, relax_one=True) -> boo
 		  or (y <= pad).any() or (y >= ymax - pad).any()
 		  or (x <= pad).any() or (x >= xmax - pad).any() )
 
-def adaptive_resample_centered(ct_img, heart_mask, size=(64,64,64),
-							   base_spacing=(2.0,2.0,2.0), max_tries=3, growth=1.15):
-	log("adaptive_resample_centered")
-	"""Center on centroid; if mask touches border, inflate spacing and retry."""
-	spacing = np.array(base_spacing, float)
-	dir_flat = ct_img.GetDirection()
-	D = np.array(dir_flat).reshape(3,3)
-	ls = sitk.LabelShapeStatisticsImageFilter(); ls.Execute(heart_mask>0)
-	c_phys = np.array(ls.GetCentroid(1))  # mm
 
-	for _ in range(max_tries):
-		# compute origin to center c_phys
-		half_extent = (np.array(size,float) - 1) * spacing / 2.0
-		origin_out = c_phys - D @ half_extent
-
-		# smooth + resample CT
-		ct_s = sitk.SmoothingRecursiveGaussian(ct_img, 0.75)
-		ct_out = sitk.Resample(ct_s, size=list(map(int,size)),
-							   transform=sitk.Transform(),
-							   interpolator=sitk.sitkLinear,
-							   outputOrigin=tuple(origin_out),
-							   outputSpacing=tuple(spacing),
-							   outputDirection=tuple(dir_flat),
-							   defaultPixelValue=0.0)
-		# resample mask and check borders
-		mask_out = sitk.Resample(heart_mask, ct_out, sitk.Transform(),
-								 sitk.sitkNearestNeighbor, 0)
-		if not touches_border(mask_out, pad_vox=2):
-			return ct_out, mask_out, tuple(spacing)
-		spacing *= growth  # inflate and retry
-
-	return ct_out, mask_out, tuple(spacing)  # last attempt result
 
 def adaptive_center_resample_96(ct_img, heart_mask, percentile=99.0,
 								margin=0.15, pad_vox=2,
@@ -365,17 +323,6 @@ def adaptive_center_resample_96(ct_img, heart_mask, percentile=99.0,
 	# Return last attempt if still touching (very rare)
 	return ct_out, mask_out, tuple(spacing)
 
-
-
-
-
-
-
-
-
-# --- helpers ---
-
-
 def resample_like(moving: sitk.Image,
 				  reference: sitk.Image,
 				  interp=sitk.sitkNearestNeighbor,
@@ -406,57 +353,62 @@ def remove_tiny_islands(mask: sitk.Image, min_voxels: int = 50) -> sitk.Image:
 			keep = keep | sitk.Equal(cc, lbl)
 	return ensure_uint8(keep)
 
-
-
-# --- main hook you add into your pipeline ---
-def make_lv_myo_masks(
-	ct_resampled: sitk.Image,
-	# EITHER a single multi-label map (0=bg, 1=LV, 2=MYO, ...)
-	labelmap_resampled: Optional[sitk.Image] = None,
-	# OR individual (already resampled) volumes for LV and MYO (binary or soft)
-	per_struct_resampled: Optional[Dict[str, sitk.Image]] = None,
-	lv_label: int = 1, myo_label: int = 2,
-	clean_small_islands: bool = True
-):
+def make_lv_myo_masks_from_binaries(
+	reference_ct: sitk.Image,
+	totalseg_parts: dict[str, sitk.Image],
+	lv_keys=("left_ventricle",),              # adapt if your keys differ
+	myo_keys=("myocardium",),
+	clean_islands=True,
+	min_voxels=50,
+	constrain_to_heart=True,
+	precomputed_heart: sitk.Image | None = None,) -> tuple[sitk.Image, sitk.Image, sitk.Image]:
 	"""
-	Returns: (lv_mask_uint8, myo_mask_uint8) aligned to ct_resampled (0/1).
-	Makes masks mutually exclusive (MYO wins only where LV is absent).
+	Returns (lv_mask, myo_mask, heart_mask) as uint8 binaries aligned to reference_ct.
+	- Enforces MYO ∩ LV = ∅  (myocardium excludes LV cavity)
+	- Optionally constrains both to the heart mask (safety)
 	"""
-	assert (labelmap_resampled is not None) ^ (per_struct_resampled is not None), \
-		"Provide either a labelmap OR per-structure volumes, not both."
-
-	if labelmap_resampled is not None:
-		# Ensure geometry alignment
-		labelmap_resampled = resample_like(labelmap_resampled, ct_resampled,
-										   interp=sitk.sitkNearestNeighbor, default_value=0)
-		lv = binary_from_labelmap(labelmap_resampled, lv_label)
-		myo = binary_from_labelmap(labelmap_resampled, myo_label)
+	# 1) Build heart if not provided
+	if precomputed_heart is None:
+		heart_mask = make_heart_mask_from_binaries(
+			reference_ct, totalseg_parts,
+			include=("myocardium","left_ventricle","right_ventricle","left_atrium","right_atrium")
+		)
 	else:
-		# Expect keys: 'LV', 'MYO'
-		lv = resample_like(per_struct_resampled['LV'], ct_resampled,
-						   interp=sitk.sitkNearestNeighbor, default_value=0)
-		myo = resample_like(per_struct_resampled['MYO'], ct_resampled,
-							interp=sitk.sitkNearestNeighbor, default_value=0)
-		# Convert to hard 0/1 if not already
-		lv = binary_from_prob_or_binary(lv, thresh=0.5)
-		myo = binary_from_prob_or_binary(myo, thresh=0.5)
+		heart_mask = resample_like(precomputed_heart, reference_ct, sitk.sitkNearestNeighbor, 0)
+		heart_mask = binarise(heart_mask, 0.5)
 
-	# Enforce mutual exclusivity (no overlapping voxels)
-	# If there is overlap, prefer myocardium to remain outside the cavity:
-	# remove LV from MYO, or vice versa depending on your anatomical convention.
-	overlap = lv & myo
-	if sitk.StatisticsImageFilter().Execute(overlap) or True:  # always resolve just in case
-		myo = myo & sitk.BinaryNot(lv)
+	# 2) Union selected keys for LV and MYO (usually single key each)
+	def union(keys):
+		masks = [totalseg_parts[k] for k in keys if k in totalseg_parts]
+		if not masks:
+			# Generate empty aligned mask if missing
+			empty = sitk.Image(reference_ct.GetSize(), sitk.sitkUInt8); empty.CopyInformation(reference_ct)
+			return empty
+		return union_binary_masks(masks, reference_ct)
 
-	# Optional: denoise tiny speckles
-	if clean_small_islands:
-		lv = remove_tiny_islands(lv, min_voxels=50)
-		myo = remove_tiny_islands(myo, min_voxels=50)
+	lv_mask  = union(lv_keys)
+	myo_mask = union(myo_keys)
 
-	# Ensure meta matches CT
-	lv.CopyInformation(ct_resampled)
-	myo.CopyInformation(ct_resampled)
-	return lv, myo
+	# 3) Optional cleanup
+	if clean_islands:
+		lv_mask  = remove_tiny_islands(lv_mask,  min_voxels=min_voxels)
+		myo_mask = remove_tiny_islands(myo_mask, min_voxels=min_voxels)
+
+	# 4) Enforce mutual exclusivity (no LV voxels inside MYO and vice versa)
+	# Anatomically: MYO is the wall, LV is the cavity -> remove LV from MYO
+	myo_mask = myo_mask & sitk.BinaryNot(lv_mask)
+
+	# 5) Constrain to heart for safety
+	if constrain_to_heart:
+		lv_mask  = lv_mask  & heart_mask
+		myo_mask = myo_mask & heart_mask
+
+	# 6) Final typing and metadata are already correct, but ensure:
+	lv_mask  = ensure_uint8(lv_mask);  lv_mask.CopyInformation(reference_ct)
+	myo_mask = ensure_uint8(myo_mask); myo_mask.CopyInformation(reference_ct)
+	heart_mask = ensure_uint8(heart_mask); heart_mask.CopyInformation(reference_ct)
+
+	return lv_mask, myo_mask, heart_mask
 
 # --- one-hot view (usually do this in the dataloader) ---
 def masks_to_one_hot(lv_mask: sitk.Image, myo_mask: sitk.Image, as_numpy=True):
