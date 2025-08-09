@@ -73,6 +73,8 @@ class NiftiVolume:
 		except Exception as e:
 			log(f"Failed to save NIfTI to {path}: {e}")
 		return img
+
+
 	def __str__(self):
 		return f"NiftiVolume(path={self.path}, shape={self.shape}, spacing={self.spacing}, orientation={self.orientation})"
 	def __repr__(self):

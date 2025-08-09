@@ -5,17 +5,6 @@ from core.Case import *
 from core.Log import log
 
 def bounding_box(segments: dict):
-	"""
-	Compute the bounding box that crops to foreground voxels
-	across all segment masks and trims any empty slices.
-
-	Parameters:
-	- case object
-	- segments: dict of segment volumes (must have .data attribute).
-
-	Returns:
-	- tuple of slice objects (x_slice, y_slice, z_slice), or None
-	"""
 	# Filter valid segment masks
 	masks = [seg.data > 0 for seg in segments.values() if seg is not None]
 	if not masks:
@@ -63,7 +52,6 @@ def crop(case: Case):
 			case.croppedCT = NiftiVolume.init_from_array(
 				case.fullCT.data[bbox],
 				case.fullCT.affine,
-				case.fullCT.header,
 				path)
 			log(f"CoppedCT saved.")
 
@@ -151,7 +139,7 @@ def clip_HU(vol: NiftiVolume, hu_clip=(-1000.0, 2500.0)):
 	return img
 
 
-def resample_spacing(vol: NiftiVolume):
+def space_resample(vol: NiftiVolume):
 	# keeps same shape + physical extent & field of view
 	# spacing becomes [1.0, 1.0, 1.0]
 	target_spacing=np.array([1.0]*3, dtype=np.float32)
@@ -175,16 +163,21 @@ def resample_spacing(vol: NiftiVolume):
 	print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
 	return img
 
-def resample_shape(vol: NiftiVolume):
-	interp = sitk.sitkLinear
-	img = resample_spacing(vol)
+def size_resample(vol: NiftiVolume, path: str):
+	interp = sitk.sitkLinear # linear for intensities
 	target_shape=(64,64,64)
+
+	# 1) resample to spacing first - returns sitk.Image
+	img = space_resample(vol)
+
+	# 2) force final size with a second resample
 	cur_size = np.array(img.GetSize(), dtype=np.int64)
 	cur_spacing = np.array(img.GetSpacing(), dtype=np.float32)
 
 	cur_phys = cur_size * cur_spacing
 	out_size = np.array(target_shape, dtype=int)
 	out_spacing = (cur_phys / out_size).astype(np.float32)
+	print(f"cur_spacing: {cur_spacing}, out_spacing: {out_spacing}")
 	rs2 = sitk.ResampleImageFilter()
 	rs2.SetSize(out_size.tolist())
 	rs2.SetOutputSpacing(out_spacing.tolist())
@@ -192,15 +185,56 @@ def resample_shape(vol: NiftiVolume):
 	rs2.SetOutputOrigin(img.GetOrigin())
 	rs2.SetInterpolator(interp)
 	img = rs2.Execute(img)
-	affine = np.eye(4)
-	affine[:3, :3] = np.array(img.GetDirection()).reshape(3,3) * np.array(img.GetSpacing())[:, None]
-	affine[:3, 3] = img.GetOrigin()
+
+	# 3) convert sitk.Image -> NumPy (XYZ order)
+	arr_xyz = sitk.GetArrayFromImage(img).transpose(2,1,0).astype(np.float32)
+
+	# 4) build affine: R @ diag(spacing)
+	R = np.array(img.GetDirection(), dtype=np.float64).reshape(3,3)
+	sp = np.array(img.GetSpacing(),  dtype=np.float64)
+	A = np.eye(4, dtype=np.float64)
+	A[:3,:3] = R @ np.diag(sp)                       # <- column scaling
+	A[:3, 3] = np.array(img.GetOrigin(), dtype=np.float64)
+	#return NiftiVolume.init_from_array(arr_xyz, A, path)
+	return None
+
 	#print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
-	return NiftiVolume.init_from_array(img, affine, path)
 
+def size_pad_crop(vol: NiftiVolume, path: str):
+	# symmetric pad or center-crop without further interpolation
+	# (spacing unchanged; FOV changes)
+	from math import floor
+	target_shape=(64,64,64)
+	def pad_to(img, target_shape):
+		size = np.array(img.GetSize())
+		pad_lower = np.maximum((np.array(target_shape) - size)//2, 0)
+		pad_upper = np.maximum(np.array(target_shape) - size - pad_lower, 0)
+		print("Padding lower:", pad_lower, "upper:", pad_upper)
+		return sitk.ConstantPad(img,
+					padList=pad_lower.tolist(),
+					padUpperBound=pad_upper.tolist(),
+					constant=0)
 
+	def crop_to(img, target_shape):
+		size = np.array(img.GetSize())
+		start = np.maximum((size - np.array(target_shape))//2, 0).astype(int)
+		extractor = sitk.RegionOfInterestImageFilter()
+		extractor.SetIndex(start.tolist())
+		extractor.SetSize(np.minimum(size, np.array(target_shape)).astype(int).tolist())
+		print("")
+		out = extractor.Execute(img)
+		if tuple(out.GetSize()) != tuple(target_shape):
+			out = pad_to(out, target_shape)  # pad if we cropped too tight on an axis
+		return out
 
+	# decide per axis
+	size_now = np.array(img.GetSize())
+	print(f"Current size: {size_now}, target shape: {target_shape}")
+	if np.any(size_now < np.array(target_shape)):
+		img = pad_to(img, target_shape)
 
+	if tuple(img.GetSize()) != tuple(target_shape):
+		img = crop_to(img, target_shape)
 '''
 
 def segmenting_volumes1(case: Case, skipSegmentation=False):

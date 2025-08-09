@@ -26,27 +26,27 @@ class Case:
 		self._croppedCT = None
 		self._resampledCT = None
 		self._normalisedCT = None
-		self._cropped_mask = None
-		self._resampled_mask = None
-		self._label_mask	= None
+		self._croppedMask = None
+		self._resampledMask = None
+		self._labelMask	= None
 		# Segments
-		self._LVtotalseg  = None
-		self._LAtotalseg  = None
-		self._RVtotalseg  = None
-		self._RAtotalseg  = None
-		self._MYOtotalseg = None
+		self._totalsegLV  = None
+		self._totalsegLA  = None
+		self._totalsegRV  = None
+		self._totalsegRA  = None
+		self._totalsegMYO = None
 
-		self._LVcropped = None
-		self._LAcropped = None
-		self._RVcropped = None
-		self._RAcropped = None
-		self._MYOcropped = None
+		self._croppedLV = None
+		self._croppedLA = None
+		self._croppedRV = None
+		self._croppedRA = None
+		self._croppedMYO = None
 
-		self._LVresampled = None
-		self._LAresampled = None
-		self._RVresampled = None
-		self._RAresampled = None
-		self._MYOresampled = None
+		self._resampledLV = None
+		self._resampledLA = None
+		self._resampledRV = None
+		self._resampledRA = None
+		self._resampledMYO = None
 		self.slices = None
 		os.makedirs(os.path.join(self.casePath, "cropped"), exist_ok=True)
 		os.makedirs(os.path.join(self.casePath, "resampled"), exist_ok=True)
@@ -78,114 +78,114 @@ class Case:
 	# ==== Total Segment Properties ====
 
 	@property
-	def LVtotalseg(self):
-		if self._LVtotalseg is not None:
-			return self._LVtotalseg
+	def totalsegLV(self):
+		if self._totalsegLV is not None:
+			return self._totalsegLV
 		path = os.path.join(self.casePath, "segments", "heart_ventricle_left.nii.gz")
 		if not self.segment_exist("segments", "heart_ventricle_left"):
 			log("LV total segment not found.")
 
 			return None
-		self._LVtotalseg = NiftiVolume(path)
-		return self._LVtotalseg
+		self._totalsegLV = NiftiVolume(path)
+		return self._totalsegLV
 
-	@LVtotalseg.setter
-	def set_LVtotalseg(self, value):
+	@totalsegLV.setter
+	def set_totalsegLV(self, value):
 		if isinstance(value, NiftiVolume):
-			self._LVtotalseg = value
+			self._totalsegLV = value
 			 #value.save()
 		else:
-			raise ValueError("LVtotalseg must be a NiftiVolume object.")
+			raise ValueError("totalsegLV must be a NiftiVolume object.")
 
 	@property
-	def LAtotalseg(self):
-		if self._LAtotalseg is not None:
-			return self._LAtotalseg
+	def totalsegLA(self):
+		if self._totalsegLA is not None:
+			return self._totalsegLA
 		path = os.path.join(self.casePath, "segments", "heart_atrium_left.nii.gz")
 		if not self.segment_exist("segments", "heart_atrium_left"):
 			log("LA total segment not found.")
 
 			return None
-		self._LAtotalseg = NiftiVolume(path)
-		return self._LAtotalseg
+		self._totalsegLA = NiftiVolume(path)
+		return self._totalsegLA
 
-	@LAtotalseg.setter
-	def LAtotalseg(self, value):
+	@totalsegLA.setter
+	def totalsegLA(self, value):
 		if isinstance(value, NiftiVolume):
-			self._LAtotalseg = value
+			self._totalsegLA = value
 			 #value.save()
 		else:
-			raise ValueError("LAtotalseg must be a NiftiVolume object.")
+			raise ValueError("totalsegLA must be a NiftiVolume object.")
 
 	@property
-	def RVtotalseg(self):
-		if self._RVtotalseg is not None:
-			return self._RVtotalseg
+	def totalsegRV(self):
+		if self._totalsegRV is not None:
+			return self._totalsegRV
 		path = os.path.join(self.casePath, "segments", "heart_ventricle_right.nii.gz")
 		if not self.segment_exist("segments", "heart_ventricle_right"):
 			log("RV total segment not found.")
 
 			return None
-		self._RVtotalseg = NiftiVolume(path)
-		return self._RVtotalseg
+		self._totalsegRV = NiftiVolume(path)
+		return self._totalsegRV
 
-	@RVtotalseg.setter
-	def set_RVtotalseg(self, value):
+	@totalsegRV.setter
+	def set_totalsegRV(self, value):
 		if isinstance(value, NiftiVolume):
-			self._RVtotalseg = value
+			self._totalsegRV = value
 			 #value.save()
 		else:
-			raise ValueError("RVtotalseg must be a NiftiVolume object.")
+			raise ValueError("totalsegRV must be a NiftiVolume object.")
 
 	@property
-	def RAtotalseg(self):
-		if self._RAtotalseg is not None:
-			return self._RAtotalseg
+	def totalsegRA(self):
+		if self._totalsegRA is not None:
+			return self._totalsegRA
 		path = os.path.join(self.casePath, "segments", "heart_atrium_right.nii.gz")
 		if not self.segment_exist("segments", "heart_atrium_right"):
 			log("RA total segment not found.")
 
 			return None
-		self._RAtotalseg = NiftiVolume(path)
-		return self._RAtotalseg
+		self._totalsegRA = NiftiVolume(path)
+		return self._totalsegRA
 
-	@RAtotalseg.setter
-	def RAtotalseg(self, value):
+	@totalsegRA.setter
+	def totalsegRA(self, value):
 		if isinstance(value, NiftiVolume):
-			self._RAtotalseg = value
+			self._totalsegRA = value
 			 #value.save()
 		else:
-			raise ValueError("RAtotalseg must be a NiftiVolume object.")
+			raise ValueError("totalsegRA must be a NiftiVolume object.")
 
 	@property
-	def MYOtotalseg(self):
-		if self._MYOtotalseg is not None:
-			return self._MYOtotalseg
+	def totalsegMYO(self):
+		if self._totalsegMYO is not None:
+			return self._totalsegMYO
 		path = os.path.join(self.casePath, "segments", "heart_myocardium.nii.gz")
 		if not self.segment_exist("segments", "heart_myocardium"):
 			log("MYO total segment not found.")
 
 			return None
-		self._MYOtotalseg = NiftiVolume(path)
-		return self._MYOtotalseg
+		self._totalsegMYO = NiftiVolume(path)
+		return self._totalsegMYO
 
-	@MYOtotalseg.setter
-	def MYOtotalseg(self, value):
+	@totalsegMYO.setter
+	def totalsegMYO(self, value):
 		if isinstance(value, NiftiVolume):
-			self._MYOtotalseg = value
+			self._totalsegMYO = value
 			 #value.save()
 		else:
-			raise ValueError("MYOtotalseg must be a NiftiVolume object.")
+			raise ValueError("totalsegMYO must be a NiftiVolume object.")
 
 
 	@property
 	def totalsegs(self):
 		return {k: v for k, v in {
-				"LV": self.LVtotalseg,
-				"LA": self.LAtotalseg,
-				"RV": self.RVtotalseg,
-				"RA": self.RAtotalseg,
-				"MYO": self.MYOtotalseg
+				"LV": self.totalsegLV,
+				"LA": self.totalsegLA,
+				"RV": self.totalsegRV,
+				"RA": self.totalsegRA,
+				"MYO": self.totalsegMYO
 			}.items() if v is not None}
 
 	@totalsegs.setter
@@ -198,19 +198,19 @@ class Case:
 				raise ValueError(f"Segment '{key}' must be a NiftiVolume object.")
 
 			if key == "LV":
-				self.LVtotalseg = volume
+				self.totalsegLV = volume
 				 #volume.save()
 			elif key == "LA":
-				self.LAtotalseg = volume
+				self.totalsegLA = volume
 				 #volume.save()
 			elif key == "RV":
-				self.RVtotalseg = volume
+				self.totalsegRV = volume
 				 #volume.save()
 			elif key == "RA":
-				self.RAtotalseg = volume
+				self.totalsegRA = volume
 				 #volume.save()
 			elif key == "MYO":
-				self.MYOtotalseg = volume
+				self.totalsegMYO = volume
 				 #volume.save()
 			else:
 				raise KeyError(f"Unknown segment key: {key}")
@@ -241,141 +241,141 @@ class Case:
 	# ==== Cropped Segments ====
 
 	@property
-	def LVcropped(self):
-		if self._LVcropped is not None:
-			return self._LVcropped
+	def croppedLV(self):
+		if self._croppedLV is not None:
+			return self._croppedLV
 		path = os.path.join(self.casePath, "cropped", "LV.nii.gz")
 		if not self.segment_exist("cropped", "LV"):
 			log("LV cropped segment not found.")
 
 			return None
-		self._LVcropped = NiftiVolume(path)
-		return self._LVcropped
+		self._croppedLV = NiftiVolume(path)
+		return self._croppedLV
 
-	@LVcropped.setter
-	def LVcropped(self, value):
+	@croppedLV.setter
+	def croppedLV(self, value):
 		if isinstance(value, NiftiVolume):
-			self._LVcropped = value
+			self._croppedLV = value
 			 #value.save()
 		else:
-			raise ValueError("LVcropped must be a NiftiVolume object.")
+			raise ValueError("croppedLV must be a NiftiVolume object.")
 
 
 	@property
-	def LAcropped(self):
-		if self._LAcropped is not None:
-			return self._LAcropped
+	def croppedLA(self):
+		if self._croppedLA is not None:
+			return self._croppedLA
 		path = os.path.join(self.casePath, "cropped", "LA.nii.gz")
 		if not self.segment_exist("cropped", "LA"):
 			log("LA cropped segment not found.")
 
 			return None
-		self._LAcropped = NiftiVolume(path)
-		return self._LAcropped
+		self._croppedLA = NiftiVolume(path)
+		return self._croppedLA
 
-	@LAcropped.setter
-	def LAcropped(self, value):
+	@croppedLA.setter
+	def croppedLA(self, value):
 		if isinstance(value, NiftiVolume):
-			self._LAcropped = value
+			self._croppedLA = value
 			 #value.save()
 		else:
-			raise ValueError("LAcropped must be a NiftiVolume object.")
+			raise ValueError("croppedLA must be a NiftiVolume object.")
 
 
 	@property
-	def RVcropped(self):
-		if self._RVcropped is not None:
-			return self._RVcropped
+	def croppedRV(self):
+		if self._croppedRV is not None:
+			return self._croppedRV
 		path = os.path.join(self.casePath, "cropped", "RV.nii.gz")
 		if not self.segment_exist("cropped", "RV"):
 			log("RV cropped segment not found.")
 
 			return None
-		self._RVcropped = NiftiVolume(path)
-		return self._RVcropped
+		self._croppedRV = NiftiVolume(path)
+		return self._croppedRV
 
-	@RVcropped.setter
-	def RVcropped(self, value):
+	@croppedRV.setter
+	def croppedRV(self, value):
 		if isinstance(value, NiftiVolume):
-			self._RVcropped = value
+			self._croppedRV = value
 			 #value.save()
 		else:
-			raise ValueError("RVcropped must be a NiftiVolume object.")
+			raise ValueError("croppedRV must be a NiftiVolume object.")
 
 
 	@property
-	def RAcropped(self):
-		if self._RAcropped is not None:
-			return self._RAcropped
+	def croppedRA(self):
+		if self._croppedRA is not None:
+			return self._croppedRA
 		path = os.path.join(self.casePath, "cropped", "RA.nii.gz")
 		if not self.segment_exist("cropped", "RA"):
 			log("RA cropped segment not found.")
 
 			return None
-		self._RAcropped = NiftiVolume(path)
-		return self._RAcropped
+		self._croppedRA = NiftiVolume(path)
+		return self._croppedRA
 
-	@RAcropped.setter
-	def RAcropped(self, value):
+	@croppedRA.setter
+	def croppedRA(self, value):
 		if isinstance(value, NiftiVolume):
-			self._RAcropped = value
+			self._croppedRA = value
 			 #value.save()
 		else:
-			raise ValueError("RAcropped must be a NiftiVolume object.")
+			raise ValueError("croppedRA must be a NiftiVolume object.")
 
 
 	@property
-	def MYOcropped(self):
-		if self._MYOcropped is not None:
-			return self._MYOcropped
+	def croppedMYO(self):
+		if self._croppedMYO is not None:
+			return self._croppedMYO
 		path = os.path.join(self.casePath, "cropped", "MYO.nii.gz")
 		if not self.segment_exist("cropped", "MYO"):
 			log("MYO cropped segment not found.")
 
 			return None
-		self._MYOcropped = NiftiVolume(path)
-		return self._MYOcropped
+		self._croppedMYO = NiftiVolume(path)
+		return self._croppedMYO
 
-	@MYOcropped.setter
-	def MYOcropped(self, value):
+	@croppedMYO.setter
+	def croppedMYO(self, value):
 		if isinstance(value, NiftiVolume):
-			self._MYOcropped = value
+			self._croppedMYO = value
 			 #value.save()
 		else:
-			raise ValueError("MYOcropped must be a NiftiVolume object.")
+			raise ValueError("croppedMYO must be a NiftiVolume object.")
 
 
 	# ==== Cropped Heart Mask ====
 
 	@property
-	def cropped_mask(self):
-		if self._cropped_mask is not None:
-			return self._cropped_mask
+	def croppedMask(self):
+		if self._croppedMask is not None:
+			return self._croppedMask
 		path = os.path.join(self.casePath, "cropped", "heart_mask.nii.gz")
 		if not self.segment_exist("cropped", "heart_mask"):
 			log("Cropped heart mask not found.")
 
 			return None
-		self._cropped_mask = NiftiVolume(path)
-		return self._cropped_mask
+		self._croppedMask = NiftiVolume(path)
+		return self._croppedMask
 
-	@cropped_mask.setter
-	def cropped_mask(self, value):
+	@croppedMask.setter
+	def croppedMask(self, value):
 		if isinstance(value, NiftiVolume):
-			self._cropped_mask = value
+			self._croppedMask = value
 			 #value.save()
 		else:
-			raise ValueError("cropped_mask must be a NiftiVolume object.")
+			raise ValueError("croppedMask must be a NiftiVolume object.")
 
 
 	@property
 	def croppedsegs(self):
 		return {k: v for k, v in {
-			"LV": self.LVcropped,
-			"LA": self.LAcropped,
-			"RV": self.RVcropped,
-			"RA": self.RAcropped,
-			"MYO": self.MYOcropped
+			"LV": self.croppedLV,
+			"LA": self.croppedLA,
+			"RV": self.croppedRV,
+			"RA": self.croppedRA,
+			"MYO": self.croppedMYO
 		}.items() if v is not None}
 
 	@croppedsegs.setter
@@ -388,19 +388,19 @@ class Case:
 				raise ValueError(f"Segment '{key}' must be a NiftiVolume object.")
 
 			if key == "LV":
-				self.LVcropped = volume
+				self.croppedLV = volume
 				 #volume.save()
 			elif key == "LA":
-				self.LAcropped = volume
+				self.croppedLA = volume
 				 #volume.save()
 			elif key == "RV":
-				self.RVcropped = volume
+				self.croppedRV = volume
 				 #volume.save()
 			elif key == "RA":
-				self.RAcropped = volume
+				self.croppedRA = volume
 				 #volume.save()
 			elif key == "MYO":
-				self.MYOcropped = volume
+				self.croppedMYO = volume
 				 #volume.save()
 			else:
 				raise KeyError(f"Unknown segment key: {key}")
@@ -431,139 +431,139 @@ class Case:
 	# ==== Resampled Segments ====
 
 	@property
-	def LVresampled(self):
-		if self._LVresampled is not None:
-			return self._LVresampled
+	def resampledLV(self):
+		if self._resampledLV is not None:
+			return self._resampledLV
 		path = os.path.join(self.casePath, "resampled", "LV.nii.gz")
 		if not self.segment_exist("resampled", "LV"):
 			log("LV resampled segment not found.")
 
 			return None
-		self._LVresampled = NiftiVolume(path)
-		return self._LVresampled
+		self._resampledLV = NiftiVolume(path)
+		return self._resampledLV
 
-	@LVresampled.setter
-	def LVresampled(self, value):
+	@resampledLV.setter
+	def resampledLV(self, value):
 		if isinstance(value, NiftiVolume):
-			self._LVresampled = value
+			self._resampledLV = value
 			 #value.save()
 		else:
-			raise ValueError("LVresampled must be a NiftiVolume object.")
+			raise ValueError("resampledLV must be a NiftiVolume object.")
 
 
 	@property
-	def LAresampled(self):
-		if self._LAresampled is not None:
-			return self._LAresampled
+	def resampledLA(self):
+		if self._resampledLA is not None:
+			return self._resampledLA
 		path = os.path.join(self.casePath, "resampled", "LA.nii.gz")
 		if not self.segment_exist("resampled", "LA"):
 			log("LA resampled segment not found.")
 			return None
-		self._LAresampled = NiftiVolume(path)
-		return self._LAresampled
+		self._resampledLA = NiftiVolume(path)
+		return self._resampledLA
 
-	@LAresampled.setter
-	def LAresampled(self, value):
+	@resampledLA.setter
+	def resampledLA(self, value):
 		if isinstance(value, NiftiVolume):
-			self._LAresampled = value
+			self._resampledLA = value
 			 #value.save()
 		else:
 			raise ValueError("LA resampled must be a NiftiVolume object.")
 
 
 	@property
-	def RVresampled(self):
-		if self._RVresampled is not None:
-			return self._RVresampled
+	def resampledRV(self):
+		if self._resampledRV is not None:
+			return self._resampledRV
 		path = os.path.join(self.casePath, "resampled", "RV.nii.gz")
 		if not self.segment_exist("resampled", "RV"):
 			log("RV resampled segment not found.")
 
 			return None
-		self._RVresampled = NiftiVolume(path)
-		return self._RVresampled
+		self._resampledRV = NiftiVolume(path)
+		return self._resampledRV
 
-	@RVresampled.setter
-	def RVresampled(self, value):
+	@resampledRV.setter
+	def resampledRV(self, value):
 		if isinstance(value, NiftiVolume):
-			self._RVresampled = value
+			self._resampledRV = value
 			 #value.save()
 		else:
-			raise ValueError("RVresampled must be a NiftiVolume object.")
+			raise ValueError("resampledRV must be a NiftiVolume object.")
 
 
 	@property
-	def RAresampled(self):
-		if self._RAresampled is not None:
-			return self._RAresampled
+	def resampledRA(self):
+		if self._resampledRA is not None:
+			return self._resampledRA
 		path = os.path.join(self.casePath, "resampled", "RA.nii.gz")
 		if not self.segment_exist("resampled", "RA"):
 			log("RA resampled segment not found.")
 
 			return None
-		self._RAresampled = NiftiVolume(path)
-		return self._RAresampled
+		self._resampledRA = NiftiVolume(path)
+		return self._resampledRA
 
-	@RAresampled.setter
-	def RAresampled(self, value):
+	@resampledRA.setter
+	def resampledRA(self, value):
 		if isinstance(value, NiftiVolume):
-			self._RAresampled = value
+			self._resampledRA = value
 			 #value.save()
 		else:
-			raise ValueError("RAresampled must be a NiftiVolume object.")
+			raise ValueError("resampledRA must be a NiftiVolume object.")
 
 
 	@property
-	def MYOresampled(self):
-		if self._MYOresampled is not None:
-			return self._MYOresampled
+	def resampledMYO(self):
+		if self._resampledMYO is not None:
+			return self._resampledMYO
 		path = os.path.join(self.casePath, "resampled", "MYO.nii.gz")
 		if not self.segment_exist("resampled", "MYO"):
 			log("MYO resampled segment not found.")
 
 			return None
-		self._MYOresampled = NiftiVolume(path)
-		return self._MYOresampled
+		self._resampledMYO = NiftiVolume(path)
+		return self._resampledMYO
 
-	@MYOresampled.setter
-	def MYOresampled(self, value):
+	@resampledMYO.setter
+	def resampledMYO(self, value):
 		if isinstance(value, NiftiVolume):
-			self._MYOresampled = value
+			self._resampledMYO = value
 			 #value.save()
 		else:
-			raise ValueError("MYOresampled must be a NiftiVolume object.")
+			raise ValueError("resampledMYO must be a NiftiVolume object.")
 
 
 	# ==== Resampled Heart Mask ====
 
 	@property
-	def resampled_mask(self):
-		if self._resampled_mask is not None:
-			return self._resampled_mask
+	def resampledMask(self):
+		if self._resampledMask is not None:
+			return self._resampledMask
 		path = os.path.join(self.casePath, "resampled", "heart_mask.nii.gz")
 		if not self.segment_exist("resampled", "heart_mask"):
 			log("Resampled heart mask not found.")
 
 			return None
-		self._resampled_mask = NiftiVolume(path)
-		return self._resampled_mask
+		self._resampledMask = NiftiVolume(path)
+		return self._resampledMask
 
-	@resampled_mask.setter
-	def resampled_mask(self, value):
+	@resampledMask.setter
+	def resampledMask(self, value):
 		if isinstance(value, NiftiVolume):
-			self._resampled_mask = value
+			self._resampledMask = value
 			 #value.save()
 		else:
-			raise ValueError("resampled_mask must be a NiftiVolume object.")
+			raise ValueError("resampledMask must be a NiftiVolume object.")
 
 	@property
 	def resampledsegs(self):
 		return {k: v for k, v in {
-			"LV": self.LVresampled,
-			"LA": self.LAresampled,
-			"RV": self.RVresampled,
-			"RA": self.RAresampled,
-			"MYO": self.MYOresampled
+			"LV": self.resampledLV,
+			"LA": self.resampledLA,
+			"RV": self.resampledRV,
+			"RA": self.resampledRA,
+			"MYO": self.resampledMYO
 		}.items() if v is not None}
 
 	@resampledsegs.setter
@@ -575,40 +575,40 @@ class Case:
 			if not isinstance(volume, NiftiVolume):
 				raise ValueError(f"Segment '{key}' must be a NiftiVolume object.")
 			if key == "LV":
-				self.LVresampled = volume
+				self.resampledLV = volume
 				 #volume.save()
 			elif key == "LA":
-				self.LAresampled = volume
+				self.resampledLA = volume
 				 #volume.save()
 			elif key == "RV":
-				self.RVresampled = volume
+				self.resampledRV = volume
 				 #volume.save()
 			elif key == "RA":
-				self.RAresampled = volume
+				self.resampledRA = volume
 				 #volume.save()
 			elif key == "MYO":
-				self.MYOresampled = volume
+				self.resampledMYO = volume
 				 #volume.save()
 			else:
 				raise KeyError(f"Unknown segment key: {key}")
 
 
 	@property
-	def label_mask(self):
-		if self._label_mask is not None:
-			return self._label_mask
-		path = os.path.join(self.casePath, "label_mask.nii.gz")
+	def labelMask(self):
+		if self._labelMask is not None:
+			return self._labelMask
+		path = os.path.join(self.casePath, "labelMask.nii.gz")
 		if not os.path.exists(path):
-			log("label_mask not found.")
+			log("labelMask not found.")
 			return None
-		self._label_mask = NiftiVolume(path)
-		return self._label_mask
-	@label_mask.setter
-	def label_mask(self, value):
+		self._labelMask = NiftiVolume(path)
+		return self._labelMask
+	@labelMask.setter
+	def labelMask(self, value):
 		if isinstance(value, NiftiVolume):
-			self._label_mask = value
+			self._labelMask = value
 		else:
-			raise ValueError(f"label_mask must be a NiftiVolume object. Got {type(value)}")
+			raise ValueError(f"labelMask must be a NiftiVolume object. Got {type(value)}")
 
 
 
@@ -654,7 +654,7 @@ class Case:
 			log("No segments found to combine.")
 			return None
 
-	def create_label_mask(self, segments, path):
+	def create_labelMask(self, segments, path):
 		if segments and self.croppedCT is not None:
 			mask = np.zeros_like(self.croppedCT.data, dtype=np.uint8)
 			for name, val in segments.items():
@@ -688,7 +688,7 @@ class Case:
 		onehot_vol = NiftiVolume.init_from_array(onehot, segments["LV"].affine, path)
 		return onehot_vol
 
-	def resample_volume(self, vol, spacing, shape, filename, linear=True):
+	def oldresample_volume(self, vol, spacing, shape, filename, linear=True):
 		print(f"vol.data.shape: {vol.data.shape} - ")
 
 		img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
