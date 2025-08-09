@@ -3,7 +3,7 @@ import os
 from core.Log import log
 from nibabel.orientations import aff2axcodes
 from core.globals import *
-
+import numpy as np
 
 class NiftiVolume:
 	def __init__(self, path):
@@ -39,6 +39,7 @@ class NiftiVolume:
 
 	@property
 	def spacing(self):
+		#return tuple(np.sqrt((self.affine[:3, :3]**2).sum(axis=0)))
 		return self.obj.header.get_zooms()
 
 	@property
@@ -60,15 +61,10 @@ class NiftiVolume:
 		#log(f"Saved: {save_path}", False)
 
 	@classmethod
-	def init_from_array(cls, array, affine, header, path):
+	def init_from_array(cls, array, affine, path):
 		img = cls.__new__(cls)
-		try:
-			header.set_data_shape(array.shape)
-		except Exception as e:
-			log(f"Failed to set header shape: {e}")
-			header = nib.Nifti1Header()  # fallback
 
-		img.obj = nib.Nifti1Image(array, affine, header)
+		img.obj = nib.Nifti1Image(array, affine)
 		img.path = path
 
 		try:

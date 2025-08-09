@@ -30,10 +30,10 @@ class Case:
 		self._resampled_mask = None
 		self._label_mask	= None
 		# Segments
-		self._LVtotalseg = None
-		self._LAtotalseg = None
-		self._RVtotalseg = None
-		self._RAtotalseg = None
+		self._LVtotalseg  = None
+		self._LAtotalseg  = None
+		self._RVtotalseg  = None
+		self._RAtotalseg  = None
 		self._MYOtotalseg = None
 
 		self._LVcropped = None
@@ -648,9 +648,8 @@ class Case:
 			seg_arrays = [seg.data.astype(bool) for seg in segments.values()]
 			array = np.any(seg_arrays, axis=0).astype(np.uint8)
 			affine = segments["LV"].affine
-			header = segments["LV"].header
 			# Use metadata from one of the cropped segmentations to create new NIfTI
-			return NiftiVolume.init_from_array(array, affine, header, path)
+			return NiftiVolume.init_from_array(array, affine, path)
 		else:
 			log("No segments found to combine.")
 			return None
@@ -663,7 +662,7 @@ class Case:
 				print(f"ct shape: {self.croppedCT.data.shape} - segment {name} shape: {val.shape}")
 				label = {"LV": 1, "LA": 2, "RV": 3, "RA": 4, "MYO": 5}.get(name, 0)
 				mask[val.data > 0] = label
-			NiftiVolume.init_from_array(mask, self.croppedCT.affine, self.croppedCT.header, path)
+			NiftiVolume.init_from_array(mask, self.croppedCT.affine, path)
 		else:
 			log("No segments found to create label mask.")
 
@@ -686,7 +685,7 @@ class Case:
 			onehot[..., i] = (seg.data > 0).astype(np.uint8)
 
 		# Save the one-hot encoded mask
-		onehot_vol = NiftiVolume.init_from_array(onehot, segments["LV"].affine, segments["LV"].header, path)
+		onehot_vol = NiftiVolume.init_from_array(onehot, segments["LV"].affine, path)
 		return onehot_vol
 
 	def resample_volume(self, vol, spacing, shape, filename, linear=True):
@@ -713,7 +712,7 @@ class Case:
 		affine[:3, 3] = new_img.GetOrigin()
 		#print(f"resampled orientation: {}")
 		#path = os.path.join(self.casePath, filename)
-		#return NiftiVolume.init_from_array(arr, affine, vol.header, path)
+		#return NiftiVolume.init_from_array(arr, affine, path)
 
 
 	def crop_volume(self, vol, bbox, filename):
@@ -721,7 +720,6 @@ class Case:
 		path = os.path.join(self.casePath, filename)
 		cropped_vol = NiftiVolume.init_from_array(data,
 											vol.affine,
-											vol.header,
 											path)
 		#cropped_vol.save()
 		log(f"Cropped {path}")

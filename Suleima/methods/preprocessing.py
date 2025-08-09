@@ -78,7 +78,6 @@ def crop(case: Case):
 				cropped = NiftiVolume.init_from_array(
 					vol.data[bbox],
 					vol.affine,
-					vol.header,
 					os.path.join(case.casePath, "cropped", f"{key}.nii.gz")
 				)
 				setattr(case, f"{key}cropped", cropped)
@@ -138,8 +137,6 @@ def resample_old(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 		log(f"Error resampling: {e}", False)
 
 
-
-
 def sitk_img(vol: NiftiVolume):
 	img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
 	img.SetDirection(tuple(vol.affine[:3, :3].flatten()))
@@ -195,9 +192,11 @@ def resample_shape(vol: NiftiVolume):
 	rs2.SetOutputOrigin(img.GetOrigin())
 	rs2.SetInterpolator(interp)
 	img = rs2.Execute(img)
-	print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
-
-
+	affine = np.eye(4)
+	affine[:3, :3] = np.array(img.GetDirection()).reshape(3,3) * np.array(img.GetSpacing())[:, None]
+	affine[:3, 3] = img.GetOrigin()
+	#print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
+	return NiftiVolume.init_from_array(img, affine, path)
 
 
 
