@@ -7,7 +7,7 @@ from pathlib import Path
 class Log:
 	def __init__(self, caseID):
 		self.caseID = caseID
-		self.logPath = os.path.join("data", "cases", caseID, "info.txt")
+		self.logPath = os.path.join("data", "cases", caseID, "pipeline.txt")
 		os.makedirs(os.path.dirname(self.logPath), exist_ok=True)
 		self.logs = []
 
