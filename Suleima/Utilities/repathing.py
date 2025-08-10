@@ -263,34 +263,55 @@ def move_Outputs_slices(case, patient):
 			shutil.move(src, dst)
 			print(f"✅ Moved PNG slice: {src} → {dst}")
 
-
+'''
+"resCT.nii.gz",
+"resMask.nii.gz",
+"resCT_64.nii.gz",
+"resMask_64.nii.gz",
+"resCT_96.nii.gz",
+"resMask_96.nii.gz",
+"resCT_128.nii.gz",
+"resMask_128.nii.gz",
+'''
 
 def delete_files(casePath):
-	p = casePath / "resampledCT.nii.gz"
-	if p.exists():
-		os.remove(p)
-	# delete all files in casePath/resampled
-	for file in os.listdir(casePath / "resampled"):
-		p = casePath / "resampled" / file
+	dirs = ["resCT.nii.gz",
+			"resMask.nii.gz",
+			"resCT_64.nii.gz",
+			"resMask_64.nii.gz",
+			"resCT_96.nii.gz",
+			"resMask_96.nii.gz",
+			"resCT_128.nii.gz",
+			"resMask_128.nii.gz",
+			"pipeline.txt",
+			"info.txt",
+			#"ctSlices",
+		 	#"maskSlices",
+		 	#"pngSlices",
+		 	#"centered64",
+			#"cropped",
+			#"resampled" ,
+		 	#"resampledCT.nii.gz",
+			#"croppedCT.nii.gz",
+			]
+
+
+	for d in dirs:
+		p = casePath / d
+		#if p.is_dir():
+		#	shutil.rmtree(p)
+		#	print(f"Deleted directory: {p}")
 		if p.is_file():
 			os.remove(p)
-			#print(f"Deleted: {p}")
-
-	for file in os.listdir(casePath / "ctSlices"):
-		p = casePath / "ctSlices" / file
-		if p.is_file():
-			os.remove(p)
-			#print(f"Deleted: {p}")
-
-	for file in os.listdir(casePath / "maskSlices"):
-		p = casePath / "maskSlices" / file
-		if p.is_file():
-			os.remove(p)
-			#print(f"Deleted: {p}")
-	print(f"deleted from {casePath}: resampledCT, resampled files, ctSlices and maskSlices.")
+		elif not p.exists():
+			continue
+		else:
+			print(f"❌ Could not delete {p}, it does not exist or is not a file/directory.")
+			break
+	print(f"deleted from {casePath}: {dirs}")
 
 
-def loop_cases():
+def loop_deletes():
 	#loop=0
 	from pathlib import Path
 	root_dir = Path("data/cases")
@@ -299,6 +320,7 @@ def loop_cases():
 			continue
 		casePath = root_dir / caseID
 		delete_files(casePath)
+		#break
 
 
 '''
