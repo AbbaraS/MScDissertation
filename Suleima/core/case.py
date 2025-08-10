@@ -62,7 +62,7 @@ class Case:
 	def fullCT(self):
 		if self._fullCT is not None:
 			return self._fullCT
-		path = os.path.join(self.casePath, "fullCT.nii.gz")
+		path = os.path.join(self.casePath, "centered64/ct_centered.nii.gz")
 		if not self.CT_exists("full"):
 			log("Full CT not found.")
 			return None

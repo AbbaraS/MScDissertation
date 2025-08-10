@@ -6,7 +6,7 @@ from matplotlib.colors import ListedColormap
 from ipywidgets import interact
 
 
-def scrollable_ct_mask(ct, mask):
+def scrollable_ct_mask(ct_img, mask_img):
 	"""
 	Displays a scrollable CT image with an overlay of the heart chamber mask.
 
@@ -15,12 +15,7 @@ def scrollable_ct_mask(ct, mask):
 	- mask_path (str): Path to the combined cropped mask NIfTI file.
 	"""
 	# Load the CT and mask images
-	ct_img = ct.data
-	mask_img = mask.data
 
-	if ct is None or mask is None:
-		print("Error: CT or mask not loaded. Run `crop_pipeline()` first.")
-		return
 
 	# === Define colormap and legend ===
 	colors = ['black', 'red', 'blue', 'green', 'yellow', 'magenta']  # label 0 to 5
@@ -36,7 +31,7 @@ def scrollable_ct_mask(ct, mask):
 	def display_slice(slice_index):
 		plt.figure(figsize=(6, 6))
 		plt.imshow(ct_img[:, :, slice_index], cmap='gray', origin='lower')
-		plt.imshow(mask_img[:, :, slice_index], cmap=cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
+		#plt.imshow(mask_img[:, :, slice_index], cmap=cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
 		plt.axis("off")
 		plt.title(f"Slice {slice_index + 1} / {ct_img.shape[2]}")
 		plt.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.1))

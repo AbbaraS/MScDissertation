@@ -138,6 +138,32 @@ def resample_old(case: Case, target_spacing=[1.0]*3, target_shape=(64,64,64)):
 		log(f"Error resampling: {e}", False)
 
 
+def sitk_from_nifti(vol):
+	"""
+	vol.data: numpy array in XYZ index order
+	vol.affine: 4x4 RAS affine from NiBabel
+	Returns: SimpleITK Image with correct LPS geometry.
+	"""
+	A_ras = np.asarray(vol.affine, dtype=np.float64)
+	M = A_ras[:3, :3]                       # voxel-to-world (RAS) linear part
+	t_ras = A_ras[:3, 3]                    # world origin (RAS)
+
+	# spacing = column norms; rotation = normalised columns
+	sp = np.linalg.norm(M, axis=0)
+	R_ras = M / sp
+
+	# convert to LPS (ITK world)
+	ras2lps = np.diag([-1.0, -1.0, 1.0])
+	R_lps = ras2lps @ R_ras                 # rotate axes into LPS
+	t_lps = ras2lps @ t_ras                 # origin into LPS
+
+	# build SITK image; keep array in XYZ and let SITK own (x,y,z) indexing
+	img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))  # z,y,x memory view
+	img.SetSpacing(tuple(sp.tolist()))                        # (x,y,z) spacings
+	img.SetDirection(tuple(R_lps.reshape(-1).tolist()))       # 3x3 row-major
+	img.SetOrigin(tuple(t_lps.tolist()))                      # (x,y,z) origin
+	return img
+
 def sitk_img(vol: NiftiVolume):
 	img = sitk.GetImageFromArray(vol.data.transpose(2,1,0))
 	img.SetDirection(tuple(vol.affine[:3, :3].flatten()))
@@ -181,7 +207,8 @@ def size_resample(vol: NiftiVolume, path: str):
 	target_shape=(64,64,64)
 
 	# 1) resample to spacing first - returns sitk.Image
-	img = space_resample(vol)
+	#img = space_resample(vol)
+	img = clip_HU(vol)
 
 	# 2) force final size with a second resample
 	cur_size = np.array(img.GetSize(), dtype=np.int64)
@@ -208,8 +235,8 @@ def size_resample(vol: NiftiVolume, path: str):
 	A = np.eye(4, dtype=np.float64)
 	A[:3,:3] = R @ np.diag(sp)                       # <- column scaling
 	A[:3, 3] = np.array(img.GetOrigin(), dtype=np.float64)
-	#return NiftiVolume.init_from_array(arr_xyz, A, path)
-	return None
+	return NiftiVolume.init_from_array(arr_xyz, A, path)
+
 
 	#print(f"Size: {img.GetSize()}, Spacing: {img.GetSpacing()}")
 

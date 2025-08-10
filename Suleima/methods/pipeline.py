@@ -3,17 +3,19 @@ import json
 import numpy as np
 import SimpleITK as sitk
 from methods.preprocessing import *
-# --------------------------------------------------------------------
-# Expected helpers (from your library; not redefined here):
-#   same_geometry(a, b) -> bool
-#   resample_to_reference_nn(img, reference, default=0) -> sitk.Image
-#   to_uint8_binary(img) -> sitk.Image
-#   union_binary_masks(masks, reference) -> sitk.Image
-#   make_heart_mask_from_binaries(reference_ct, totalseg_parts, include=...) -> sitk.Image
-#   heart_extents_mm(mask_img, percentile=99.0) -> ((Hx,Hy,Hz), c_phys)
-#   spacing_from_extents(H, size=(64,64,64), margin=0.15, isotropic=True) -> (sx,sy,sz)
-#   touches_border(mask_resampled, pad_vox=2) -> bool
-# --------------------------------------------------------------------
+#from methods.preprocessing import make_lv_myo_masks_from_binaries
+#assert callable(make_lv_myo_masks_from_binaries)
+
+import os
+from core.Case import *
+from core.Log import log
+
+import SimpleITK as sitk
+import numpy as np
+from typing import Optional, Dict
+
+from typing import Optional, Tuple, Dict, Sequence, List
+
 
 INCLUDE_FILES = [
 	"heart_ventricle_left.nii.gz",
@@ -56,6 +58,208 @@ def load_available_totalseg_masks(segments_dir: Path) -> dict:
 			files.append(fname)
 	log(f"_load_available_totalseg_masks: {files}")
 	return out
+
+
+
+# --- helpers ---
+def ensure_float32(img: sitk.Image) -> sitk.Image:
+	return sitk.Cast(img, sitk.sitkFloat32)
+
+def ensure_uint8(img: sitk.Image) -> sitk.Image:
+	return sitk.Cast(img, sitk.sitkUInt8)
+
+
+
+def union_binary_masks(masks: list[sitk.Image], reference: sitk.Image) -> sitk.Image:
+	if not masks:
+		raise ValueError("union_binary_masks: empty input list")
+	out = sitk.Image(reference.GetSize(), sitk.sitkUInt8)
+	out.CopyInformation(reference)
+	for m in masks:
+		m_ref = resample_like(m, reference, interp=sitk.sitkNearestNeighbor, default_value=0)
+		out = out | binarise(m_ref, 0.5)
+	return ensure_uint8(out)
+
+def make_heart_mask_from_binaries(
+	reference_ct: sitk.Image,
+	totalseg_parts: dict[str, sitk.Image],
+	include=("myocardium","left_ventricle","right_ventricle","left_atrium","right_atrium")) -> sitk.Image:
+	"""
+	totalseg_parts: mapping name->binary mask image (from TotalSegmentator per-structure files)
+	include:       which keys to union
+	returns        uint8 binary mask aligned to reference_ct
+	"""
+	log("make_heart_mask_from_binaries")
+	masks = []
+	for k in include:
+		img = totalseg_parts.get(k)
+		if img is None:
+			continue
+		masks.append(img)
+	if not masks:
+		raise ValueError("No included TotalSegmentator structures were found.")
+	heart_mask = union_binary_masks(masks, reference_ct)
+	return heart_mask
+
+
+
+
+def heart_extents_mm(mask_img: sitk.Image, percentile=99.0) -> tuple:
+	"""Return robust half-extents (Hx, Hy, Hz) in mm about the centroid."""
+	# 1) voxel indices where mask > 0
+	arr = sitk.GetArrayFromImage(mask_img)          # z,y,x
+	idx_zyx = np.argwhere(arr > 0)                  # (N,3)
+	if idx_zyx.size == 0:
+		raise ValueError("Mask empty.")
+	# convert to (x,y,z) index order expected by affine math below
+	idx_xyz = idx_zyx[:, ::-1].astype(float)
+
+	# 2) index→physical mapping
+	origin = np.array(mask_img.GetOrigin())         # (X0,Y0,Z0)
+	spacing = np.array(mask_img.GetSpacing())       # (sx,sy,sz)
+	D = np.array(mask_img.GetDirection()).reshape(3,3)  # 3x3
+
+	# physical coordinates of all foreground voxels
+	phys = origin + (D @ (idx_xyz * spacing).T).T   # (N,3) mm
+
+	# 3) centroid in physical space
+	c_phys = phys.mean(axis=0)
+
+	# 4) robust half-extents (percentile of absolute deviation)
+	dev = np.abs(phys - c_phys)                     # (N,3)
+	Hx, Hy, Hz = np.percentile(dev, percentile, axis=0)
+	log(f"heart_extents_mm: (Hx, Hy, Hz), c_phys --> ({Hx}, {Hy}, {Hz}), {c_phys}")
+	return (Hx, Hy, Hz), c_phys
+
+def spacing_from_extents(H,
+						 size=(64,64,64),
+						 margin=0.15,
+						 isotropic=True,
+						 eps_mm=0.05,
+						 pad_vox=2, extra_half_vox=True):
+	H = np.array(H, float)                          # (Hx,Hy,Hz)
+	N = np.array(size, float)
+	half_vox = (N - 1.0)/2.0
+	pad_term = float(pad_vox) + (0.5 if extra_half_vox else 0.0)
+	denom = half_vox - pad_term                        # account for pad
+	if np.any(denom <= 0):
+		log(f"pad_vox 2 too large for size={size}. Need pad_vox < {(N-1)/2}.")
+		raise ValueError(f"pad too large.")         # account for pad
+	s_axes = H*(1.0 + margin) / denom
+	if isotropic:
+		s = float(np.max(s_axes)) + float(eps_mm)
+		log(f"spacing_from_extents: (s, s, s): {(s, s, s)}")
+		return (s, s, s)
+	log(f"spacing_from_extents: (s_axes {s_axes} + float(eps_mm)): {tuple((s_axes + float(eps_mm)).tolist())}")
+	return tuple((s_axes + float(eps_mm)).tolist())
+
+
+
+def touches_border(mask_resampled: sitk.Image, pad_vox=2, relax_one=True) -> bool:
+	arr = sitk.GetArrayFromImage(mask_resampled)  # z,y,x
+	zmax, ymax, xmax = np.array(arr.shape) - 1
+	# A pad of 'pad_vox' means we flag if any foreground exists at indices <pad or >dim-1-pad.
+	z, y, x = np.where(arr > 0)
+	if z.size == 0:
+		return False
+	pad = pad_vox - 1 if relax_one else pad_vox
+	return ( (z <= pad).any() or (z >= zmax - pad).any()
+		  or (y <= pad).any() or (y >= ymax - pad).any()
+		  or (x <= pad).any() or (x >= xmax - pad).any() )
+
+
+
+
+def resample_like(moving: sitk.Image,
+				  reference: sitk.Image,
+				  interp=sitk.sitkNearestNeighbor,
+				  default_value: float = 0) -> sitk.Image:
+	"""Resample 'moving' to match 'reference' geometry."""
+	resampler = sitk.ResampleImageFilter()
+	resampler.SetReferenceImage(reference)
+	resampler.SetInterpolator(interp)
+	resampler.SetDefaultPixelValue(default_value)
+	# Preserve orientation/spacing/origin from reference via SetReferenceImage
+	return resampler.Execute(moving)
+
+def binarise(img: sitk.Image, thr: float = 0.5) -> sitk.Image:
+	# Handles 0/1, probabilities, or stray intensities the same way
+	out = sitk.BinaryThreshold(img, lowerThreshold=thr, upperThreshold=1e9,
+							   insideValue=1, outsideValue=0)
+	return ensure_uint8(out)
+
+def remove_tiny_islands(mask: sitk.Image, min_voxels: int = 50) -> sitk.Image:
+	"""Optional: clean spurious speckles."""
+	cc = sitk.ConnectedComponent(mask)
+	stats = sitk.LabelShapeStatisticsImageFilter()
+	stats.Execute(cc)
+	keep = sitk.Image(mask.GetSize(), sitk.sitkUInt8)
+	keep.CopyInformation(mask)
+	for lbl in stats.GetLabels():
+		if stats.GetNumberOfPixels(lbl) >= min_voxels:
+			keep = keep | sitk.Equal(cc, lbl)
+	return ensure_uint8(keep)
+
+def make_lv_myo_masks_from_binaries(
+    reference_ct: sitk.Image,
+    totalseg_parts: Dict[str, sitk.Image],
+    lv_keys: Sequence[str] = ("left_ventricle",),
+    myo_keys: Sequence[str] = ("myocardium",),
+    clean_islands: bool = True,
+    min_voxels: int = 50,
+    constrain_to_heart: bool = True,
+    precomputed_heart: Optional[sitk.Image] = None,
+	) -> Tuple[sitk.Image, sitk.Image, sitk.Image]:
+	"""
+	Returns (lv_mask, myo_mask, heart_mask) as uint8 binaries aligned to reference_ct.
+	- Enforces MYO ∩ LV = ∅  (myocardium excludes LV cavity)
+	- Optionally constrains both to the heart mask (safety)
+	"""
+	# 1) Build heart if not provided
+	if precomputed_heart is None:
+		heart_mask = make_heart_mask_from_binaries(
+			reference_ct, totalseg_parts,
+			include=("myocardium","left_ventricle","right_ventricle","left_atrium","right_atrium")
+		)
+	else:
+		heart_mask = resample_like(precomputed_heart, reference_ct, sitk.sitkNearestNeighbor, 0)
+		heart_mask = binarise(heart_mask, 0.5)
+
+	# 2) Union selected keys for LV and MYO (usually single key each)
+	def union(keys):
+		masks = [totalseg_parts[k] for k in keys if k in totalseg_parts]
+		if not masks:
+			# Generate empty aligned mask if missing
+			empty = sitk.Image(reference_ct.GetSize(), sitk.sitkUInt8); empty.CopyInformation(reference_ct)
+			return empty
+		return union_binary_masks(masks, reference_ct)
+
+	lv_mask  = union(lv_keys)
+	myo_mask = union(myo_keys)
+
+	# 3) Optional cleanup
+	if clean_islands:
+		lv_mask  = remove_tiny_islands(lv_mask,  min_voxels=min_voxels)
+		myo_mask = remove_tiny_islands(myo_mask, min_voxels=min_voxels)
+
+	# 4) Enforce mutual exclusivity (no LV voxels inside MYO and vice versa)
+	# Anatomically: MYO is the wall, LV is the cavity -> remove LV from MYO
+	myo_mask = myo_mask & sitk.BinaryNot(lv_mask)
+
+	# 5) Constrain to heart for safety
+	if constrain_to_heart:
+		lv_mask  = lv_mask  & heart_mask
+		myo_mask = myo_mask & heart_mask
+
+	# 6) Final typing and metadata are already correct, but ensure:
+	lv_mask  = ensure_uint8(lv_mask);  lv_mask.CopyInformation(reference_ct)
+	myo_mask = ensure_uint8(myo_mask); myo_mask.CopyInformation(reference_ct)
+	heart_mask = ensure_uint8(heart_mask); heart_mask.CopyInformation(reference_ct)
+
+	return lv_mask, myo_mask, heart_mask
+
+
+
 
 def gaussian_if_downsampling(ct_img: sitk.Image, target_spacing_xyz: tuple[float,float,float]) -> sitk.Image:
 	"""
@@ -113,8 +317,8 @@ def resample_centered(ct_img: sitk.Image,
 	AIR_HU = -1024.0
 
 	# 4) resample CT, then mask to CT grid
-	interp = sitk.sitkBSpline
-	#interp = sitk.sitkLinear
+	#interp = sitk.sitkBSpline
+	interp = sitk.sitkLinear
 
 	ct_out = sitk.Resample(
 		ct_pre,
@@ -180,16 +384,7 @@ def process_case_centroid_FOV(case_path,
 							  growth=1.12,
 							  max_tries=2,
 							  outdir_name="centered64"):
-	"""
-	Pipeline:
-	  - Load CT and available TS masks (from the five specified files).
-	  - Align masks to CT, union → heart mask (uint8).
-	  - Compute robust half-extents (mm) and centroid (mm).
-	  - Compute isotropic spacing for the requested 'size' using H + margin.
-	  - Centered resample (CT: linear + anti-alias if downsampling; mask: NN).
-	  - Runtime border safety check; inflate spacing if needed and retry.
-	  - Save CT, mask, and a small JSON metadata file.
-	"""
+
 	log("process_case_centroid_FOV")
 	# --- resolve case path ---
 	if not isinstance(case_path, (str, Path)):
@@ -232,7 +427,6 @@ def process_case_centroid_FOV(case_path,
 		max_tries=max_tries)
 
 	ct_out = ensure_float32(ct_out)
-	# --- save outputs ---
 
 
 	'''
@@ -251,14 +445,14 @@ def process_case_centroid_FOV(case_path,
 			clean_islands=True,
 			min_voxels=50,
 			constrain_to_heart=True,
-			precomputed_heart=None  )
+			precomputed_heart=mask_out  )
 
-	#sitk.WriteImage(ct_clipped,   str(ct_out_path), True)
+	sitk.WriteImage(ct_clipped,   str(ct_out_path), False)
 	#sitk.WriteImage(mask_out, str(mask_out_path), True)
 	# Save (uint8, 0/1)
-	sitk.WriteImage(heart_mask, str(heart_mask_path), useCompression=True)
-	sitk.WriteImage(lv_mask,    str(lv_mask_path),    useCompression=True)
-	sitk.WriteImage(myo_mask,   str(myo_mask_path),   useCompression=True)
+	sitk.WriteImage(heart_mask, str(heart_mask_path), useCompression=False)
+	sitk.WriteImage(lv_mask,    str(lv_mask_path),    useCompression=False)
+	sitk.WriteImage(myo_mask,   str(myo_mask_path),   useCompression=False)
 	'''
 	Global z‑score normalization (train‑set statistics only).
 	Compute μ, σ on the training set only (after clipping).
