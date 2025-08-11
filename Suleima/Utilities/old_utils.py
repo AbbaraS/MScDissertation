@@ -26,44 +26,47 @@ from matplotlib.patches import Patch
 from matplotlib.colors import ListedColormap
 from ipywidgets import interact
 
+
+
+
 '''
 labels = { "patientID": {"label": 0/1}, ...}
 slices = {"patientID":{
             "Axial":
                 {"ct": [{"idx":"…"," slice": []},
-                        {"idx":"…"," slice": []},		
+                        {"idx":"…"," slice": []},
                         {"idx":"…"," slice": []}
-                        ],		
+                        ],
                 "mask": [{"idx":"…"," slice": []},
-                        {"idx":"…"," slice": []},		
+                        {"idx":"…"," slice": []},
                         {"idx":"…"," slice": []}
                         ]},
             "Coronal":
                 {"ct": [{"idx":"…"," slice": []},
-                        {"idx":"…"," slice": []},		
+                        {"idx":"…"," slice": []},
                         {"idx":"…"," slice": []}
-                        ],		
+                        ],
                 "mask": [{"idx":"…"," slice": []},
-                        {"idx":"…"," slice": []},		
+                        {"idx":"…"," slice": []},
                         {"idx":"…"," slice": []}
                         ]},
             "Sagittal":
                 {"ct": [{"idx":"…"," slice": []},
-                        {"idx":"…"," slice": []},		
+                        {"idx":"…"," slice": []},
                         {"idx":"…"," slice": []}
-                        ],		
+                        ],
                 "mask": [{"idx":"…"," slice": []},
-                        {"idx":"…"," slice": []},		
+                        {"idx":"…"," slice": []},
                         {"idx":"…"," slice": []}
                         ]}
-            }, ...}	
+            }, ...}
 metadata = {"patientID": {"age": 0, "gender": "M/F"},...}
 
 
 '''
 
 # === Plots ===
-                
+
 def plot_slices(ct_cropped, combined_mask, x_slices, y_slices, z_slices):
     # === Define colormap ===
     colors = ['black', 'red', 'blue', 'green', 'yellow', 'magenta']  # label 0 to 5
@@ -121,7 +124,7 @@ def plot_slices_from_png(png_slices_folder):
     # === Collect CT slice indices from filenames ===
     pattern = re.compile(r"(ct|mask)([XYZ])_(\d+)\.png", re.IGNORECASE)
     slice_dict = {'x': [], 'y': [], 'z': []}
-    
+
     for fname in os.listdir(png_slices_folder):
         match = pattern.match(fname)
         if match:
@@ -161,7 +164,7 @@ def plot_slices_from_png(png_slices_folder):
     fig.legend(handles=legend_patches, loc='lower center', ncol=5, fontsize='large', bbox_to_anchor=(0.5, 0.02))
     plt.tight_layout(rect=[0, 0.05, 1, 1])
     plt.show()
-    
+
 def plot_slices_masks(png_slices_folder, ct_path, mask_path):
     # === Load CT and combined mask volumes ===
     ct_volume = nib.load(ct_path).get_fdata()
@@ -186,7 +189,7 @@ def plot_slices_masks(png_slices_folder, ct_path, mask_path):
     # === Collect slice indices from PNG filenames ===
     pattern = re.compile(r"slice([XYZ])_(\d+)\.png", re.IGNORECASE)
     slice_dict = {'x': [], 'y': [], 'z': []}
-    
+
     for fname in os.listdir(png_slices_folder):
         match = pattern.match(fname)
         if match:
@@ -285,7 +288,7 @@ def scrollable_ct_mask(ct_path, mask_path):
         plt.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.1))
         plt.show()
 
-    interact(display_slice, slice_index=(0, ct_data.shape[2] - 1))    
+    interact(display_slice, slice_index=(0, ct_data.shape[2] - 1))
 
 # === Extras ===
 
@@ -294,7 +297,7 @@ def check_original_mask_alignment(ct_path, mask_path, world_mm, slice_axis='z', 
     img = nib.load(ct_path)
     ct = img.get_fdata()
     mask = nib.load(mask_path).get_fdata()
-    
+
     if world_mm:
         aff=img.affine
         spacing = img.header.get_zooms()
@@ -303,8 +306,8 @@ def check_original_mask_alignment(ct_path, mask_path, world_mm, slice_axis='z', 
         spacing_mm = spacing[axis]
         origin_mm = origin[axis]
         slice_index = round((world_mm - origin_mm) / spacing_mm)
-        
-    
+
+
 
     # Choose a slice index if not provided
     if slice_index is None:
@@ -329,7 +332,7 @@ def check_original_mask_alignment(ct_path, mask_path, world_mm, slice_axis='z', 
     plt.contour(mask_slice.T, levels=[0.5], colors='r')  # red contour for mask
     plt.title(f"Original mask overlay ({slice_axis.upper()} = {slice_index})")
     plt.axis('off')
-    plt.show()    
+    plt.show()
 
 def get_slices_idx(png_slices_folder):
     """
@@ -352,7 +355,7 @@ def get_slices_idx(png_slices_folder):
     # sort each axis's list
     for axis in slice_dict:
         slice_dict[axis].sort()
-    
+
     return slice_dict
 
 def save_missing_filesCSV(case):
@@ -407,7 +410,7 @@ def save_missing_filesCSV(case):
         except Exception as e:
             print(f"❌ Error processing {patientID}: {e}")
             continue
-    
+
     missing_files_dic = missing_files_dic
     with open(output_filename, mode='w', newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -419,8 +422,8 @@ def save_missing_filesCSV(case):
             for file_info in files:
                 writer.writerow([patient_id, file_info['file'], file_info['path']])
 
-    print(f"CSV file '{output_filename}' has been created successfully.") 
-    
+    print(f"CSV file '{output_filename}' has been created successfully.")
+
 def resample_volume(volume_np, spacing, new_spacing=[1.0, 1.0, 1.0], is_label=False, reference_image=None):
     """
     Resamples a 3D volume to the given spacing, optionally matching a reference image for perfect alignment.
@@ -485,7 +488,7 @@ class DataInfo:
 
 def update_info_csv(case):
     metadata_path = f"data/CSVs/{case}_info.csv"
-    output_dir = f"data/Outputs/{case}"	
+    output_dir = f"data/Outputs/{case}"
     input_dir = f"data/Inputs/{case}"
 
     # Get all patient folder names
@@ -527,9 +530,9 @@ def update_info_csv(case):
                 df.at[idx, "Original_Spacing"] = str(tuple(round(s, 3) for s in orig_img.header.get_zooms()))
                 df.at[idx, "Original_Orientation"] = str(aff2axcodes(orig_img.affine))
                 df.at[idx, "Origin"] = str(tuple(round(s, 3) for s in orig_img.affine[:3, 3]))
-                
+
             #df.at[idx, "Cropped_Shape"] =
-            
+
             # Load cropped CT
             if os.path.exists(cropped_ct_path):
                 #cropped_img = nib.load(cropped_ct_path)
@@ -553,7 +556,7 @@ def update_info_csv(case):
     df.to_csv(metadata_path, index=False)
     print(f"Metadata CSV saved at: {metadata_path}")
 
-def get_segments_paths(segment_dir): 
+def get_segments_paths(segment_dir):
     # Define the paths to the original files
     return {
         #"CT": os.path.join(segment_dir, "OG_CT.nii.gz"),
@@ -564,7 +567,7 @@ def get_segments_paths(segment_dir):
         "MYO" : "heart_myocardium.nii.gz",
     }
     #return OG_file_paths
-    
+
 def get_resampled_paths(resampled_dir):
 	# Define the paths to the resampled files
 	return {
@@ -673,11 +676,11 @@ def segment_and_crop_data(case):
             coords = np.array(np.where(heart_mask))
             x_min, y_min, z_min = coords.min(axis=1)
             x_max, y_max, z_max = coords.max(axis=1)
-            
+
             x0, x1 = max(x_min, 0), min(x_max, ct_data.shape[0])
             y0, y1 = max(y_min, 0), min(y_max, ct_data.shape[1])
             z0, z1 = max(z_min, 0), min(z_max, ct_data.shape[2])
-            
+
 
             # Further trim empty slices
             trimmed_mask = (lv_crop + rv_crop + la_crop + ra_crop + myo_crop) > 0
@@ -698,7 +701,7 @@ def segment_and_crop_data(case):
 
             # === Load cropped masks and CT scan ===
             ct_img = nib.load(f"{output_folder}/cropped_ct.nii.gz")
-            ct_cropped = ct_img.get_fdata()       
+            ct_cropped = ct_img.get_fdata()
             lv_cropped = nib.load(f"{output_folder}/cropped_lv.nii.gz").get_fdata()
             rv_cropped = nib.load(f"{output_folder}/cropped_rv.nii.gz").get_fdata()
             la_cropped = nib.load(f"{output_folder}/cropped_la.nii.gz").get_fdata()
@@ -707,11 +710,11 @@ def segment_and_crop_data(case):
 
             # === Combine masks into a single label map ===
             combined_mask = np.zeros_like(ct_cropped, dtype=np.uint8)
-            combined_mask[lv_cropped > 0] = 1  # LV -             
-            combined_mask[rv_cropped > 0] = 2  # RV - 
-            combined_mask[la_cropped > 0] = 3  # LA - 
-            combined_mask[ra_cropped > 0] = 4  # RA - 
-            combined_mask[myo_cropped > 0] = 5  # Myo - 
+            combined_mask[lv_cropped > 0] = 1  # LV -
+            combined_mask[rv_cropped > 0] = 2  # RV -
+            combined_mask[la_cropped > 0] = 3  # LA -
+            combined_mask[ra_cropped > 0] = 4  # RA -
+            combined_mask[myo_cropped > 0] = 5  # Myo -
 
             nib.save(nib.Nifti1Image(combined_mask, affine=ct_img.affine), os.path.join(output_folder, "combined_cropped_mask.nii.gz"))
 
@@ -720,7 +723,7 @@ def segment_and_crop_data(case):
         except Exception as e:
             print(f"❌ Failed for {patientID}: {e}")
         #break
-        
+
 def slicing_data(case):
     # folder paths
     base_output_root = f"data/Outputs/{case}" #/{patient}
@@ -729,12 +732,12 @@ def slicing_data(case):
     for patientID in os.listdir(base_output_root):
         #print(f"\nPatient ID: {patientID}")
         output_folder = os.path.join(base_output_root, patientID)
-        
+
         # Skip if output folder doesn't exist
         if not os.path.exists(output_folder):
             print(f"⚠️ Skipping {patientID}: Output folder not found.")
             continue
-        
+
         output_dir = f"data/Outputs/{case}/{patientID}/png_slices"
         os.makedirs(output_dir, exist_ok=True)
 
@@ -743,21 +746,21 @@ def slicing_data(case):
             ct = nib.load(f"{output_folder}/cropped_ct.nii.gz").get_fdata()
             #combined_mask = nib.load(f"{output_folder}/combined_cropped_mask.nii.gz").get_fdata()
             lv_cropped = nib.load(f"{output_folder}/cropped_lv.nii.gz").get_fdata()
-            
+
             #z_slices = get_three_slices_within(np.where(np.any(lv_cropped > 0, axis=(0, 1)))[0])
             #y_slices = get_three_slices_within(np.where(np.any(lv_cropped > 0, axis=(0, 2)))[0])
             #x_slices = get_three_slices_within(np.where(np.any(lv_cropped > 0, axis=(1, 2)))[0])
-            
+
             # Save sagittal (X) slices
             for idx in get_three_slices_within(np.where(np.any(lv_cropped > 0, axis=(1, 2)))[0]):
                 slice_data = convert_slice_to_PNG(ct[idx, :, :])
                 imageio.imwrite(os.path.join(output_dir, f"sliceX_{idx}.png"), np.rot90(slice_data))
-            
+
             # Save coronal (Y) slices
             for idx in get_three_slices_within(np.where(np.any(lv_cropped > 0, axis=(0, 2)))[0]):
                 slice_data = convert_slice_to_PNG(ct[:, idx, :])
                 imageio.imwrite(os.path.join(output_dir, f"sliceY_{idx}.png"), np.rot90(slice_data))
-            
+
             # Save axial (Z) slices
             for idx in get_three_slices_within(np.where(np.any(lv_cropped > 0, axis=(0, 1)))[0]):
                 slice_data = convert_slice_to_PNG(ct[:, :, idx])
@@ -765,7 +768,7 @@ def slicing_data(case):
 
         except Exception as e:
             print(f"⚠️ Error processing {patientID}: {e}")
-        
+
 def save_slice(slice_data, slices_dir, axis_label, idx, kind):
     out_path = os.path.join(slices_dir, f"{kind}{axis_label}_{idx}.png")
     if kind == "ct":
@@ -775,13 +778,13 @@ def save_slice(slice_data, slices_dir, axis_label, idx, kind):
         image = np.rot90(slice_data.astype(np.uint8))
     else:
         raise ValueError(f"Unknown kind: {kind}")
-    imageio.imwrite(out_path, image)        
-        
+    imageio.imwrite(out_path, image)
+
 def convert_slice_to_PNG(slice_data):
     min_val = np.min(slice_data)
     ptp_val = np.ptp(slice_data)  # same as max - min
     if ptp_val == 0:
         return np.zeros_like(slice_data, dtype=np.uint8)
     norm = (slice_data - min_val) / ptp_val
-    return (norm * 255).astype(np.uint8)         
-        
+    return (norm * 255).astype(np.uint8)
+

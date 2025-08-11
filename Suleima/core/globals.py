@@ -1,9 +1,5 @@
-import logging
 from core.Log import *
 
-
-DATASET = dataset = load_dataset_info()
-INDEX = {d["ID"]: d for d in dataset if "ID" in d}
 
 T=True
 F=False
@@ -15,7 +11,7 @@ LABEL_MAP = {
 }
 
 CASE_INFO = ["ID", "directory", "volumes"]
-KEYS = ["image", "mask"]
+MONAI_KEYS = ["image", "mask"]
 
 SEGMENT_FILES = {
 	"myocardium":       	"heart_myocardium.nii.gz",
@@ -33,10 +29,5 @@ TARGETORIEN = "RAS"
 MEAN= 151.40625
 STD= 86.16580963134766#
 
-'''
-"ID": Unique identifier for the case,
-"directory": Path to the case directory,
-"original_paths": []
 
-'''
 

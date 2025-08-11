@@ -1,45 +1,61 @@
 
-from torch.utils.data import Dataset, DataLoader, Subset
-import torch
+import json
+import numpy as np
+import logging
+from pathlib import Path
+from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
+from core.preprocessing import *
+from core.mydataloader import *
 
-class CTDataset(Dataset):
-    def __init__(self, slices_dict, metadata_dict, labels_dict):
-        self.data = []
-        self._build_dataset(slices_dict, metadata_dict, labels_dict)
 
-    def _get_axis_tensor(self, axis, slices):
-        axis_slices = slices[axis]["ct"]
-        return torch.stack([
-            torch.tensor(s["slice"], dtype=torch.float32)
-            for s in axis_slices
-        ])  # Shape: (3, H, W)
+def run_one_fold(train_datalist, val_datalist, test_datalist, fold_idx):
+	"""
+	Executes the entire pipeline for a single fold of the cross-validation.
+	This includes:
+	1. Calculating normalization stats for the fold's training data.
+	2. Creating DataLoaders.
+	3. Initializing and training the model.
+	4. Evaluating the model on the fold's test set.
+	Args:
+		train_datalist (list): The list of training cases for this fold.
+		val_datalist (list): The list of validation cases for this fold.
+		test_datalist (list): The list of test cases for this fold.
+		fold_idx (int): The index of the current fold (for logging).
+	Returns:
+		float: The performance score (e.g., AUC) for this fold.
+	"""
+	logging.info(f"--- Starting Fold {fold_idx + 1} ---")
+	logging.info(f"Fold Split: {len(train_datalist)} train, {len(val_datalist)} val, {len(test_datalist)} test.")
 
-    def _build_dataset(self, slices_dict, metadata_dict, labels_dict):
-        for pid in slices_dict:
-            slices = slices_dict[pid]
-            if all(k in slices for k in ["Axial", "Sagittal", "Coronal"]):
-                self.data.append({
-                    "axial": self._get_axis_tensor("Axial", slices),
-                    "sagittal": self._get_axis_tensor("Sagittal", slices),
-                    "coronal": self._get_axis_tensor("Coronal", slices),
-                    "meta": torch.tensor([
-                        float(metadata_dict[pid]["age"]),
-                        0.0 if metadata_dict[pid]["gender"] == "M" else 1.0
-                    ], dtype=torch.float32),
-                    "label": torch.tensor(labels_dict[pid]["label"], dtype=torch.float32),
-                    "pid": pid
-                })
 
-    def __getitem__(self, idx):
-        item = self.data[idx]
-        return {
-            "axial": item["axial"],       # (3, H, W)
-            "sagittal": item["sagittal"], # (3, H, W)
-            "coronal": item["coronal"],   # (3, H, W)
-            "meta": item["meta"],         # (2,)
-            "label": item["label"].unsqueeze(0),  # (1,)
-            "pid": item["pid"]
-        }
+	HUstats = [case["stats"] for case in train_datalist]
+	UH_mean, HU_std = calculate_HU_stats(HUstats)
 
-    def __len__(self):
-        return len(self.data)
+	ages = [case['age'] for case in train_datalist]
+	AGE_mean = np.mean(ages); AGE_std = np.std(ages)
+	logging.info(f"Fold {fold_idx + 1} | HU_mean={UH_mean:.2f}, HU_std={HU_std:.2f}, AGE_mean={AGE_mean:.2f}, AGE_std={AGE_std:.2f}")
+	fold_stats = {
+		'HU_mean': UH_mean,
+		'HU_std': HU_std,
+		'AGE_mean': AGE_mean,
+		'AGE_std': AGE_std}
+
+	train_loader, val_loader, test_loader = get_data_loaders(
+	     				train_datalist,
+						val_datalist,
+						test_datalist,
+						fold_stats)
+
+	# 3. Initialize model and train it
+	# This function would contain your epoch loop, training, validation, and saving the best model
+	# trained_model = train_and_evaluate_model(train_loader, val_loader)
+
+	# 4. Evaluate the final model on the held-out test set
+	# score = evaluate_final_model(trained_model, test_loader)
+	score = np.random.rand() # Placeholder for the actual score
+	logging.info(f"--- Fold {fold_idx + 1} Score: {score:.4f} ---")
+
+	return score
+
+
+

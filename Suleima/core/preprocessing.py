@@ -1,39 +1,149 @@
+'''
+METHODS IN FILE:
+get_vols(itm, loader=tensor_loader) --->  return loader(paths)
+resample_dataset(dataset, train_mean, train_std, dim=64) ---> NO RETURN | saves volumes in directory
+
+'''
+
+
 from monai.transforms import (
 	Compose,
 	LoadImaged,
 	EnsureChannelFirstd,
 	Orientationd,
 	CropForegroundd,
+	EnsureTyped,
+	Resized,
+	NormalizeIntensityd,
 	Lambdad)
 from sklearn.model_selection import StratifiedShuffleSplit
 import numpy as np
 from core.Log import *
 from pathlib import Path
-import os
 import logging
 from tqdm import tqdm
 import torch
 import nibabel as nib
+from tqdm import tqdm
+from core.globals import *
 
+stats_transforms = Compose([
+		LoadImaged(keys=["image"]),
+		EnsureChannelFirstd(keys=["image"])])
 
-def get_demographics(ID: str):
-	try:
-		parts = ID.split("_")
-		type = parts[0]
+tensor_loader = Compose([
+	LoadImaged(keys=MONAI_KEYS),
+	EnsureChannelFirstd(keys=MONAI_KEYS),
+	EnsureTyped(keys=MONAI_KEYS)
+])
 
-		if len(parts) == 3: # e.g., "CNTRL_AAP50415783_61F"
-			info = parts[2]
-		elif len(parts) == 4: # e.g., "CNTRL_AAP_50415783_61F"
-			info = parts[3]
-		label = 0 if type == "CNTRL" else 1
-		return {
-			"label": label,         # control = 0, tts = 1
-			"age": int(info[:2]),   # age = first two digits of info
-			"gender": info[2]       # 'F' or 'M'
-			}
-	except Exception as e:
-		logging.error(f"Error parsing: '{parts}' - should be AgeGender")
-		return None
+def calculate_age_stats(datalist):
+	# 1. Extract all 'age' values from the list of dictionaries
+	ages = [case['age'] for case in datalist]
+
+	# 2. Handle the edge case of an empty list
+	if not ages:
+		logging.error("The provided training datalist is empty.")
+		return
+
+	# 3. Calculate mean and standard deviation using NumPy
+	age_mean = np.mean(ages)
+	age_std = np.std(ages)
+
+	logging.info(f"Calculated Age Stats: Mean={age_mean:.2f}, Std Dev={age_std:.2f}")
+
+	return age_mean, age_std
+
+def get_vols(itm, loader=tensor_loader):
+	paths = {"image": Path(itm["image"]),
+			 "mask":  Path(itm["mask"])}
+	return loader(paths)
+
+def resample_dataset(dataset, train_mean, train_std, dim=64):
+	"""
+	Preprocess the cases and return a dictionary of processed volumes.
+	"""
+	if dim == 64:
+		target_shape = (64, 64, 64)
+	elif dim == 128:
+		target_shape = (128, 128, 128)
+	elif dim == 96:
+		target_shape = (96, 96, 96)
+
+	target_orientation = "RAS"
+	preproc_transforms = Compose([
+		LoadImaged(keys=MONAI_KEYS),
+		EnsureChannelFirstd(keys=MONAI_KEYS),
+		Orientationd(keys=MONAI_KEYS, axcodes=target_orientation),
+		Lambdad(keys=["image"], func=lambda x: torch.clamp(x, min=-175.0, max=250.0)),
+		CropForegroundd(keys=MONAI_KEYS, source_key="mask"),
+		NormalizeIntensityd(keys=["image"], subtrahend=train_mean, divisor=train_std),
+		Resized(keys=MONAI_KEYS, spatial_size=target_shape, mode=("bilinear", "nearest")),
+		EnsureTyped(keys=MONAI_KEYS)])
+
+	for item in  tqdm(dataset, desc=f"Resampling to {dim} dataset..."):
+		paths = {"image": Path(item["originals"]["image"]),
+		   		 "mask": Path(item["originals"]["mask"])}
+
+		volumes = preproc_transforms(paths)
+
+		image = volumes["image"]
+		mask = volumes["mask"]
+
+		p1 = Path(item["directory"], f"resCT_{dim}.nii.gz" )
+		p2 = Path(item["directory"], f"resMASK_{dim}.nii.gz")
+
+		save_metatensor_as_nifti(image, p1)
+		save_metatensor_as_nifti(mask, p2)
+		#item[f"resampled{dim}"] = {"image": str(p1), "mask": str(p2)}
+
+def create_multilabel_heart_mask(casepath: Path):
+	"""
+	Loads individual TotalSegmentator files, combines them
+	into a single multi-label NIfTI file.
+	The labels are applied with priority: LV > Myocardium > Other Heart.
+	Args:
+		segments_dir: Path to the directory containing the .nii.gz segment files.
+		output_path: Path to save the final combined_mask.nii.gz file.
+	"""
+	segments_dir = casepath / "segments"
+	if not segments_dir.exists():
+		return
+
+	segments_data = {}
+	reference_nii = None
+	missing = []
+	for key, filename in SEGMENT_FILES.items():
+		file_path = segments_dir / filename
+		if file_path.exists():
+			nii_obj = nib.load(file_path)
+			if reference_nii is None:
+				reference_nii = nii_obj
+			segments_data[key] = (nii_obj.get_fdata() > 0)
+		else:
+			missing.append(key)
+
+	if missing:
+		logging.error(f"Missing segments:{missing}. Aborting.")
+		return
+
+	if reference_nii is None:
+		logging.error("No valid segment files were loaded. Cannot create mask.")
+		return
+	shape = reference_nii.shape
+	combined_mask = np.zeros(shape, dtype=np.uint8)
+	other_heart_mask = np.zeros(shape, dtype=bool)
+	for key in ["right_atrium", "right_ventricle", "left_atrium"]:
+		if key in segments_data:
+			other_heart_mask = np.logical_or(other_heart_mask, segments_data[key])
+	combined_mask[other_heart_mask] = LABEL_MAP["other_heart"]
+	if "myocardium" in segments_data:
+		combined_mask[segments_data["myocardium"]] = LABEL_MAP["myocardium"]
+	if "left_ventricle" in segments_data:
+		combined_mask[segments_data["left_ventricle"]] = LABEL_MAP["left_ventricle"]
+	output_nii = nib.Nifti1Image(combined_mask, affine=reference_nii.affine, header=reference_nii.header)
+	output_path = casepath / "label_mask.nii.gz"
+	nib.save(output_nii, output_path)
 
 def stratified_datalists(
 	full_datalist,
@@ -110,32 +220,24 @@ def crop_training(datalist):
 		case_data["cropped"] = {"image": str(p1),"mask": str(p2)}
 
 def get_HU_stats(datalist):
-	stats_transforms = Compose([
-		LoadImaged(keys=["image"]),
-		EnsureChannelFirstd(keys=["image"])])
-	stats = []
 	for item in tqdm(datalist, desc="Loading cropped images"):
 		paths = {"image": Path(item["cropped"]["image"]), "mask": Path(item["cropped"]["mask"])}
 		loaded = stats_transforms(paths)
 		image = loaded["image"]
-		fg_voxs = image[image > 0]
+		fg_voxs = image[image > image.min()]
 		if fg_voxs.numel() == 0: continue
-		stats.append({
+		item["stats"]={
 			"count": fg_voxs.numel(),
-			"sum": torch.sum(fg_voxs),
-			"sum_sq": torch.sum(fg_voxs ** 2)
-		})
-	return stats
+			"sum": torch.sum(fg_voxs).item(),
+			"sum_sq": torch.sum(fg_voxs ** 2).item()}
 
-def calculate_HU_stats(cropped):
-	stats = get_HU_stats(cropped)
+def calculate_HU_stats(stats):
 	count = sum(s['count'] for s in stats)
 	sum_global = sum(s['sum'] for s in stats)
 	sum_sq_global = sum(s['sum_sq'] for s in stats)
 	if count == 0:
 			logging.error("No foreground voxels found.")
 			return 0.0, 1.0
-	#E[X] = sum(X) / N
 	global_mean = sum_global / count
 	global_variance = (sum_sq_global / count) - (global_mean ** 2)
 	if global_variance < 0:
@@ -164,7 +266,7 @@ def select_slices(volumes):
 	# --- Axial ---
 	d_span = d_max - d_min
 	d_base = d_min + int(0.20 * d_span)
-	d_mid = d_min + int(0.50 * d_span)
+	d_mid =  d_min + int(0.50 * d_span)
 	d_apex = d_min + int(0.80 * d_span)
 	# --- Coronal & Sagittal  ---
 
@@ -175,12 +277,9 @@ def select_slices(volumes):
 	h_span = h_max - h_min
 	w_span = w_max - w_min
 
-	# Define a gap that is 15% of the LV's size in that dimension
 	h_gap = max(1, int(0.15 * h_span))
 	w_gap = max(1, int(0.15 * w_span))
 
-	# Select the central slice, and one on each side separated by the gap
-	# Use min/max to ensure indices are within the volume's bounds
 	sagittal_slices = (
 		max(0, h_optimal - h_gap),
 		h_optimal,
@@ -195,64 +294,46 @@ def select_slices(volumes):
 			"Sagittal": sagittal_slices,
 			"Coronal": coronal_slices}
 
-
 def save_slice_as_nifti(
 	volume_tensor,
 	slice_index: int,
 	slice_axis: int,
-	output_path: Path
-):
+	output_path: Path):
 	"""
 	Extracts a 2D slice from a 3D volume, correctly adjusts its affine matrix,
 	and saves it as a spatially-aware 3D NIfTI file with a thickness of 1.
-
-	Args:
-		volume_tensor (torch.Tensor): The 3D MetaTensor (image or mask) from which to extract the slice.
-									  Must have metadata (e.g., from MONAI LoadImaged).
-		slice_index (int): The index of the slice to extract.
-		slice_axis (int): The axis from which to extract the slice (0=sagittal, 1=coronal, 2=axial).
-		output_path (Path): The full path to save the output .nii.gz file.
 	"""
 	if 'affine' not in volume_tensor.meta:
 		raise ValueError("Input tensor must be a MetaTensor with an 'affine' key in its metadata.")
-
-	# --- 1. Extract the 2D slice data ---
 	slice_data = np.take(volume_tensor.cpu().numpy().squeeze(0), slice_index, axis=slice_axis)
-
-	# A NIfTI file must be at least 3D. We add a new axis of size 1.
-	# The new axis should correspond to the one we sliced from.
 	slice_data_3d = np.expand_dims(slice_data, axis=slice_axis)
-
-	# --- 2. Calculate the new affine matrix for the slice ---
 	original_affine = volume_tensor.meta['affine'].cpu().numpy()
-
-	# Create a new affine matrix, starting as a copy
 	new_affine = original_affine.copy()
-
-	# The new origin is the physical coordinate of the corner of our slice.
-	# We find this by transforming the voxel coordinate (e.g., [0, 0, slice_index, 1])
-	# by the original affine matrix.
 	corner_voxel_coord = np.array([0, 0, 0, 1])
 	corner_voxel_coord[slice_axis] = slice_index
-
 	new_physical_origin = np.dot(original_affine, corner_voxel_coord)
-
-	# Update the origin (the last column) of our new affine matrix
 	new_affine[:, 3] = new_physical_origin
-
-	# --- 3. Save the new NIfTI file ---
 	output_path.parent.mkdir(parents=True, exist_ok=True)
 	nifti_img = nib.Nifti1Image(slice_data_3d, new_affine)
 	nib.save(nifti_img, output_path)
 	# print(f"Saved slice to: {output_path}")
 
+def get_demographics(ID: str):
+	try:
+		parts = ID.split("_")
+		type = parts[0]
 
-
-
-
-
-
-
-
-
+		if len(parts) == 3: # e.g., "CNTRL_AAP50415783_61F"
+			info = parts[2]
+		elif len(parts) == 4: # e.g., "CNTRL_AAP_50415783_61F"
+			info = parts[3]
+		label = 0 if type == "CNTRL" else 1
+		return {
+			"label": label,         # control = 0, tts = 1
+			"age": int(info[:2]),   # age = first two digits of info
+			"gender": info[2]       # 'F' or 'M'
+			}
+	except Exception as e:
+		logging.error(f"Error parsing: '{parts}' - should be AgeGender")
+		return None
 
