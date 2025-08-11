@@ -1,154 +1,78 @@
 
 import matplotlib.pyplot as plt
-
-from matplotlib.patches import Patch
+import matplotlib
+import matplotlib.patches as mpatches
 from matplotlib.colors import ListedColormap
 from ipywidgets import interact
-
-
+import ipywidgets as widgets
+from ipywidgets import IntSlider, HBox, VBox, Output
+from IPython.display import display
 import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.widgets import Slider
 from matplotlib.colors import ListedColormap
 
-def view_slice_in_3d(image_tensor, mask_tensor, view_axis=2):
-	"""
-	Displays an interactive, scrollable plot for a 3D image and its mask.
 
-	Args:
-		image_tensor (torch.Tensor): The processed 3D image tensor (C, H, W, D).
-		mask_tensor (torch.Tensor): The processed 3D multi-label mask (C, H, W, D).
-									Assumes labels: 0=BG, 1=Other, 2=Myo, 3=LV.
-	"""
-	# --- 1. Data Preparation ---
-	# Ensure tensors are on CPU and convert to NumPy arrays
-	image_np = image_tensor.cpu().numpy()
-	mask_np = mask_tensor.cpu().numpy()
-
-	# Remove the channel dimension (C) -> (H, W, D)
-	if image_np.ndim == 4:
-		image_np = image_np.squeeze(0)
-	if mask_np.ndim == 4:
-		mask_np = mask_np.squeeze(0)
-
-	# For display, let's view along the last axis (axial view in RAS orientation)
-	# You can change this to axis 0 or 1 for sagittal or coronal views
-
-	num_slices = image_np.shape[view_axis]
-
-	# --- 2. Create Custom Colormap for Mask ---
-	# Define colors: 0=Transparent, 1=Yellow(semi-transparent), 2=Blue, 3=Red
-	# RGBA format (Red, Green, Blue, Alpha)
-	colors = [
+colors = [
 		(0, 0, 0, 0),       # 0: Background (fully transparent)
 		(1, 1, 0, 0.3),     # 1: Other heart structures (semi-transparent yellow)
-		(0, 0, 1, 0.5),     # 2: Myocardium (semi-transparent blue)
-		(1, 0, 0, 0.5)      # 3: Left Ventricle (semi-transparent red)
+		(0, 0, 1, 0.3),     # 2: Myocardium (semi-transparent blue)
+		(1, 0, 0, 0.3)      # 3: Left Ventricle (semi-transparent red)
 	]
-	custom_cmap = ListedColormap(colors)
-	legend_patches = [
-		Patch(color=colors[1], label='Heart'),
-		Patch(color=colors[2], label='Myocardium'),
-		Patch(color=colors[3], label='LV'),
+custom_cmap = ListedColormap(colors)
+legend_patches = [
+		mpatches.Patch(color=colors[1], label='Heart'),
+		mpatches.Patch(color=colors[2], label='Myocardium'),
+		mpatches.Patch(color=colors[3], label='LV'),
 	]
-	# --- 3. Setup the Plot ---
-	# Start at the middle slice
-	initial_slice_idx = num_slices // 2
 
-	fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-	plt.subplots_adjust(bottom=0.15) # Make space for the slider
+def display_selected_slices(volumes, slices):
+	plt.close('all')
+	mask_np = volumes["mask"].cpu().numpy().squeeze(0)
+	img_np = volumes["image"].cpu().numpy().squeeze(0)
 
-	# Display the initial CT slice in grayscale
-	ct_display = ax.imshow(
-		np.take(image_np, initial_slice_idx, axis=view_axis).T,
-		cmap='gray',
-		origin='lower'
-	)
+	axial_indices = slices["Axial"]
+	coronal_indices = slices["Coronal"]
+	sagittal_indices = slices["Sagittal"]
 
-	# Overlay the mask with our custom colormap and transparency
-	mask_display = ax.imshow(
-		np.take(mask_np, initial_slice_idx, axis=view_axis).T,
-		cmap=custom_cmap,
-		origin='lower',
-		vmin=0,
-		vmax=len(colors)-1
-	)
+	fig, axes = plt.subplots(3, 3, figsize=(8, 8))
+	fig.suptitle("Selected Slices for Diagnosis", fontsize=6)
+	# --- Plot Axial Slices ---
+	for i, slice_idx in enumerate(axial_indices):
+		ax = axes[0, i]
+		ax.imshow(np.take(img_np, slice_idx, axis=2).T, cmap='gray', origin='lower')
+		ax.imshow(np.take(mask_np, slice_idx, axis=2).T, cmap=custom_cmap, origin='lower', vmin=0, vmax=len(colors)-1)
+		ax.set_title(f'Axial (Short-Axis) Slice: {slice_idx}', fontsize=6)
+		ax.axis('off')
+	# --- Plot Coronal Slices ---
+	for i, slice_idx in enumerate(coronal_indices):
+		ax = axes[1, i]
+		ax.imshow(np.take(img_np, slice_idx, axis=1).T, cmap='gray', origin='lower')
+		ax.imshow(np.take(mask_np, slice_idx, axis=1).T, cmap=custom_cmap, origin='lower', vmin=0, vmax=len(colors)-1)
+		ax.set_title(f'Coronal (4-Chamber View) Slice: {slice_idx}', fontsize=6)
+		ax.axis('off')
 
-	ax.set_title(f'Axial Slice: {initial_slice_idx}/{num_slices-1}')
-	ax.axis('off') # Hide axes ticks
+	# --- Plot Sagittal Slices ---
+	for i, slice_idx in enumerate(sagittal_indices):
+		ax = axes[2, i]
+		ax.imshow(np.take(img_np, slice_idx, axis=0).T, cmap='gray', origin='lower')
+		ax.imshow(np.take(mask_np, slice_idx, axis=0).T, cmap=custom_cmap, origin='lower', vmin=0, vmax=len(colors)-1)
+		ax.set_title(f'Sagittal (2-Chamber View) Slice: {slice_idx}', fontsize=6)
+		ax.axis('off')
 
-	# --- 4. Create the Slider ---
-	slider_ax = plt.axes([0.2, 0.05, 0.6, 0.03]) # [left, bottom, width, height]
-	slice_slider = Slider(
-		ax=slider_ax,
-		label='Slice',
-		valmin=0,
-		valmax=num_slices - 1,
-		valinit=initial_slice_idx,
-		valstep=1
-	)
-
-	# --- 5. Update Function for the Slider ---
-	def update(val):
-		slice_idx = int(val)
-
-		# Update the data for both the CT and the mask plots
-		ct_display.set_data(np.take(image_np, slice_idx, axis=view_axis).T)
-		mask_display.set_data(np.take(mask_np, slice_idx, axis=view_axis).T)
-
-		ax.set_title(f'Axial Slice: {slice_idx}/{num_slices-1}')
-		fig.canvas.draw_idle() # Redraw the plot
-
-	# Register the update function with the slider
-	slice_slider.on_changed(update)
-
+	plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 	plt.show()
 
 
 
-
-
-
 def scrollable_ct_mask(image_tensor, mask_tensor, view_axis=2):
-	"""
-	Displays a scrollable CT image with an overlay of the heart chamber mask.
-
-	Parameters:
-	- ct_path (str): Path to the cropped CT NIfTI file.
-	- mask_path (str): Path to the combined cropped mask NIfTI file.
-	"""
-	# Load the CT and mask images
+	plt.close('all')
 	image_np = image_tensor.cpu().numpy()
 	mask_np = mask_tensor.cpu().numpy()
 
-	# Remove the channel dimension (C) -> (H, W, D)
-	if image_np.ndim == 4:
-		image_np = image_np.squeeze(0)
-	if mask_np.ndim == 4:
-		mask_np = mask_np.squeeze(0)
+	if image_np.ndim == 4: image_np = image_np.squeeze(0)
+	if mask_np.ndim == 4: mask_np = mask_np.squeeze(0)
 
-	# For display, let's view along the last axis (axial view in RAS orientation)
-	# You can change this to axis 0 or 1 for sagittal or coronal views
-
-
-
-	# === Define colormap and legend ===
-
-	colors = [
-		(0, 0, 0, 0),       # 0: Background (fully transparent)
-		(1, 1, 0, 0.8),     # 1: Other heart structures (semi-transparent yellow)
-		(0, 0, 1, 0.5),     # 2: Myocardium (semi-transparent blue)
-		(1, 0, 0, 0.5)      # 3: Left Ventricle (semi-transparent red)
-	]
-	custom_cmap = ListedColormap(colors)
-	legend_patches = [
-		Patch(color=colors[1], label='Heart'),
-		Patch(color=colors[2], label='Myocardium'),
-		Patch(color=colors[3], label='LV'),
-	]
-	# === Axial 'Z' view ===
 	def display_axial(slice_index):
-		plt.figure(figsize=(6, 6))
+		plt.figure(figsize=(4, 4))
 		plt.imshow(image_np[:, :, slice_index], cmap='gray', origin='lower')
 		plt.imshow(mask_np[:, :, slice_index], cmap=custom_cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
 		plt.axis("off")
@@ -156,7 +80,7 @@ def scrollable_ct_mask(image_tensor, mask_tensor, view_axis=2):
 		plt.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.1))
 		plt.show()
 	def display_sagittal(slice_index):
-		plt.figure(figsize=(6, 6))
+		plt.figure(figsize=(4, 4))
 		plt.imshow(image_np[slice_index,:, :], cmap='gray', origin='lower')
 		plt.imshow(mask_np[slice_index,:, :], cmap=custom_cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
 		plt.axis("off")
@@ -164,7 +88,7 @@ def scrollable_ct_mask(image_tensor, mask_tensor, view_axis=2):
 		plt.legend(handles=legend_patches, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.1))
 		plt.show()
 	def display_coronal(slice_index):
-		plt.figure(figsize=(6, 6))
+		plt.figure(figsize=(4, 4))
 		plt.imshow(image_np[:, slice_index, :], cmap='gray', origin='lower')
 		plt.imshow(mask_np[:, slice_index, :], cmap=custom_cmap, alpha=0.4, origin='lower', vmin=0, vmax=5)
 		plt.axis("off")
@@ -178,6 +102,74 @@ def scrollable_ct_mask(image_tensor, mask_tensor, view_axis=2):
 		print("Invalid view axis. Choose 0 (sagittal), 1 (coronal), or 2 (axial).")
 
 
+def scrollable_planes(image_tensor, mask_tensor):
+	plt.close('all')
+	img = image_tensor.detach().cpu().numpy()
+	msk = mask_tensor.detach().cpu().numpy()
+	if img.ndim == 4: img = img.squeeze(0)
+	if msk.ndim == 4: msk = msk.squeeze(0)
+	assert img.shape == msk.shape and img.ndim == 3, "Expect matching 3D volumes"
+	X, Y, Z = img.shape
+	#vmax = int(np.max(msk)) if np.max(msk) > 0 else 1
+	vmax = min(3, int(msk.max()))
+
+	with plt.ioff(): fig, axes = plt.subplots(1, 3, figsize=(10, 5), constrained_layout=True)
+	for ax in axes: ax.axis("off")
+
+	i_sag, i_cor, i_ax = X//2, Y//2, Z//2
+
+	sag_im = axes[0].imshow(img[i_sag, :, :], cmap='gray', origin='lower')
+	sag_ov = axes[0].imshow(msk[i_sag, :, :], cmap=custom_cmap, alpha=0.4, origin='lower', vmin=0, vmax=vmax)
+	axes[0].set_title(f"Sagittal  {i_sag+1}/{X}")
+
+	cor_im = axes[1].imshow(img[:, i_cor, :], cmap='gray', origin='lower')
+	cor_ov = axes[1].imshow(msk[:, i_cor, :], cmap=custom_cmap, alpha=0.4, origin='lower', vmin=0, vmax=vmax)
+	axes[1].set_title(f"Coronal   {i_cor+1}/{Y}")
+	axes[1].legend(handles=legend_patches, loc='lower center', ncol=3, bbox_to_anchor=(0.5, -0.15))
+
+	ax_im = axes[2].imshow(img[:, :, i_ax], cmap='gray', origin='lower')
+	ax_ov = axes[2].imshow(msk[:, :, i_ax], cmap=custom_cmap, alpha=0.4, origin='lower', vmin=0, vmax=vmax)
+	axes[2].set_title(f"Axial     {i_ax+1}/{Z}")
+
+	s_sag = IntSlider(description='Sagittal', min=0, max=X-1, value=i_sag, continuous_update=False)
+	s_cor = IntSlider(description='Coronal',  min=0, max=Y-1, value=i_cor, continuous_update=False)
+	s_axl = IntSlider(description='Axial',    min=0, max=Z-1, value=i_ax,  continuous_update=False)
+	live = "widget" in matplotlib.get_backend().lower() or "nbagg" in matplotlib.get_backend().lower()
+	out = None
+	#with out: display(fig)
+	if live :
+		def redraw(): fig.canvas.draw_idle()
+		#fig_widget = fig.canvas
+	else:
+		out = Output()
+		with out:
+			display(fig)
+		def redraw():
+			with out:
+				out.clear_output(wait=True)
+				display(fig)
+		fig_widget = out
+
+	def on_sag(change):
+		i = change["new"]
+		sag_im.set_data(img[i, :, :]);	sag_ov.set_data(msk[i, :, :])
+		axes[0].set_title(f"Sagittal  {i+1}/{X}")
+		redraw()
+	def on_cor(change):
+		i = change["new"]
+		cor_im.set_data(img[:, i, :]);	cor_ov.set_data(msk[:, i, :])
+		axes[1].set_title(f"Coronal   {i+1}/{Y}")
+		redraw()
+	def on_ax(change):
+		i = change["new"]
+		ax_im.set_data(img[:, :, i]);	ax_ov.set_data(msk[:, :, i])
+		axes[2].set_title(f"Axial     {i+1}/{Z}")
+		redraw()
+	s_sag.observe(on_sag, names="value")
+	s_cor.observe(on_cor, names="value")
+	s_axl.observe(on_ax,  names="value")
+
+	return VBox([fig.canvas, HBox([s_sag, s_cor, s_axl])])
 
 
 def scrollable_ct_mask_compare(view, caseID1, ct_img1, mask_img1, caseID2, ct_img2, mask_img2):

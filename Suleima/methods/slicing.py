@@ -1,6 +1,5 @@
 import os
-from core.Case import *
-from core.Log import log
+
 
 '''
 	LV + MYO focus areas: Apical, Mid, Basal.

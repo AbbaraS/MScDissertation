@@ -1,7 +1,9 @@
-
-
 import logging
+from core.Log import *
 
+
+DATASET = dataset = load_dataset_info()
+INDEX = {d["ID"]: d for d in dataset if "ID" in d}
 
 T=True
 F=False
@@ -28,6 +30,8 @@ HUMAX = 250.0
 TARGETVOL = (64, 64, 64)
 TARGETORIEN = "RAS"
 
+MEAN= 151.40625
+STD= 86.16580963134766#
 
 '''
 "ID": Unique identifier for the case,
@@ -36,8 +40,3 @@ TARGETORIEN = "RAS"
 
 '''
 
-
-
-
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
