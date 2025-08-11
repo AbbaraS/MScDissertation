@@ -154,32 +154,46 @@ def select_slices(volumes):
 		raise ValueError("volumes must be a dictionary with 'mask' and 'image' keys")
 	lv = volumes["mask"]
 	lv_mask = (lv == 3)
+	_, H, W, D = volumes["mask"].shape
 	h_indices, w_indices, d_indices = torch.where(lv_mask.squeeze(0))
+
 	h_min, h_max = h_indices.min(), h_indices.max()
 	w_min, w_max = w_indices.min(), w_indices.max()
 	d_min, d_max = d_indices.min(), d_indices.max()
-	#print(f"H: ({h_min}, {h_max}), W: ({w_min}, {w_max}), D: ({d_min}, {d_max})")
-	d_base = int(d_min + int(0.2 * (d_max - d_min)))
-	d_mid = int((d_min + d_max) // 2)
-	d_apex = int(d_min + int(0.8 * (d_max - d_min)))
-	w_optimal = 0
-	max_area = 0
-	for w in range(w_min, w_max + 1):
-		area = lv_mask[:, :, w, :].sum()
-		if area > max_area:
-			max_area = area
-			w_optimal = w
-	h_optimal = 0
-	max_area = 0
-	for h in range(h_min, h_max + 1):
-		area = lv_mask[:, h, :, :].sum()
-		if area > max_area:
-			max_area = area
-			h_optimal = h
-	return {
-			"Axial": (d_base, d_mid, d_apex),
-			"Sagittal": (h_optimal-1, h_optimal, h_optimal+2),
-			"Coronal": (w_optimal-1, w_optimal, w_optimal+2)}
+
+	# --- Axial ---
+	d_span = d_max - d_min
+	d_base = d_min + int(0.20 * d_span)
+	d_mid = d_min + int(0.50 * d_span)
+	d_apex = d_min + int(0.80 * d_span)
+	# --- Coronal & Sagittal  ---
+
+	w_optimal = max(range(w_min, w_max + 1), key=lambda w: lv_mask[:, :, w, :].sum())
+	h_optimal = max(range(h_min, h_max + 1), key=lambda h: lv_mask[:, h, :, :].sum())
+
+	# --- Proportional Gap Calculation ---
+	h_span = h_max - h_min
+	w_span = w_max - w_min
+
+	# Define a gap that is 15% of the LV's size in that dimension
+	h_gap = max(1, int(0.15 * h_span))
+	w_gap = max(1, int(0.15 * w_span))
+
+	# Select the central slice, and one on each side separated by the gap
+	# Use min/max to ensure indices are within the volume's bounds
+	sagittal_slices = (
+		max(0, h_optimal - h_gap),
+		h_optimal,
+		min(H - 1, h_optimal + h_gap)
+	)
+	coronal_slices = (
+		max(0, w_optimal - w_gap),
+		w_optimal,
+		min(W - 1, w_optimal + w_gap)
+	)
+	return {"Axial": (d_base, d_mid, d_apex),
+			"Sagittal": sagittal_slices,
+			"Coronal": coronal_slices}
 
 
 def save_slice_as_nifti(
