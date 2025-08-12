@@ -1,6 +1,8 @@
 **/data/
 __pycache__/
 zipped/
+Suleima/model.log
+Suleima/folds.log
 
 # Ignore everything inside Takotsubo-Syndrome/
 Takotsubo-Syndrome/*
@@ -21,6 +23,7 @@ Takotsubo-Syndrome/code_model/figures/
 
 Suleima/plots/
 Suleima/pt_files/
+Suleima/app.log
 __MACOSX/
 
 .env

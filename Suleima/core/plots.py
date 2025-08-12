@@ -1,4 +1,4 @@
-
+import logging
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches as mpatches
@@ -9,7 +9,7 @@ from ipywidgets import IntSlider, HBox, VBox, Output
 from IPython.display import display
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-
+logger = logging.getLogger(__name__)
 
 colors = [
 		(0, 0, 0, 0),       # 0: Background (fully transparent)

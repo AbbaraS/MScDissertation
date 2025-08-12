@@ -1,0 +1,15 @@
+2025-08-12 22:01:28,044 | root | Total Cases: 157 | TTS: 82, Control: 75
+2025-08-12 22:01:31,717 | root | Sample Cases: 50 | TTS: 26, Control: 24
+2025-08-12 22:02:03,284 | root | Starting 2-fold Nested Cross-Validation...
+2025-08-12 22:02:03,287 | root | Starting Fold 1 | Data Split: 18 train, 7 val, 25 test.
+2025-08-12 22:02:03,288 | root | Starting 1 
+2025-08-12 22:03:09,827 | root | End of Fold 1 | Test results ---> {'loss': 0.6664901638031006, 'accuracy': 0.48, 'auc': 0.44871794871794873}
+2025-08-12 22:11:05,133 | root | Total Cases: 157 | TTS: 82, Control: 75
+2025-08-12 22:11:05,136 | root | Sample Cases: 50 | TTS: 26, Control: 24
+2025-08-12 22:12:17,373 | root | Total Cases: 157 | TTS: 82, Control: 75
+2025-08-12 22:12:17,376 | root | Sample Cases: 50 | TTS: 26, Control: 24
+2025-08-12 22:12:47,663 | root | Total Cases: 157 | TTS: 82, Control: 75
+2025-08-12 22:12:47,665 | root | Sample Cases: 50 | TTS: 26, Control: 24
+2025-08-12 22:12:47,666 | root | Starting 3-fold Nested Cross-Validation...
+2025-08-12 22:12:47,668 | root | Starting Fold 1 | Data Split: 30 train, 10 val, 10 test.
+2025-08-12 22:12:47,669 | root | Starting 1 

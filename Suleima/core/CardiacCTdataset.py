@@ -1,0 +1,106 @@
+import torch
+from torch.utils.data import Dataset
+from monai.transforms import LoadImaged
+from core.globals import *
+
+import logging
+import numpy as np
+from core.CNNmodel import *
+from core.preprocessing import *
+
+
+logger = logging.getLogger('root')
+
+class CardiacCTDataset(Dataset):
+	def __init__(self, data_dicts, transforms, stats):
+		self.data_dicts = data_dicts
+		self.stats = stats
+		self.transforms = transforms
+		self.loader = LoadImaged(keys=["image", "mask"])
+
+	def __len__(self):
+		return len(self.data_dicts)
+
+	def __getitem__(self, idx):
+		case_dict = self.data_dicts[idx]
+		loaded_dict = self.loader({
+			"image": case_dict['cropped']['image'],
+			"mask": case_dict['cropped']['mask']})
+
+		processed_3D = self.transforms(loaded_dict)
+		image_3d = processed_3D["image"]
+		mask_3d = processed_3D["mask"]
+		slice_indices = select_slices(mask_3d)
+
+		# 4. Extract the 2D slices from the 3D IMAGE tensor
+		# MONAI standard orientation (RAS) is (H, W, D) which corresponds to
+		# Sagittal, Coronal, and Axial planes.
+
+		# Axial slices (from the Depth axis)
+		axial1 = image_3d[0, :, :, slice_indices['Axial'][0]]
+		axial2 = image_3d[0, :, :, slice_indices['Axial'][1]]
+		axial3 = image_3d[0, :, :, slice_indices['Axial'][2]]
+
+		# Coronal slices (from the Width axis)
+		coronal1 = image_3d[0, :, slice_indices['Coronal'][0], :]
+		coronal2 = image_3d[0, :, slice_indices['Coronal'][1], :]
+		coronal3 = image_3d[0, :, slice_indices['Coronal'][2], :]
+
+		# Sagittal slices (from the Height axis)
+		sagittal1 = image_3d[0, slice_indices['Sagittal'][0], :, :]
+		sagittal2 = image_3d[0, slice_indices['Sagittal'][1], :, :]
+		sagittal3 = image_3d[0, slice_indices['Sagittal'][2], :, :]
+
+		# 5. create 3-channel 2D inputs per view
+		# Conv2d expects (C, H, W), stack on the channel dim=0
+		axial_image = torch.stack([axial1, axial2, axial3], dim=0)
+		coronal_image = torch.stack([coronal1, coronal2, coronal3], dim=0)
+		sagittal_image = torch.stack([sagittal1, sagittal2, sagittal3], dim=0)
+
+		# One-hot encode gender ('F' -> [1, 0], 'M' -> [0, 1])
+		gender = [1.0, 0.0] if case_dict['gender'] == 'F' else [0.0, 1.0]
+		age = (case_dict['age'] - self.stats['AGEmean']) / self.stats['AGEstd']
+
+		meta = torch.tensor([age] + gender, dtype=torch.float32)
+		label = torch.tensor(case_dict['label'], dtype=torch.float32)
+
+		return {
+			"axial_image": axial_image,
+			"coronal_image": coronal_image,
+			"sagittal_image": sagittal_image,
+			"label": label, "meta": meta}
+
+def select_slices(mask):
+	lv_mask = (mask == 3)
+	_, H, W, D = mask.shape
+	h_indices, w_indices, d_indices = torch.where(lv_mask.squeeze(0))
+	h_min, h_max = h_indices.min(), h_indices.max()
+	w_min, w_max = w_indices.min(), w_indices.max()
+	d_min, d_max = d_indices.min(), d_indices.max()
+
+	# --- Axial ---
+	d_span = d_max - d_min
+	d_base = d_min + int(0.20 * d_span)
+	d_mid =  d_min + int(0.50 * d_span)
+	d_apex = d_min + int(0.80 * d_span)
+	# --- Coronal & Sagittal  ---
+	w_optimal = max(range(w_min, w_max + 1), key=lambda w: lv_mask[:, :, w, :].sum())
+	h_optimal = max(range(h_min, h_max + 1), key=lambda h: lv_mask[:, h, :, :].sum())
+	h_span = h_max - h_min; w_span = w_max - w_min
+	h_gap = max(1, int(0.15 * h_span)); w_gap = max(1, int(0.15 * w_span))
+
+	return {"Axial": (d_base, d_mid, d_apex),
+			"Sagittal": (max(0, h_optimal - h_gap), h_optimal, min(H - 1, h_optimal + h_gap)),
+			"Coronal": (max(0, w_optimal - w_gap), w_optimal, min(W - 1, w_optimal + w_gap))}
+
+
+
+
+
+
+
+
+
+
+
+
