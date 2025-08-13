@@ -1,23 +1,19 @@
 import numpy as np
 import torch
-import torch.nn as nn
-
 from sklearn.metrics import roc_auc_score
 import torch.nn as nn
 import torch.optim as optim
 import copy
 from core.CNNmodel import *
 from torch.utils.data import DataLoader
-import numpy as np
-from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from monai.transforms import (
 	Compose, EnsureChannelFirstd, Orientationd, Lambdad,
 	CropForegroundd, NormalizeIntensityd, Resized, EnsureTyped,
 	RandAffined, RandGaussianNoiseD)
 from core.CardiacCTdataset import *
-
-from torch.optim.lr_scheduler import StepLR
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+import logging
+
 
 logger = logging.getLogger('root')
 fold_log = logging.getLogger('folds')
@@ -25,11 +21,11 @@ fold_log = logging.getLogger('folds')
 def clamp_hu_values(image_tensor):
 	return torch.clamp(image_tensor, min=-175.0, max=250.0)
 
-def get_data_loaders(batch_size, train_datalist, val_datalist, test_datalist, stats):
+def get_transforms(stats):
 	shape = (64, 64, 64)
 	orientation = "RAS"
 
-	base_transforms_list = [
+	val_test_transforms = [
 		EnsureChannelFirstd(keys=["image", "mask"]),
 		Orientationd(keys=["image", "mask"], axcodes=orientation),
 		Lambdad(keys=["image"], func=clamp_hu_values),
@@ -37,27 +33,15 @@ def get_data_loaders(batch_size, train_datalist, val_datalist, test_datalist, st
 		NormalizeIntensityd(keys=["image"], subtrahend=stats['HUmean'], divisor=stats['HUstd']),
 		Resized(keys=["image", "mask"], spatial_size=shape, mode=("bilinear", "nearest")),
 		EnsureTyped(keys=["image", "mask"])]
-	val_transforms = Compose(base_transforms_list) # Validation/Test transforms have no augmentation
 
-	train_transforms_list = base_transforms_list + [
+	train_transforms = val_test_transforms + [
 		RandAffined(keys=['image', 'mask'], prob=0.5, rotate_range=(0, 0, np.pi/12), scale_range=(0.1, 0.1, 0.1)),
 		RandGaussianNoiseD(keys=['image'], prob=0.1)]
-	train_transforms = Compose(train_transforms_list)
-
-	train_dataset = CardiacCTDataset(train_datalist, train_transforms, stats)
-	val_dataset   = CardiacCTDataset(val_datalist, val_transforms, stats)
-	test_dataset  = CardiacCTDataset(test_datalist, val_transforms, stats)
-
-	num_workers = 4
-	trn_loader  = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
-	val_loader  = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
-	tst_loader  = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+	return Compose(val_test_transforms), Compose(train_transforms)
 
 
-	return trn_loader, val_loader, tst_loader
 
-
-def get_Kfold_stats(datalist):
+def get_dataset_stats(datalist):
 	stats = [case["stats"] for case in datalist]
 	ages = [case['age'] for case in datalist]
 
@@ -74,27 +58,84 @@ def get_Kfold_stats(datalist):
 			'AGEmean': float(np.mean(ages)),
 			'AGEstd':  float(np.std(ages))}
 
-def run_k_fold(train_datalist, val_datalist, test_datalist, fold_idx):
-	fold_log.info(f"---------- FOLD {fold_idx + 1} ----------")
-	Kstats = get_Kfold_stats(train_datalist)
-
-	# --- Define Hyperparameters ---
-	hypers = {"LR": 1e-4, "WD": 1e-5, "epochs": 20,
-			  "patience": 10, "batch_size": 8, "threshold_cutoff": 0.5, "DR": 0.4}
-
-	train_loader, val_loader, test_loader = get_data_loaders(hypers["batch_size"], train_datalist, val_datalist, test_datalist, Kstats)
-	# --- Initialize Model ---
+def train_val_model(model, train_loader, val_loader, hypers):
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-	model = MultiViewCNN(dropout_rate=hypers["DR"]).to(device)
+	model.to(device)
+	labels = [d['label'] for d in train_loader.dataset.data_dicts]
+	pos_weight = torch.tensor(labels.count(0) / labels.count(1), dtype=torch.float32)
+	optimizer = optim.Adam(model.parameters(), lr=hypers['LR'], weight_decay=hypers['WD'])
+	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=hypers['patience'], factor=0.5)
+	criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight.to(device))
+	best_val_loss = float('inf')
+	best_model_state = None
+	patience_counter = 0
 
-	best_model, epoch_history = train_model(model, train_loader, val_loader, hypers, fold_idx)
-	final_scores = evaluate_model(best_model, test_loader, hypers)
+	for epoch in range(hypers['epochs']):
+		_, _ = train_epoch(model, train_loader, optimizer, criterion, device)
+		val_loss, _ = validate_epoch(model, val_loader, criterion, device)
+		scheduler.step(val_loss)
+		if val_loss < best_val_loss:
+			best_val_loss = val_loss
+			best_model_state = copy.deepcopy(model.state_dict())
+			patience_counter = 0
+		else:
+			patience_counter += 1
+			if patience_counter >= hypers['patience']:
+				break
+	model.load_state_dict(best_model_state)
+	return best_val_loss
 
-	final_scores['learning_rate'] = hypers['LR']
 
-	fold_log.info(f"Fold {fold_idx + 1} Stats: {Kstats}")
-	fold_log.info(f"Fold {fold_idx + 1} Final scores: {final_scores}")
-	return final_scores, epoch_history
+def outer_train_model(model, train_loader, val_loader, hypers):
+	epoch_history = []
+	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+	model.to(device)
+
+	# Calculate pos_weight for handling class imbalance
+	labels = [d['label'] for d in train_loader.dataset.data_dicts]
+	pos_weight = torch.tensor(labels.count(0) / labels.count(1), dtype=torch.float32)
+
+	optimizer = optim.Adam(model.parameters(), lr=hypers['LR'], weight_decay=hypers['WD'])
+	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=hypers['patience'], factor=0.5)
+	criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight.to(device))
+
+	best_val_loss = float('inf')
+	best_model_state = None
+	patience_counter = 0
+
+	fold_log.info(f"Epoch | TrnLss | TrnAcc | VlLss | VlAcc | LR  ")
+	for epoch in range(hypers['epochs']):
+		train_loss, train_acc = train_epoch(model, train_loader, optimizer, criterion, device)
+		val_loss, val_acc = validate_epoch(model, val_loader, criterion, device)
+
+		current_lr = optimizer.param_groups[0]['lr']
+		fold_log.info(f"{epoch+1}/{hypers['epochs']} | "
+					 f"{train_loss:.4f} | {train_acc:.4f} | "
+					 f"{val_loss:.4f} | {val_acc:.4f} | {current_lr:.4f}")
+
+		epoch_history.append({
+			'epoch': epoch + 1,
+			'train_loss': train_loss,
+			'train_acc': train_acc,
+			'val_loss': val_loss,
+			'val_acc': val_acc})
+
+		scheduler.step(val_loss)
+
+		logger.info(f"Epoch {epoch+1}: Best Val Loss: {best_val_loss:.4f}, Patience: {patience_counter}/{hypers['patience']}")
+		if val_loss < best_val_loss:
+			best_val_loss = val_loss
+			# deepcopy to save the state in memory, not to disk
+			best_model_state = copy.deepcopy(model.state_dict())
+			patience_counter = 0
+		else:
+			patience_counter += 1
+			if patience_counter >= hypers['patience']:
+				fold_log.info(f"Early stopping with Val Loss: {best_val_loss:.4f} at patience: {patience_counter}/{hypers['patience']}")
+				break
+
+	model.load_state_dict(best_model_state)
+	return model, epoch_history, best_val_loss
 
 
 def train_epoch(model, loader, optimizer, criterion, device):
@@ -154,59 +195,6 @@ def validate_epoch(model, loader, criterion, device):
 	return epoch_loss, epoch_acc
 
 
-def train_model(model, train_loader, val_loader, hypers, fold_idx):
-	epoch_history = []
-	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-	model.to(device)
-
-	# Calculate pos_weight for handling class imbalance
-	labels = [d['label'] for d in train_loader.dataset.data_dicts]
-	pos_weight = torch.tensor(labels.count(0) / labels.count(1), dtype=torch.float32)
-
-	optimizer = optim.Adam(model.parameters(), lr=hypers['LR'], weight_decay=hypers['WD'])
-	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=hypers['patience'],
-							   factor=0.5)
-	criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight.to(device))
-
-	best_val_loss = float('inf')
-	best_model_state = None
-	patience_counter = 0
-
-	fold_log.info("---- Model training ----")
-	fold_log.info(f"Epoch | TrnLss | TrnAcc | VlLss | VlAcc | LR  ")
-	for epoch in range(hypers['epochs']):
-		train_loss, train_acc = train_epoch(model, train_loader, optimizer, criterion, device)
-		val_loss, val_acc = validate_epoch(model, val_loader, criterion, device)
-
-		current_lr = optimizer.param_groups[0]['lr']
-		fold_log.info(f"{epoch+1}/{hypers['epochs']} | "
-					 f"{train_loss:.4f} | {train_acc:.4f} | "
-					 f"{val_loss:.4f} | {val_acc:.4f} | {current_lr:.4f}")
-
-		epoch_history.append({
-			'fold_id': fold_idx + 1,
-			'epoch': epoch + 1,
-			'train_loss': train_loss,
-			'train_acc': train_acc,
-			'val_loss': val_loss,
-			'val_acc': val_acc
-		})
-		scheduler.step(val_loss)
-		#print(optimizer.param_groups[0]['lr'])
-		if val_loss < best_val_loss:
-			best_val_loss = val_loss
-			# deepcopy to save the state in memory, not to disk
-			best_model_state = copy.deepcopy(model.state_dict())
-			patience_counter = 0
-		else:
-			patience_counter += 1
-			if patience_counter >= hypers['patience']:
-				fold_log.info("Early stopping triggered.")
-				break
-
-	model.load_state_dict(best_model_state)
-	return model, epoch_history
-
 def evaluate_model(model, test_loader, hypers):
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	model.to(device)
@@ -247,7 +235,6 @@ def evaluate_model(model, test_loader, hypers):
 
 	return {"loss": final_loss,
 		 "accuracy": final_acc,
-		 "auc": final_auc,
-		 }
+		 "auc": final_auc}
 
 

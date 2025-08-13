@@ -41,8 +41,37 @@ def folds_logger():
 		folds_logger.addHandler(folds_handler)
 
 
-
 logger = logging.getLogger('root')
+
+'''
+per epoch metrics:
+[fold_id, epoch_number , train_loss,  train_accuracy, val_loss, val_accuracy]
+
+Final Fold Performance:
+[fold_id, model_name, val_loss at which early stopping occurred] +
+	key classifier metrics:
+	AUC (Area Under the ROC Curve),
+	F1-Score, Precision, Recall, Accuracy,
+	positive predictive value, negative predictive value,
+	false positive rate, false negative rate,
+	uncalibrated_brier, calibrated_brier,
+Hyperparameters and Metadata:
+[learning_rate, weight_decay, batch_size, dropout_rate, image_size]
+
+
+Does the 64x64x64 volume still clearly show the anatomical features needed for diagnosis & classification in this set up?
+
+'''
+
+training = ['model', 'fold_id', 'epoch', 'train_loss', 'train_acc', 'val_loss', 'val_acc']
+testing = ['model', 'fold_id', 'AUC', 'F1-Score', 'Precision',
+		   'Recall', 'Accuracy', 'Specificity', 'Sensitivity']
+
+
+training_filename = 'training_logs.csv'
+
+
+
 
 json_path = Path("data/data_info.json")
 
@@ -110,18 +139,7 @@ def filter_json_keys(input_path: str, output_path: str):
 		logger.error(f"An unexpected error occurred: {e}")
 
 
-'''
-per epoch metrics:
-[fold_id, epoch_number ,train_loss,  train_accuracy, val_loss, val_accuracy]
 
-Final Fold Performance:
-[fold_id, model_name, val_loss at which early stopping occurred] +
-	key classifier metrics:
-	[AUC (Area Under the ROC Curve), F1-Score, Precision, Recall, Accuracy]
-Hyperparameters and Metadata:
-[learning_rate, weight_decay, batch_size, dropout_rate, image_size]
-
-'''
 
 
 
