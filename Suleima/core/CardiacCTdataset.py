@@ -1,15 +1,61 @@
 import torch
-from torch.utils.data import Dataset
 from monai.transforms import LoadImaged
 from core.globals import *
-
+from core.modelUtils import *
 import logging
 import numpy as np
 from core.CNNmodel import *
 from core.preprocessing import *
-
-
 logger = logging.getLogger('root')
+
+from torch.utils.data import Dataset, DataLoader
+
+
+class DataLoaderFactory:
+	"""
+	Creates PyTorch DataLoaders for specific folds of a pre-computed
+	cross-validation setup.
+	"""
+	def __init__(self, main_dataset, all_folds_data):
+		self.main_dataset = main_dataset
+		self.all_folds_data = all_folds_data
+		# You can also store constants like num_workers here
+		self.num_workers = 4
+
+	def create_inner_loaders(self, outer_fold_id, inner_fold_id):
+		"""
+		Generates train and validation dataloaders for a specific inner fold.
+		"""
+		# --- 1. Get the correct data for the specified fold ---
+		outer_fold_struct = self.all_folds_data[outer_fold_id]
+		inner_fold_struct = outer_fold_struct['inner_folds'][inner_fold_id]
+
+		# The outer_train_pool is the dataset from which inner folds are made
+		outer_train_pool = [self.main_dataset[i] for i in outer_fold_struct['outer_train_indices']]
+
+		# Get the specific train/val data for the inner fold
+		# Note: The indices are local to the outer_train_pool
+		train_fold_data = [outer_train_pool[i] for i in inner_fold_struct['inner_train_indices']]
+		val_fold_data = [outer_train_pool[i] for i in inner_fold_struct['inner_val_indices']]
+
+		# --- 2. Get the pre-calculated stats and create transforms ---
+		# It's crucial to use the stats calculated from the *inner* training set
+		# to avoid any data leakage from the inner validation set.
+		inner_stats = inner_fold_struct['inner_fold_stats']
+
+		train_transforms = get_train_transforms(inner_stats)
+		val_transforms = get_val_test_transforms(inner_stats)
+
+		# --- 3. Create Dataset and DataLoader objects ---
+		train_dataset = CardiacCTDataset(train_fold_data, train_transforms, inner_stats)
+		val_dataset = CardiacCTDataset(val_fold_data, val_transforms, inner_stats)
+
+		train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=self.num_workers)
+		val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, num_workers=self.num_workers)
+
+		return train_loader, val_loader
+
+
 
 class CardiacCTDataset(Dataset):
 	def __init__(self, data_dicts, transforms, stats):

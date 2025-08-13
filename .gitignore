@@ -3,7 +3,7 @@ __pycache__/
 zipped/
 Suleima/model.log
 Suleima/folds.log
-
+Suleima/training/*
 # Ignore everything inside Takotsubo-Syndrome/
 Takotsubo-Syndrome/*
 

@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 import logging
 import sys
-
+import os
 def root_logger():
 	"""Configures both the root logger and the dedicated folds logger."""
 
@@ -14,7 +14,7 @@ def root_logger():
 		# Clear existing handlers if any
 		root_logger.handlers.clear()
 		# File handler for app.log
-		app_handler = logging.FileHandler('model.log', mode='w')
+		app_handler = logging.FileHandler('training/model.log', mode='w')
 		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s'))
 
 		# Console handler
@@ -36,7 +36,7 @@ def folds_logger():
 
 		folds_logger.propagate = False
 		# File handler for folds.log
-		folds_handler = logging.FileHandler('folds.log', mode='w')
+		folds_handler = logging.FileHandler('training/folds.log', mode='w')
 		folds_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s'))
 		folds_logger.addHandler(folds_handler)
 
@@ -63,29 +63,48 @@ Does the 64x64x64 volume still clearly show the anatomical features needed for d
 
 '''
 
-training = ['model', 'fold_id', 'epoch', 'train_loss', 'train_acc', 'val_loss', 'val_acc']
+training = ['model', 'OUT_K', 'params_id', 'INNER_K', '', 'epoch', 'train_loss', 'train_acc', 'val_loss', 'val_acc']
+
 testing = ['model', 'fold_id', 'AUC', 'F1-Score', 'Precision',
 		   'Recall', 'Accuracy', 'Specificity', 'Sensitivity']
 
 
 training_filename = 'training_logs.csv'
 
+RESULTS_FILEPATH = Path("training/hp_search_results.json")
+
+
+def load_hp_search_results(filename="training/hp_search_results.json"):
+	"""Loads results from a JSON file, handling missing or empty files."""
+	if not os.path.exists(filename):
+		print("No hyperparameter search done.")
+		return []
+	with open(filename, 'r') as f:
+		results = json.load(f)
+		print(f"Loaded {len(results)} completed results.")
+		return results
+
+
+def save_hp_search_results(data, filename="training/hp_search_results.json"):
+	"""Saves data to a JSON file."""
+	os.makedirs(os.path.dirname(filename), exist_ok=True)
+	with open(filename, 'w') as f:
+		json.dump(data, f, indent=2)
+
 
 
 
 json_path = Path("data/data_info.json")
-
 def save_dataset_info(dataset):
 	"""Save dataset information to a JSON file."""
 	try:
 		json_path.parent.mkdir(parents=True, exist_ok=True)
 		with open(json_path, 'w') as json_file:
 			json.dump(dataset, json_file, indent=4)
-		logger.info(f"Successfully saved data to: {json_path}")
-		# Reload updated dataset info
+		print(f"Successfully saved data to: {json_path}")
 		return load_dataset_info()
 	except Exception as e:
-		logger.error(f"An error occurred: {e}")
+		print(f"An error occurred: {e}")
 
 def load_dataset_info():
 	"""Load dataset information from a JSON file."""
@@ -95,10 +114,10 @@ def load_dataset_info():
 				dataset = json.load(json_file)
 			return dataset
 		else:
-			logger.warning(f"File not found: {json_path}")
+			print(f"File not found: {json_path}")
 			return None
 	except Exception as e:
-		logger.error(f"An error occurred: {e}")
+		print(f"An error occurred: {e}")
 		return None
 
 def filter_json_keys(input_path: str, output_path: str):

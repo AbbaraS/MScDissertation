@@ -1,6 +1,7 @@
 from core.Log import *
 
-
+OUTER_FOLDS = 4
+INNER_FOLDS = 3
 T=True
 F=False
 
@@ -9,6 +10,16 @@ LABEL_MAP = {
 	"myocardium": 2,
 	"left_ventricle": 3,
 }
+PARAM_GRID = [
+{'paramID': 1, 'learning_rate': 0.0001, 'weight_decay': 1e-05,  'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 2, 'learning_rate': 0.0001, 'weight_decay': 0.0001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 3, 'learning_rate': 0.0001, 'weight_decay': 0.001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 4, 'learning_rate': 0.001, 'weight_decay': 1e-05, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 5, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 6, 'learning_rate': 0.001, 'weight_decay': 0.001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 7, 'learning_rate': 0.005, 'weight_decay': 1e-05, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 8, 'learning_rate': 0.005, 'weight_decay': 0.0001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
+{'paramID': 9, 'learning_rate': 0.005, 'weight_decay': 0.001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8}]
 
 CASE_INFO = ["ID", "directory", "volumes"]
 MONAI_KEYS = ["image", "mask"]
