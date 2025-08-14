@@ -10,16 +10,41 @@ LABEL_MAP = {
 	"myocardium": 2,
 	"left_ventricle": 3,
 }
+
+'''
+
+0.0001
+0.0005
+0.00001
+
+'''
+
+LR_SWEEP = [2e-4, 5e-4, 8e-4]
+DR_SWEEP = [0.2, 0.3, 0.4]
+WD_SWEEP = [1e-4, 5e-4, 1e-5]
+
+fixed_dropout_rate = 0.2             # A reasonable, fixed value
+
 PARAM_GRID = [
-{'paramID': 1, 'learning_rate': 0.0001, 'weight_decay': 1e-05,  'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 2, 'learning_rate': 0.0001, 'weight_decay': 0.0001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 3, 'learning_rate': 0.0001, 'weight_decay': 0.001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 4, 'learning_rate': 0.001, 'weight_decay': 1e-05, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 5, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 6, 'learning_rate': 0.001, 'weight_decay': 0.001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 7, 'learning_rate': 0.005, 'weight_decay': 1e-05, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 8, 'learning_rate': 0.005, 'weight_decay': 0.0001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8},
-{'paramID': 9, 'learning_rate': 0.005, 'weight_decay': 0.001, 'threshold': 0.4, 'DR': 0.4, 'epochs': 50, 'patience': 10, 'batch_size': 8}]
+	{"paramID": 1, "LR": 5e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},
+	{"paramID": 2, "LR": 5e-4, "WD": 1e-4, "DR": 0.3, "epochs":10},
+	{"paramID": 3, "LR": 5e-4, "WD": 1e-4, "DR": 0.4, "epochs":10},
+	{"paramID": 4, "LR": 5e-4, "WD": 1e-6, "DR": 0.2, "epochs":10},   # --- Confirm with your other best WD value ---
+	{"paramID": 5, "LR": 2e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},   # --- Check a slightly lower LR just in case ---
+	{"paramID": 6, "LR": 8e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},    # --- Check a slightly higher LR just in case ---
+]
+
+
+
+
+
+
+
+
+
+
+
+
 
 CASE_INFO = ["ID", "directory", "volumes"]
 MONAI_KEYS = ["image", "mask"]

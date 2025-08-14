@@ -7,8 +7,8 @@ logger = logging.getLogger(__name__)
 
 
 class SingleBranchCNN(nn.Module):
-	def __init__(self, dropout_rate=0.4):
-		super(SingleBranchCNN, self).__init__()
+	def __init__(self, dropout_rate=0.2):
+		super().__init__()
 
 		self.dropout_rate = dropout_rate
 		self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
@@ -46,8 +46,8 @@ This means:
 '''
 
 class MultiViewCNN(nn.Module):
-	def __init__(self, dropout_rate=0.4):
-		super(MultiViewCNN, self).__init__()
+	def __init__(self, dropout_rate=0.2):
+		super().__init__()
 
 		self.axial_branch = SingleBranchCNN(dropout_rate)          # 64 features
 		self.sagittal_branch = SingleBranchCNN(dropout_rate)       # 64 features

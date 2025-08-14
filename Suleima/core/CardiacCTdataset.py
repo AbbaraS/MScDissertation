@@ -1,14 +1,18 @@
 import torch
 from monai.transforms import LoadImaged
+from monai.transforms import (
+	Compose, EnsureChannelFirstd, Orientationd, Lambdad,
+	CropForegroundd, NormalizeIntensityd, Resized, EnsureTyped,
+	RandAffined, RandGaussianNoiseD)
 from core.globals import *
 from core.modelUtils import *
 import logging
 import numpy as np
 from core.CNNmodel import *
 from core.preprocessing import *
+from torch.utils.data import Dataset, DataLoader
 logger = logging.getLogger('root')
 
-from torch.utils.data import Dataset, DataLoader
 
 
 class DataLoaderFactory:
@@ -55,6 +59,33 @@ class DataLoaderFactory:
 
 		return train_loader, val_loader
 
+def clamp_hu_values(image_tensor):
+	return torch.clamp(image_tensor, min=-175.0, max=250.0)
+
+def get_base_transforms(stats, shape=(64, 64, 64)):
+	"""Returns the list of base transforms without augmentation."""
+	return [
+		EnsureChannelFirstd(keys=["image", "mask"]),
+		Orientationd(keys=["image", "mask"], axcodes="RAS"),
+		Lambdad(keys=["image"], func=clamp_hu_values),
+		CropForegroundd(keys=["image", "mask"], source_key="mask"),
+		NormalizeIntensityd(keys=["image"], subtrahend=stats['HUmean'], divisor=stats['HUstd']),
+		Resized(keys=["image", "mask"], spatial_size=shape, mode=("bilinear", "nearest")),
+		EnsureTyped(keys=["image", "mask"])
+	]
+
+def get_train_transforms(stats):
+	"""Applies augmentations on top of the base transforms."""
+	base_transforms = get_base_transforms(stats)
+	augmentation_transforms = [
+		RandAffined(keys=['image', 'mask'], prob=0.5, rotate_range=(0, 0, np.pi/12), scale_range=(0.1, 0.1, 0.1)),
+		RandGaussianNoiseD(keys=['image'], prob=0.1)
+	]
+	return Compose(base_transforms + augmentation_transforms)
+
+def get_val_test_transforms(stats):
+	"""Validation/Test transforms have no augmentation."""
+	return Compose(get_base_transforms(stats))
 
 
 class CardiacCTDataset(Dataset):

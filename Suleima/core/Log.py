@@ -3,23 +3,27 @@ import json
 import logging
 import sys
 import os
+
+
+
 def root_logger():
 	"""Configures both the root logger and the dedicated folds logger."""
 
 	# --- Configure Root Logger (for general model.log and console) ---
 	root_logger = logging.getLogger('root')
 	root_logger.setLevel(logging.INFO)
+	root_logger.propagate = False
 	if not root_logger.hasHandlers():
-
+		root_logger.propagate = False
 		# Clear existing handlers if any
 		root_logger.handlers.clear()
 		# File handler for app.log
-		app_handler = logging.FileHandler('training/model.log', mode='w')
-		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s'))
+		app_handler = logging.FileHandler('model.log', mode='w')
+		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 
 		# Console handler
 		console_handler = logging.StreamHandler(sys.stdout)
-		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s'))
+		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 		root_logger.addHandler(app_handler)
 		root_logger.addHandler(console_handler)
 
@@ -28,6 +32,7 @@ def folds_logger():
 	# --- Configure Folds Logger (for folds.log) ---
 	folds_logger = logging.getLogger('folds') # Give it a descriptive name
 	folds_logger.setLevel(logging.INFO)
+	folds_logger.propagate = False
 
 	if not folds_logger.hasHandlers():
 
@@ -36,8 +41,8 @@ def folds_logger():
 
 		folds_logger.propagate = False
 		# File handler for folds.log
-		folds_handler = logging.FileHandler('training/folds.log', mode='w')
-		folds_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s'))
+		folds_handler = logging.FileHandler('folds.log', mode='w')
+		folds_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 		folds_logger.addHandler(folds_handler)
 
 

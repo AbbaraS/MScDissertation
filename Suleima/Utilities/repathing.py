@@ -274,17 +274,15 @@ def move_Outputs_slices(case, patient):
 "resMask_128.nii.gz",
 '''
 
-def delete_files(casePath):
-	dirs = ["resCT.nii.gz",
-			"resMask.nii.gz",
-			"resCT_64.nii.gz",
-			"resMask_64.nii.gz",
+def delete_files(casePath, to_dir):
+	dirs = ["resCT_64.nii.gz",
 			"resCT_96.nii.gz",
-			"resMask_96.nii.gz",
 			"resCT_128.nii.gz",
-			"resMask_128.nii.gz",
-			"pipeline.txt",
-			"info.txt",
+			"resMASK_64.nii.gz",
+			"resMASK_96.nii.gz",
+			"resMASK_128.nii.gz",
+			#"pipeline.txt",
+			#"info.txt",
 			#"ctSlices",
 		 	#"maskSlices",
 		 	#"pngSlices",
@@ -296,17 +294,19 @@ def delete_files(casePath):
 			]
 
 
+
 	for d in dirs:
-		p = casePath / d
+		from_p = casePath / d
+		to_p = to_dir / d
 		#if p.is_dir():
 		#	shutil.rmtree(p)
 		#	print(f"Deleted directory: {p}")
-		if p.is_file():
-			os.remove(p)
-		elif not p.exists():
+		if from_p.is_file():
+			shutil.move(from_p, to_p)
+		elif not from_p.exists():
 			continue
 		else:
-			print(f"❌ Could not delete {p}, it does not exist or is not a file/directory.")
+			print(f"❌ Could not delete {from_p}, it does not exist or is not a file/directory.")
 			break
 	print(f"deleted from {casePath}: {dirs}")
 
@@ -319,7 +319,11 @@ def loop_deletes():
 		if caseID.startswith('.'):
 			continue
 		casePath = root_dir / caseID
-		delete_files(casePath)
+		to_p = Path("data/cases_done", caseID)
+		if not to_p.exists():
+			print(f"doesnt exist {to_p}")
+			continue
+		delete_files(casePath, to_p)
 		#break
 
 
