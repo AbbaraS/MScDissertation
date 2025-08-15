@@ -8,9 +8,9 @@ from core.CNNmodel import *
 
 
 class MetadataMLP(nn.Module):
-	def __init__(self, input_features=3, dropout_rate=0.4): # Input: age & gender
+	def __init__(self, dropout_rate=0.4): # Input: age & gender
 		super(MetadataMLP, self).__init__()
-		self.fc1 = nn.Linear(input_features, 64)
+		self.fc1 = nn.Linear(3, 64)
 		self.bn1 = nn.BatchNorm1d(64)
 		self.dropout1 = nn.Dropout(dropout_rate)
 		self.fc2 = nn.Linear(64, 32)
@@ -26,6 +26,16 @@ class MetadataMLP(nn.Module):
 		x = self.dropout2(x)
 		x = self.fc3(x)
 		return x
+
+
+
+
+
+
+
+
+
+
 
 class SingleViewClassifier(nn.Module):
 	def __init__(self, dropout_rate=0.4):
@@ -69,23 +79,25 @@ def create_adapted_resnet18(device):
 
 	# Freeze all the parameters in the model
 	# This prevents the pre-trained weights from changing during training
-	print("Freezing existing model layers...")
+	#print("Freezing existing model layers...")
 	for param in feature_extractor.parameters():
 		param.requires_grad = False
 
 
 	# Get the number of input features for the final layer
 	num_ftrs = feature_extractor.fc.in_features    ## This will be 512
-
 	feature_extractor.fc = nn.Identity()
+	num_views = 3
+	total_input_features = (num_ftrs * num_views) + 3     # (512 * 3) + 3 = 1539
+
 
 	classifier = nn.Sequential(
-		nn.BatchNorm1d(num_ftrs + 3), # 512 resnet features + 2 meta features
-		nn.Linear(num_ftrs + 2, 256),
+		nn.BatchNorm1d(total_input_features), # 512 resnet features + 2 meta features
+		nn.Linear(total_input_features, 256),
 		nn.ReLU(),
-		nn.Dropout(0.5),
+		nn.Dropout(0.3),
 		nn.Linear(256, 1)
 	)
-	feature_extractor = feature_extractor.to(device)
-	classifier = classifier.to(device)
+
 	return feature_extractor.to(device), classifier.to(device)
+

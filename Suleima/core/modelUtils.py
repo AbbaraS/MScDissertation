@@ -232,23 +232,23 @@ def run_INNER_folds(DL, outer_id, hypers, inner_folds):
 def train_INNER_model(model, train_loader, val_loader, experiment):
 	''' DONE. DONT CHANGE IT EVER..'''
 	log = logging.getLogger('INNER_train')
-	log.info(f"		 ExpID; HP_Set;  Fold;   Epoch;   TrainLoss;   	   ValLoss;  P;  	LR")
+	#log.info(f"		 ExpID; OUTER_FOLD; INNER_FOLD;	HP_Set;   Epoch;  TrainLoss;  ValLoss;  P;  LR")
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 	hypers = experiment['hypers']
-	LR = hypers['LR']
-	WD = hypers['WD']
-	ExpID = experiment['ExpID']
-	P = hypers['P']
+	#LR = hypers['LR']
+	#WD = hypers['WD']
+	#ExpID = experiment['ExpID']
+	#P = hypers['P']
 	epochs = hypers['Epochs']
-	optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=WD)
+	optimizer = optim.Adam(model.parameters(), lr= hypers['LR'], weight_decay=hypers['WD'])
 	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=3, factor=0.5)
 	criterion = nn.BCEWithLogitsLoss()
 	best_V_loss = float('inf')
 	P_counter = 0
 	val_N=len(val_loader.dataset)
 	train_N=len(train_loader.dataset)
-	pbar_epochs = tqdm(range(epochs), desc=f"	↳ Experiment {ExpID} | Training model... ", position=ExpID, leave=True)
+	pbar_epochs = tqdm(range(epochs), desc=f"	↳ Experiment {experiment['ExpID']} | Training model... ", position=experiment['ExpID'], leave=True)
 	for epoch in pbar_epochs:
 		model.train()
 		running_loss = 0.0
@@ -258,13 +258,11 @@ def train_INNER_model(model, train_loader, val_loader, experiment):
 			sag = batch["sagittal_image"].to(device)
 			met = batch["meta"].to(device)
 			lbl = batch["label"].to(device).unsqueeze(1)
-
 			optimizer.zero_grad()
 			outputs = model(axi, sag, cor, met)
 			T_loss = criterion(outputs, lbl)
 			T_loss.backward()
 			optimizer.step()
-
 			running_loss += T_loss.item() * lbl.size(0)
 		T_loss = running_loss / train_N
 		model.eval()
@@ -276,7 +274,6 @@ def train_INNER_model(model, train_loader, val_loader, experiment):
 				sag = batch["sagittal_image"].to(device)
 				met = batch["meta"].to(device)
 				lbl = batch["label"].to(device).unsqueeze(1)
-
 				outputs = model(axi, sag, cor, met)
 				V_loss = criterion(outputs, lbl)
 				running_loss += V_loss.item() * lbl.size(0)
@@ -288,8 +285,138 @@ def train_INNER_model(model, train_loader, val_loader, experiment):
 			P_counter = 0
 		else:
 			P_counter += 1
-		log.info(f"		{ExpID}; 	{experiment['OUTER_FOLD']}; 	{experiment['INNER_FOLD']}; 	{hypers['HPset']};  	{epoch}; 	{T_loss}; 	{V_loss};  	{P_counter}; 	{optimizer.param_groups[0]['lr']}")
-		if P_counter >= P: break
+		log.info(f"		{experiment['ExpID']}; 	{experiment['OUTER_FOLD']}; 	{experiment['INNER_FOLD']}; 	{hypers['HPset']};  	{epoch}; 	{T_loss}; 	{V_loss};  	{P_counter}; 	{optimizer.param_groups[0]['lr']}")
+		if P_counter >= hypers['P']: break
+	return best_V_loss
+
+#def train_INNER_RESNET(model, train_loader, val_loader, experiment):
+#	''' DONE. DONT CHANGE IT EVER..'''
+#	log = logging.getLogger('INNER_train')
+#	#log.info(f"		 ExpID; OUTER_FOLD; INNER_FOLD;	HP_Set;   Epoch;  TrainLoss;  ValLoss;  P;  LR")
+#	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#	feature_extractor, classifier = create_adapted_resnet18(device)
+#	model.to(device)
+#	hypers = experiment['hypers']
+#	#LR = hypers['LR']
+#	#WD = hypers['WD']
+#	#ExpID = experiment['ExpID']
+#	#P = hypers['P']
+#	epochs = hypers['Epochs']
+#	optimizer = optim.Adam(model.parameters(), lr= hypers['LR'], weight_decay=hypers['WD'])
+#	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=3, factor=0.5)
+#	criterion = nn.BCEWithLogitsLoss()
+#	best_V_loss = float('inf')
+#	P_counter = 0
+#	val_N=len(val_loader.dataset)
+#	train_N=len(train_loader.dataset)
+#	pbar_epochs = tqdm(range(epochs), desc=f"	↳ Experiment {experiment['ExpID']} | Training model... ", position=experiment['ExpID'], leave=True)
+#	for epoch in pbar_epochs:
+#		model.train()
+#		running_loss = 0.0
+#		for batch in train_loader:
+#			axi = batch["axial_image"].to(device)
+#			cor = batch["coronal_image"].to(device)
+#			sag = batch["sagittal_image"].to(device)
+#			met = batch["meta"].to(device)
+#			lbl = batch["label"].to(device).unsqueeze(1)
+#			axi_features = feature_extractor(axi)
+#			cor_features = feature_extractor(cor)
+#			sag_features = feature_extractor(sag)
+#			combined_input = torch.cat([axi_features, cor_features, sag_features, met], dim=1)
+#			optimizer.zero_grad()
+#			outputs = classifier(combined_input)
+#			T_loss = criterion(outputs, lbl)
+#			T_loss.backward()
+#			optimizer.step()
+#			running_loss += T_loss.item() * lbl.size(0)
+#		T_loss = running_loss / train_N
+#		model.eval()
+#		running_loss = 0.0
+#		with torch.no_grad():
+#			for batch in val_loader:
+#				axi = batch["axial_image"].to(device)
+#				cor = batch["coronal_image"].to(device)
+#				sag = batch["sagittal_image"].to(device)
+#				met = batch["meta"].to(device)
+#				lbl = batch["label"].to(device).unsqueeze(1)
+#				axi_features = feature_extractor(axi)
+#				cor_features = feature_extractor(cor)
+#				sag_features = feature_extractor(sag)
+#				combined_input = torch.cat([axi_features, cor_features, sag_features, met], dim=1)
+#				outputs = classifier(combined_input)
+#				V_loss = criterion(outputs, lbl)
+#				running_loss += V_loss.item() * lbl.size(0)
+#
+#		V_loss = running_loss / val_N
+#		scheduler.step(V_loss)
+#		if V_loss < best_V_loss:
+#			best_V_loss = V_loss
+#			P_counter = 0
+#		else:
+#			P_counter += 1
+#		log.info(f"	 RESNET;	{experiment['ExpID']}; 	{experiment['OUTER_FOLD']}; 	{experiment['INNER_FOLD']}; 	{hypers['HPset']};  	{epoch}; 	{T_loss}; 	{V_loss};  	{P_counter}; 	{optimizer.param_groups[0]['lr']}")
+#		if P_counter >= hypers['P']: break
+#	return best_V_loss
+
+
+def train_INNER_MLP2(model, train_loader, val_loader, experiment):
+	''' DONE. DONT CHANGE IT EVER..'''
+	log = logging.getLogger('INNER_train')
+	#log.info(f"		 ExpID; OUTER_FOLD; INNER_FOLD;	HP_Set;   Epoch;  TrainLoss;  ValLoss;  P;  LR")
+	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+	model.to(device)
+	hypers = experiment['hypers']
+	#LR = hypers['LR']
+	#WD = hypers['WD']
+	#ExpID = experiment['ExpID']
+	#P = hypers['P']
+	epochs = hypers['Epochs']
+	optimizer = optim.Adam(model.parameters(), lr= hypers['LR'], weight_decay=hypers['WD'])
+	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=3, factor=0.5)
+	criterion = nn.BCEWithLogitsLoss()
+	best_V_loss = float('inf')
+	P_counter = 0
+	val_N=len(val_loader.dataset)
+	train_N=len(train_loader.dataset)
+	pbar_epochs = tqdm(range(epochs), desc=f"	↳ Experiment {experiment['ExpID']} | Training model... ", position=experiment['ExpID'], leave=True)
+	for epoch in pbar_epochs:
+		model.train()
+		running_loss = 0.0
+		for batch in train_loader:
+			#axi = batch["axial_image"].to(device)
+			#cor = batch["coronal_image"].to(device)
+			#sag = batch["sagittal_image"].to(device)
+			met = batch["meta"].to(device)
+			lbl = batch["label"].to(device).unsqueeze(1)
+			optimizer.zero_grad()
+			outputs = model(met)
+			T_loss = criterion(outputs, lbl)
+			T_loss.backward()
+			optimizer.step()
+			running_loss += T_loss.item() * lbl.size(0)
+		T_loss = running_loss / train_N
+		model.eval()
+		running_loss = 0.0
+		with torch.no_grad():
+			for batch in val_loader:
+				#axi = batch["axial_image"].to(device)
+				#cor = batch["coronal_image"].to(device)
+				#sag = batch["sagittal_image"].to(device)
+				met = batch["meta"].to(device)
+				lbl = batch["label"].to(device).unsqueeze(1)
+				outputs = model(met)
+				V_loss = criterion(outputs, lbl)
+				running_loss += V_loss.item() * lbl.size(0)
+
+		V_loss = running_loss / val_N
+		scheduler.step(V_loss)
+		if V_loss < best_V_loss:
+			best_V_loss = V_loss
+			P_counter = 0
+		else:
+			P_counter += 1
+		log.info(f"	 MLP;	{experiment['ExpID']}; 	{experiment['OUTER_FOLD']}; 	{experiment['INNER_FOLD']}; 	{hypers['HPset']};  	{epoch}; 	{T_loss}; 	{V_loss};  	{P_counter}; 	{optimizer.param_groups[0]['lr']}")
+		if P_counter >= hypers['P']: break
 	return best_V_loss
 
 
