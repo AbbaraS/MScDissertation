@@ -1,7 +1,7 @@
 import pickle
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
-
+from pathlib import Path
 from core.Log import *
 from core.globals import *
 pools = ["holdout", "main"]
@@ -10,29 +10,37 @@ def load_dataset(pool="main"):
 	full_dl = load_dataset_info()
 	return [i for i in full_dl if i["pool"] == pool]
 
+json_files = [
+	"training/hp_search_results.json",
+	"training/OUTERSexperiments_results.json",
+	"training/param_grid.json",
 
-def when_NCV_is_done():
-	import pandas as pd
-	all_tasks = get_all_tasks()
-	all_OUTER_folds_results = load_hp_search_results()
-	print(f"all results: {len(all_OUTER_folds_results)}, all tasks: {len(all_tasks)}")
-	if len(all_OUTER_folds_results) == len(all_tasks):
-		results_df = pd.DataFrame(all_OUTER_folds_results)
-		best_params_df = results_df.loc[results_df.groupby('OUTER_fold_id')['avg_val_loss'].idxmin()]
-		print(best_params_df)
-		BEST_PARAMS_FILE = "training/best_params_per_fold.json"
-		os.makedirs(os.path.dirname(BEST_PARAMS_FILE), exist_ok=True)
-		best_params_df.to_json(BEST_PARAMS_FILE, orient='records', indent=2)
+	]
 
-		'''
-			NEXT: training a final model for each outer fold
-			using its winning hyperparameters and evaluating it on the outer test set.
-		'''
 
-	else:
-		completed_tasks = {(res['outer_fold_id'], res['paramID']) for res in all_OUTER_folds_results}
-		remaining = [task for task in all_tasks if task not in completed_tasks]
-		print(f"remaining tasks: {len(remaining)}")
+
+
+def save_to_json(data, filename="training/OUTERSexperiments_results.json"):
+	print(f"Saving to {filename}.")
+	os.makedirs(os.path.dirname(filename), exist_ok=True)
+	with open(filename, 'w') as f:
+		json.dump(data, f, indent=2)
+
+def load_from_json(filename="training/OUTERSexperiments_results.json"):
+	if not os.path.exists(filename):
+		print(f"No data found in {filename}.")
+		return []
+	with open(filename, 'r') as f:
+		results = json.load(f)
+		print(f"Loaded {filename}.")
+		return results
+
+
+
+
+
+
+
 
 def get_dataset_stats(datalist):
 	'''DONE. ONLY UPDATE IF ERROR OCCURS.'''
@@ -136,10 +144,10 @@ def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
 		return outer_fold_data['outer_fold_stats'], inner_fold_data['inner_fold_stats']
 
 
-def get_all_tasks():
+def get_all_tasks(grid=PARAM_GRID):
 	all_possible_tasks = []
 	for outer_id in range(OUTER_FOLDS):
-		for params in PARAM_GRID:
+		for params in grid:
 			param_id = params['paramID']
 			all_possible_tasks.append((outer_id, param_id))
 	return all_possible_tasks

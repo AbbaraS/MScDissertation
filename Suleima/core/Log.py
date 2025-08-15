@@ -15,13 +15,8 @@ def root_logger():
 	root_logger.propagate = False
 	if not root_logger.hasHandlers():
 		root_logger.propagate = False
-		# Clear existing handlers if any
-		root_logger.handlers.clear()
-		# File handler for app.log
-		app_handler = logging.FileHandler('model.log', mode='w')
+		app_handler = logging.FileHandler('model.log', mode='a')
 		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
-
-		# Console handler
 		console_handler = logging.StreamHandler(sys.stdout)
 		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 		root_logger.addHandler(app_handler)
@@ -35,15 +30,34 @@ def folds_logger():
 	folds_logger.propagate = False
 
 	if not folds_logger.hasHandlers():
-
-		# Clear existing handlers if any
-		folds_logger.handlers.clear()
-
 		folds_logger.propagate = False
-		# File handler for folds.log
-		folds_handler = logging.FileHandler('folds.log', mode='w')
+		folds_handler = logging.FileHandler('folds.log', mode='a')
 		folds_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 		folds_logger.addHandler(folds_handler)
+
+
+
+def setup_loggers():
+	# --- Configure Logger
+	train = logging.getLogger('train')
+	train.setLevel(logging.INFO)
+	train.propagate = False
+
+	evaluate = logging.getLogger('evaluate')
+	evaluate.setLevel(logging.INFO)
+	evaluate.propagate = False
+
+	if not train.hasHandlers():
+		train.propagate = False
+		train_handler = logging.FileHandler('training.log', mode='a')		#REMEMBER: 'a' mode to append logs
+		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
+		train.addHandler(train_handler)
+
+	if not evaluate.hasHandlers():
+		evaluate.propagate = False
+		evaluate_handler = logging.FileHandler('evaluating.log', mode='a')		#REMEMBER: 'a' mode to append logs
+		evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
+		evaluate.addHandler(evaluate_handler)
 
 
 logger = logging.getLogger('root')
@@ -79,22 +93,7 @@ training_filename = 'training_logs.csv'
 RESULTS_FILEPATH = Path("training/hp_search_results.json")
 
 
-def load_hp_search_results(filename="training/hp_search_results.json"):
-	"""Loads results from a JSON file, handling missing or empty files."""
-	if not os.path.exists(filename):
-		print("No hyperparameter search done.")
-		return []
-	with open(filename, 'r') as f:
-		results = json.load(f)
-		print(f"Loaded {len(results)} completed results.")
-		return results
 
-
-def save_hp_search_results(data, filename="training/hp_search_results.json"):
-	"""Saves data to a JSON file."""
-	os.makedirs(os.path.dirname(filename), exist_ok=True)
-	with open(filename, 'w') as f:
-		json.dump(data, f, indent=2)
 
 
 

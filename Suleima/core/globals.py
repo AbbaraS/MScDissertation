@@ -1,4 +1,5 @@
 from core.Log import *
+#PBAR_POSITION = 0
 
 OUTER_FOLDS = 4
 INNER_FOLDS = 3
@@ -25,21 +26,31 @@ WD_SWEEP = [1e-4, 5e-4, 1e-5]
 
 fixed_dropout_rate = 0.2             # A reasonable, fixed value
 
-PARAM_GRID = [
+DONE_PARAM_GRID = [
 	{"paramID": 1, "LR": 5e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},
 	{"paramID": 2, "LR": 5e-4, "WD": 1e-4, "DR": 0.3, "epochs":10},
 	{"paramID": 3, "LR": 5e-4, "WD": 1e-4, "DR": 0.4, "epochs":10},
-	{"paramID": 4, "LR": 5e-4, "WD": 1e-6, "DR": 0.2, "epochs":10},   # --- Confirm with your other best WD value ---
-	{"paramID": 5, "LR": 2e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},   # --- Check a slightly lower LR just in case ---
-	{"paramID": 6, "LR": 8e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},    # --- Check a slightly higher LR just in case ---
+	{"paramID": 4, "LR": 5e-4, "WD": 1e-6, "DR": 0.2, "epochs":10},
+	{"paramID": 5, "LR": 2e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},
+	{"paramID": 6, "LR": 8e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},]
+
+PARAM_GRID = [
+	{"paramID": 9, "LR": 0.0008, "WD": 0.000001, "DR": 0.2, "epochs":10},
+	#{"paramID": 10, "LR": 0.0002, "WD": 0.0001, "DR": 0.4, "epochs":10},
+	#{"paramID": 11, "LR": 0.001, "WD": 0.0001, "DR": 0.2, "epochs":10},
+	#{"paramID": 12, "LR": 0.001, "WD": 0.000001, "DR": 0.2, "epochs":10},
+	{"paramID": 1, "LR": 5e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},
+	{"paramID": 2, "LR": 5e-4, "WD": 1e-4, "DR": 0.3, "epochs":10},
+	{"paramID": 3, "LR": 5e-4, "WD": 1e-4, "DR": 0.4, "epochs":10},
+	{"paramID": 4, "LR": 5e-4, "WD": 1e-6, "DR": 0.2, "epochs":10},
+	{"paramID": 5, "LR": 2e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},
+	{"paramID": 6, "LR": 8e-4, "WD": 1e-4, "DR": 0.2, "epochs":10},
 ]
 
-
-
-
-
-
-
+OUTER_FOLDS_PARAMS=[
+	{"paramID": 9, "LR": 0.0008, "WD": 0.000001, "DR": 0.2, "epochs":10},
+	{"paramID": 6, "LR": 8e-4, "WD": 1e-4, "DR": 0.2, "epochs":10}
+]
 
 
 

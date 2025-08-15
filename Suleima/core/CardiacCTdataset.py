@@ -1,4 +1,5 @@
 import torch
+from sklearn.model_selection import train_test_split
 from monai.transforms import LoadImaged
 from monai.transforms import (
 	Compose, EnsureChannelFirstd, Orientationd, Lambdad,
@@ -58,6 +59,37 @@ class DataLoaderFactory:
 		val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, num_workers=self.num_workers)
 
 		return train_loader, val_loader
+
+
+
+	def create_outer_loaders(self, outer_fold_id):
+		"""
+		Generates train and test dataloaders for a specific outer fold.
+		"""
+		outer_fold_struct = self.all_folds_data[outer_fold_id]
+		fold_pool = [self.main_dataset[i] for i in outer_fold_struct['outer_train_indices']]
+		fold_pool_labels = [self.main_dataset[i]['label'] for i in outer_fold_struct['outer_train_indices']]
+		train_fold_data, val_fold_data = train_test_split(
+			fold_pool,
+			test_size=0.1,
+			random_state=42,
+			stratify=fold_pool_labels)
+		test_fold_data = [self.main_dataset[i] for i in outer_fold_struct['outer_test_indices']]
+		outer_stats = outer_fold_struct['outer_fold_stats']
+
+		train_transforms = get_train_transforms(outer_stats)
+		train_dataset = CardiacCTDataset(train_fold_data, train_transforms, outer_stats)
+		train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=self.num_workers)
+
+		test_transforms = get_val_test_transforms(outer_stats)
+		val_dataset = CardiacCTDataset(val_fold_data, test_transforms, outer_stats)
+		val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, num_workers=self.num_workers)
+		test_dataset = CardiacCTDataset(test_fold_data, test_transforms, outer_stats)
+		test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False, num_workers=self.num_workers)
+
+		return train_loader, val_loader, test_loader
+
+
 
 def clamp_hu_values(image_tensor):
 	return torch.clamp(image_tensor, min=-175.0, max=250.0)
@@ -141,7 +173,7 @@ class CardiacCTDataset(Dataset):
 		meta = torch.tensor([age] + gender, dtype=torch.float32)
 		label = torch.tensor(case_dict['label'], dtype=torch.float32)
 
-		return {
+		return {"CaseID": case_dict['CaseID'],
 			"axial_image": axial_image,
 			"coronal_image": coronal_image,
 			"sagittal_image": sagittal_image,

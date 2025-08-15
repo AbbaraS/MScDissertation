@@ -64,6 +64,112 @@ metadata = {"patientID": {"age": 0, "gender": "M/F"},...}
 
 
 '''
+import re
+import csv
+import ast
+
+def create_csv_from_log(log_file_path, csv_file_path):
+	"""
+	Parses a log file to extract hyperparameter tuning results and saves them to a CSV file.
+
+	This function reads a log file where hyperparameter sets and their corresponding
+	validation losses are recorded on separate lines. It extracts the relevant data,
+	combines it, and writes it to a CSV file.
+
+	Args:
+		log_file_path (str): The full path to the input log file.
+		csv_file_path (str): The full path where the output CSV file will be saved.
+	"""
+	# Regex to find the line with the dictionary of parameters
+	# This looks for a line that starts with a timestamp, a pipe, and then a curly brace.
+	param_line_regex = re.compile(r"^\d{2}:\d{2} \| (\{.*\})$")
+
+	# Regex to find the line with the fold results
+	# This captures the Fold number, ParamID, and Avg Val Loss.
+	fold_line_regex = re.compile(r"Fold (\d+) \| ParamID \d+ \| Avg Val Loss: ([\d\.]+)")
+
+	# This will hold the most recently found parameters.
+	last_params = {}
+	processed_data = []
+
+	try:
+		with open(log_file_path, 'r') as f_in:
+			for line in f_in:
+				# Check if the current line contains the parameters
+				param_match = param_line_regex.search(line)
+				if param_match:
+					# The matched group is a string representation of a dictionary.
+					# ast.literal_eval safely evaluates it into a Python dictionary.
+					param_dict_str = param_match.group(1)
+					try:
+						last_params = ast.literal_eval(param_dict_str)
+					except (ValueError, SyntaxError) as e:
+						print(f"Warning: Could not parse parameter dictionary on line: {line.strip()}. Error: {e}")
+						last_params = {} # Reset to avoid using stale data
+					continue # Move to the next line
+
+				# Check if the current line contains the fold results
+				fold_match = fold_line_regex.search(line)
+				if fold_match and last_params:
+					# Extract captured groups from the regex match
+					fold = fold_match.group(1)
+					avg_val_loss = fold_match.group(2)
+
+					# Combine the data from the last parameter set and the current fold result
+					# into a single dictionary.
+					row_data = {
+						'paramID': last_params.get('paramID'),
+						'LR': last_params.get('LR'),
+						'WD': last_params.get('WD'),
+						'DR': last_params.get('DR'),
+						'Avg Val Loss': avg_val_loss,
+						'Fold': fold
+					}
+					processed_data.append(row_data)
+					# It's good practice to reset last_params after using it,
+					# though in this file format it's not strictly necessary.
+					# last_params = {}
+
+	except FileNotFoundError:
+		print(f"Error: The file '{log_file_path}' was not found.")
+		return
+	except Exception as e:
+		print(f"An unexpected error occurred: {e}")
+		return
+
+	# Check if we have any data to write
+	if not processed_data:
+		print("No data was processed. The output CSV will be empty.")
+		return
+
+	# Write the collected data to the CSV file
+	try:
+		with open(csv_file_path, 'w', newline='') as f_out:
+			# Define the headers for the CSV file
+			headers = ['paramID', 'LR', 'WD', 'DR', 'Avg Val Loss', 'Fold']
+			writer = csv.DictWriter(f_out, fieldnames=headers)
+
+			# Write the header row
+			writer.writeheader()
+			# Write all the data rows
+			writer.writerows(processed_data)
+		print(f"Successfully created CSV file at: {csv_file_path}")
+
+	except IOError as e:
+		print(f"Error writing to CSV file '{csv_file_path}': {e}")
+
+
+'''
+##########to run
+# Get the path to the uploaded log file
+input_log_file = 'testing.log'
+# Define the name for the output CSV file
+output_csv_file = 'results.csv'
+# Run the conversion function
+create_csv_from_log(input_log_file, output_csv_file)
+
+'''
+
 
 # === Plots ===
 
@@ -787,4 +893,16 @@ def convert_slice_to_PNG(slice_data):
         return np.zeros_like(slice_data, dtype=np.uint8)
     norm = (slice_data - min_val) / ptp_val
     return (norm * 255).astype(np.uint8)
+
+
+
+
+
+
+
+
+
+
+
+
 
