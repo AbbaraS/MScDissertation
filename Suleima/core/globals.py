@@ -20,9 +20,10 @@ LABEL_MAP = {
 
 '''
 
-LR_SWEEP = [2e-4, 5e-4, 8e-4]
-DR_SWEEP = [0.2, 0.3, 0.4]
-WD_SWEEP = [1e-4, 5e-4, 1e-5]
+LR_SWEEP = [6e-4, 5e-4, 4e-4, 3e-4]
+DR_SWEEP = [0.3]
+TH_SWEEP = [0.4, 0.5]
+WD_SWEEP = [1e-4, 1e-6]
 
 fixed_dropout_rate = 0.2             # A reasonable, fixed value
 

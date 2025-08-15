@@ -8,7 +8,7 @@ from core.CNNmodel import *
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import logging
 from core.globals import *
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 from core.Log import *
 logger = logging.getLogger('root')
 fold_log = logging.getLogger('folds')
@@ -20,12 +20,14 @@ from core.globals import *
 
 
 def TRAIN_MODEL(model, train_loader, val_loader, hypers):
-	log = logging.getLogger('train')
+	log = logging.getLogger('OUTER_train')
+	log.info(f"		 ExpID; HP_Set;  Fold;   Epoch;   TrainLoss;   		 TrainAcc;             ValLoss;              	ValAcc; 	LR")
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 	LR = hypers['LR']
 	WD = hypers['WD']
 	TH = hypers['TH']
+	ExpID = hypers['ExpID']
 	P = 5
 	epochs = hypers['epochs']
 	optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=WD)
@@ -35,8 +37,8 @@ def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 	P_counter = 0
 	val_N=len(val_loader.dataset)
 	train_N=len(train_loader.dataset)
-
-	for epoch in range(epochs):
+	pbar_epochs = tqdm(range(epochs), desc=f"	↳ Experiment {ExpID} | Training model... ", position=ExpID, leave=True)
+	for epoch in pbar_epochs:
 		model.train()
 		running_loss = 0.0
 		all_labels = []
@@ -62,7 +64,6 @@ def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 
 		T_loss = running_loss / train_N
 		T_acc = np.mean(np.array(all_preds) == np.array(all_labels))
-
 		model.eval()
 		running_loss = 0.0
 		all_labels = []
@@ -86,16 +87,13 @@ def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 		V_loss = running_loss / val_N
 		V_acc = np.mean(np.array(all_preds) == np.array(all_labels))
 		scheduler.step(V_loss)
-
 		if V_loss < best_V_loss:
 			best_V_loss = V_loss
-
 			best_model_state = copy.deepcopy(model.state_dict())
 			P_counter = 0
 		else:
 			P_counter += 1
-
-		log.info(f"		{hypers["paramID"]}; {hypers["Fold"]}; {epoch}; {T_loss}; {T_acc}; {V_loss}; {V_acc}; {optimizer.param_groups[0]['lr']}")
+		log.info(f"		{ExpID}; {hypers['HPset']}; {hypers['Fold']}; {epoch}; {T_loss}; {T_acc}; {V_loss}; {V_acc}; {optimizer.param_groups[0]['lr']}")
 		if P_counter >= P: break
 	model.load_state_dict(best_model_state)
 	return model, best_model_state
@@ -106,7 +104,9 @@ def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 
 def EVALUATE_MODEL(model, test_loader, hypers):
 	TH = hypers['TH']
-	log = logging.getLogger('evaluate')
+	ExpID = hypers['ExpID']
+	log = logging.getLogger('OUTER_evaluate')
+	log.info(f"		 ExpID; HP_Set;  Fold;   CaseID;   prediction;   		 probability    ")
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 	model.eval()
@@ -118,7 +118,8 @@ def EVALUATE_MODEL(model, test_loader, hypers):
 	all_probabilities = []
 	all_labels = []
 	with torch.no_grad():
-		for batch in test_loader:
+		pbar_eval = tqdm(test_loader, desc=f"	↳ Experiment {ExpID} | Evaluating model... ", position=ExpID, leave=True)
+		for batch in pbar_eval:
 			axi = batch["axial_image"].to(device)
 			cor = batch["coronal_image"].to(device)
 			sag = batch["sagittal_image"].to(device)
@@ -136,7 +137,7 @@ def EVALUATE_MODEL(model, test_loader, hypers):
 
 			all_predictions.extend(prediction.cpu().numpy())
 			all_labels.extend(lbl.cpu().numpy())
-			log.info(f"		{hypers["paramID"]}; {hypers["Fold"]}; {CaseID}; {prediction}; {probability};")
+			log.info(f"		{ExpID}; {hypers['HPset']}; {hypers['Fold']}; {CaseID}; {prediction}; {probability};")
 
 	final_loss = running_loss / eval_N
 	return final_loss, all_probabilities, all_labels, all_predictions
@@ -177,7 +178,7 @@ def run_OUTERS_topParamSets(experiments_results, completed_tasks, DL):
 				'best_val_loss': best_val_loss
 			})
 
-			save_experiments_results(experiments_results)
+			save_to_json(experiments_results, filename="training/OUTERSexperiments_results.json")
 			fold_log.info(f"FOLD {CURRENT_OUT_ID} | ParamID {paramID} | Best Val Loss: {best_val_loss:.4f}  --------")
 			completed_tasks.add((CURRENT_OUT_ID, paramID))
 
@@ -203,7 +204,7 @@ def run_OUTER_hp_search(hp_search_results, completed_tasks, DL):
 				"OUTER_fold_id": CURRENT_OUT_ID,
 				"paramID": paramID,
 				"avg_val_loss": np.mean(inner_val_losses)})
-			save_hp_search_results(hp_search_results)
+			save_to_json(hp_search_results, filename="training/hp_search_results.json")
 			fold_log.info(f"FOLD {CURRENT_OUT_ID} | ParamID {paramID} | Avg Val Loss: {np.mean(inner_val_losses):.4f}###############")
 			completed_tasks.add((CURRENT_OUT_ID, paramID))
 	return completed_tasks
@@ -227,25 +228,30 @@ def run_INNER_folds(DL, outer_id, hypers, inner_folds):
 	return inner_loop_results
 
 
-def train_INNER_model(model, train_loader, val_loader, hypers):
+
+def train_INNER_model(model, train_loader, val_loader, experiment):
 	''' DONE. DONT CHANGE IT EVER..'''
+	log = logging.getLogger('INNER_train')
+	log.info(f"		 ExpID; HP_Set;  Fold;   Epoch;   TrainLoss;   	   ValLoss;  P;  	LR")
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	model.to(device)
+	hypers = experiment['hypers']
 	LR = hypers['LR']
 	WD = hypers['WD']
-	P = 3
-	epochs = hypers['epochs']
+	ExpID = experiment['ExpID']
+	P = hypers['P']
+	epochs = hypers['Epochs']
 	optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=WD)
-	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=P, factor=0.5)
+	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=3, factor=0.5)
 	criterion = nn.BCEWithLogitsLoss()
-	best_val_loss = float('inf')
+	best_V_loss = float('inf')
 	P_counter = 0
 	val_N=len(val_loader.dataset)
 	train_N=len(train_loader.dataset)
-
-	for epoch in range(epochs):
+	pbar_epochs = tqdm(range(epochs), desc=f"	↳ Experiment {ExpID} | Training model... ", position=ExpID, leave=True)
+	for epoch in pbar_epochs:
 		model.train()
-		train_running_loss = 0.0
+		running_loss = 0.0
 		for batch in train_loader:
 			axi = batch["axial_image"].to(device)
 			cor = batch["coronal_image"].to(device)
@@ -255,14 +261,14 @@ def train_INNER_model(model, train_loader, val_loader, hypers):
 
 			optimizer.zero_grad()
 			outputs = model(axi, sag, cor, met)
-			Tloss = criterion(outputs, lbl)
-			Tloss.backward()
-			train_running_loss += Tloss.item() * lbl.size(0)
+			T_loss = criterion(outputs, lbl)
+			T_loss.backward()
 			optimizer.step()
-		T_loss = train_running_loss / train_N
 
+			running_loss += T_loss.item() * lbl.size(0)
+		T_loss = running_loss / train_N
 		model.eval()
-		val_running_loss = 0.0
+		running_loss = 0.0
 		with torch.no_grad():
 			for batch in val_loader:
 				axi = batch["axial_image"].to(device)
@@ -272,23 +278,19 @@ def train_INNER_model(model, train_loader, val_loader, hypers):
 				lbl = batch["label"].to(device).unsqueeze(1)
 
 				outputs = model(axi, sag, cor, met)
-				Vloss = criterion(outputs, lbl)
-				val_running_loss += Vloss.item() * lbl.size(0)
+				V_loss = criterion(outputs, lbl)
+				running_loss += V_loss.item() * lbl.size(0)
 
-		val_loss = val_running_loss / val_N
-		scheduler.step(val_loss)
-
-		if val_loss < best_val_loss:
-			best_val_loss = val_loss
+		V_loss = running_loss / val_N
+		scheduler.step(V_loss)
+		if V_loss < best_V_loss:
+			best_V_loss = V_loss
 			P_counter = 0
 		else:
 			P_counter += 1
-			if P_counter >= P:
-				#logger.info(f"Early stopping with Val Loss: {best_val_loss:.4f} at patience: {P_counter}/10")
-				fold_log.info(f"	E: {epoch} | TL: {T_loss} |	VL: {val_loss} | P: {P_counter} | Early stopping triggered.")
-				break
-		fold_log.info(f"	E: {epoch} | TL: {T_loss} |	VL: {val_loss} | P: {P_counter}")
-	return best_val_loss
+		log.info(f"		{ExpID}; 	{experiment['OUTER_FOLD']}; 	{experiment['INNER_FOLD']}; 	{hypers['HPset']};  	{epoch}; 	{T_loss}; 	{V_loss};  	{P_counter}; 	{optimizer.param_groups[0]['lr']}")
+		if P_counter >= P: break
+	return best_V_loss
 
 
 

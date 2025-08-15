@@ -39,25 +39,36 @@ def folds_logger():
 
 def setup_loggers():
 	# --- Configure Logger
-	train = logging.getLogger('train')
+	train = logging.getLogger('OUTER_train')
 	train.setLevel(logging.INFO)
 	train.propagate = False
 
-	evaluate = logging.getLogger('evaluate')
+	evaluate = logging.getLogger('OUTER_evaluate')
 	evaluate.setLevel(logging.INFO)
 	evaluate.propagate = False
 
 	if not train.hasHandlers():
 		train.propagate = False
-		train_handler = logging.FileHandler('training.log', mode='a')		#REMEMBER: 'a' mode to append logs
+		train_handler = logging.FileHandler('OUTER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
 		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
 		train.addHandler(train_handler)
 
 	if not evaluate.hasHandlers():
 		evaluate.propagate = False
-		evaluate_handler = logging.FileHandler('evaluating.log', mode='a')		#REMEMBER: 'a' mode to append logs
+		evaluate_handler = logging.FileHandler('OUTER_evaluating.log', mode='a')		#REMEMBER: 'a' mode to append logs
 		evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
 		evaluate.addHandler(evaluate_handler)
+
+	train = logging.getLogger('INNER_train')
+	train.setLevel(logging.INFO)
+	train.propagate = False
+
+	if not train.hasHandlers():
+		train.propagate = False
+		train_handler = logging.FileHandler('INNER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
+		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
+		train.addHandler(train_handler)
+
 
 
 logger = logging.getLogger('root')
@@ -95,34 +106,64 @@ RESULTS_FILEPATH = Path("training/hp_search_results.json")
 
 
 
+def load_dataset(pool="main"):
+	full_dl = load_dataset_info()
+	return [i for i in full_dl if i["pool"] == pool]
+
+json_files = [
+	"training/hp_search_results.json",
+	"training/OUTERSexperiments_results.json",
+	"training/parameter_grid.json",
+
+	]
+
+
+
+
+def save_to_json(data, filename="training/OUTERSexperiments_results.json"):
+	#print(f"Saving to {filename}.")
+	os.makedirs(os.path.dirname(filename), exist_ok=True)
+	with open(filename, 'w') as f:
+		json.dump(data, f, indent=2)
+
+def load_from_json(filename="training/OUTERSexperiments_results.json"):
+	if not os.path.exists(filename):
+		print(f"No data found in {filename}.")
+		return []
+	with open(filename, 'r') as f:
+		results = json.load(f)
+		print(f"Loaded {filename}.")
+		return results
+
+
+
 
 
 
 json_path = Path("data/data_info.json")
-def save_dataset_info(dataset):
+
+def save_dataset_info(dataset, file="data/data_info.json"):
 	"""Save dataset information to a JSON file."""
 	try:
-		json_path.parent.mkdir(parents=True, exist_ok=True)
-		with open(json_path, 'w') as json_file:
-			json.dump(dataset, json_file, indent=4)
-		print(f"Successfully saved data to: {json_path}")
-		return load_dataset_info()
+		Path(file).parent.mkdir(parents=True, exist_ok=True)
+		with open(file, 'w') as jf:
+			json.dump(dataset, jf, indent=4)
+		print(f"Successfully saved data to: {file}")
 	except Exception as e:
 		print(f"An error occurred: {e}")
 
-def load_dataset_info():
+def load_dataset_info(file="data/data_info.json"):
 	"""Load dataset information from a JSON file."""
 	try:
-		if json_path.exists():
-			with open(json_path, 'r') as json_file:
-				dataset = json.load(json_file)
-			return dataset
+		if Path(file).exists():
+			with open(file, 'r') as jf:
+				return json.load(jf)
 		else:
-			print(f"File not found: {json_path}")
-			return None
+			print(f"File not found: {file}")
+			return []
 	except Exception as e:
 		print(f"An error occurred: {e}")
-		return None
+		return []
 
 def filter_json_keys(input_path: str, output_path: str):
 	"""

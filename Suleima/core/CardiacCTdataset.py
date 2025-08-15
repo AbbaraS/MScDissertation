@@ -33,20 +33,20 @@ class DataLoaderFactory:
 		"""
 		# --- 1. Get the correct data for the specified fold ---
 		outer_fold_struct = self.all_folds_data[outer_fold_id]
-		inner_fold_struct = outer_fold_struct['inner_folds'][inner_fold_id]
+		inner_fold_struct = outer_fold_struct['INNER_FOLDS'][inner_fold_id]
 
 		# The outer_train_pool is the dataset from which inner folds are made
-		outer_train_pool = [self.main_dataset[i] for i in outer_fold_struct['outer_train_indices']]
+		outer_train_pool = [self.main_dataset[i] for i in outer_fold_struct['OUTER_FOLD_TRAIN_idx']]
 
 		# Get the specific train/val data for the inner fold
 		# Note: The indices are local to the outer_train_pool
-		train_fold_data = [outer_train_pool[i] for i in inner_fold_struct['inner_train_indices']]
-		val_fold_data = [outer_train_pool[i] for i in inner_fold_struct['inner_val_indices']]
+		train_fold_data = [outer_train_pool[i] for i in inner_fold_struct['INNER_FOLD_TRAIN_idx']]
+		val_fold_data = [outer_train_pool[i] for i in inner_fold_struct['INNER_FOLD_VAL_idx']]
 
 		# --- 2. Get the pre-calculated stats and create transforms ---
 		# It's crucial to use the stats calculated from the *inner* training set
 		# to avoid any data leakage from the inner validation set.
-		inner_stats = inner_fold_struct['inner_fold_stats']
+		inner_stats = inner_fold_struct['INNER_FOLD_stats']
 
 		train_transforms = get_train_transforms(inner_stats)
 		val_transforms = get_val_test_transforms(inner_stats)
@@ -173,7 +173,7 @@ class CardiacCTDataset(Dataset):
 		meta = torch.tensor([age] + gender, dtype=torch.float32)
 		label = torch.tensor(case_dict['label'], dtype=torch.float32)
 
-		return {"CaseID": case_dict['CaseID'],
+		return {"CaseID": case_dict['ID'],
 			"axial_image": axial_image,
 			"coronal_image": coronal_image,
 			"sagittal_image": sagittal_image,
