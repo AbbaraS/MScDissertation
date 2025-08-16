@@ -1,10 +1,8 @@
 from core.Log import *
 #PBAR_POSITION = 0
 
-OUTER_FOLDS = 4
-INNER_FOLDS = 3
-T=True
-F=False
+
+
 
 LABEL_MAP = {
 	"other_heart": 1,
@@ -55,7 +53,25 @@ OUTER_FOLDS_PARAMS=[
 
 
 
+'''
+per epoch metrics:
+[fold_id, epoch_number , train_loss,  train_accuracy, val_loss, val_accuracy]
 
+Final Fold Performance:
+[fold_id, model_name, val_loss at which early stopping occurred] +
+	key classifier metrics:
+	AUC (Area Under the ROC Curve),
+	F1-Score, Precision, Recall, Accuracy,
+	positive predictive value, negative predictive value,
+	false positive rate, false negative rate,
+	uncalibrated_brier, calibrated_brier,
+Hyperparameters and Metadata:
+[learning_rate, weight_decay, batch_size, dropout_rate, image_size]
+
+
+Does the 64x64x64 volume still clearly show the anatomical features needed for diagnosis & classification in this set up?
+
+'''
 
 
 CASE_INFO = ["ID", "directory", "volumes"]
@@ -73,12 +89,6 @@ HUMIN = -175.0
 HUMAX = 250.0
 TARGETVOL = (64, 64, 64)
 TARGETORIEN = "RAS"
-
-MEAN= 151.40625
-STD= 86.16580963134766#
-
-
-
 
 
 

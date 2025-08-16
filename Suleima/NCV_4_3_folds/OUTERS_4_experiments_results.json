@@ -1,0 +1,47 @@
+[
+  {
+    "OUTER_fold_id": 1,
+    "paramID": 9,
+    "best_val_loss": 0.39243541955947875
+  },
+  {
+    "OUTER_fold_id": 0,
+    "paramID": 9,
+    "best_val_loss": 0.5163510322570801
+  },
+  {
+    "OUTER_fold_id": 0,
+    "paramID": 6,
+    "best_val_loss": 0.5210204958915711
+  },
+  {
+    "OUTER_fold_id": 0,
+    "paramID": 9,
+    "best_val_loss": 0.5393583655357361
+  },
+  {
+    "OUTER_fold_id": 1,
+    "paramID": 6,
+    "best_val_loss": 0.5371072351932525
+  },
+  {
+    "OUTER_fold_id": 2,
+    "paramID": 9,
+    "best_val_loss": 0.6294387102127075
+  },
+  {
+    "OUTER_fold_id": 2,
+    "paramID": 6,
+    "best_val_loss": 0.6032060980796814
+  },
+  {
+    "OUTER_fold_id": 3,
+    "paramID": 9,
+    "best_val_loss": 0.48239887952804567
+  },
+  {
+    "OUTER_fold_id": 3,
+    "paramID": 6,
+    "best_val_loss": 0.44651804864406586
+  }
+]

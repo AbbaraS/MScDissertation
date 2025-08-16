@@ -4,7 +4,7 @@ from torchvision import models
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from core.CNNmodel import *
+
 
 
 class MetadataMLP(nn.Module):
@@ -30,46 +30,6 @@ class MetadataMLP(nn.Module):
 
 
 
-
-
-
-
-
-
-
-class SingleViewClassifier(nn.Module):
-	def __init__(self, dropout_rate=0.4):
-		super(SingleViewClassifier, self).__init__()
-		# Use one instance of your existing single-branch CNN
-		self.view_features = SingleBranchCNN(dropout_rate)
-
-		total_features = 64  + 3
-		# Classifier head
-		# The feature_extractor outputs a (B, 64, 1, 1) tensor, which flattens to 64 features
-		self.fc1 = nn.Linear(total_features, 64) # 64 image features + 2 meta features
-		self.dropout = nn.Dropout(dropout_rate)
-		self.fc2 = nn.Linear(64, 1)
-
-	def forward(self, image, meta):
-		# We'll test this with the axial view, but you can run it for each view
-		view_features = self.view_features(image)
-		view_features = view_features.view(view_features.size(0), -1) # Flatten
-
-		# Combine image and metadata features
-		combined_features = torch.cat([view_features, meta], dim=1)
-
-		x = F.relu(self.fc1(combined_features))
-		x = self.dropout(x)
-		x = self.fc2(x)
-		return x
-
-
-# In training loop for this model:
-# feature_extractor, classifier = create_adapted_resnet18(device)
-# image_features = feature_extractor(axial_images) # Pass one view
-# combined_input = torch.cat([image_features, meta], dim=1)
-# outputs = classifier(combined_input)
-
 def create_adapted_resnet18(device):
 	"""
 	Creates a pre-trained ResNet-18 model adapted for binary classification.
@@ -89,7 +49,6 @@ def create_adapted_resnet18(device):
 	feature_extractor.fc = nn.Identity()
 	num_views = 3
 	total_input_features = (num_ftrs * num_views) + 3     # (512 * 3) + 3 = 1539
-
 
 	classifier = nn.Sequential(
 		nn.BatchNorm1d(total_input_features), # 512 resnet features + 2 meta features

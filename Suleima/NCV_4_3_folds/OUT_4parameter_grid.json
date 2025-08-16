@@ -1,0 +1,98 @@
+[
+  {
+    "ExpID": 1,
+    "Fold": 0,
+    "HPset": 6,
+    "LR": 0.0008,
+    "WD": 0.0001,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 2,
+    "Fold": 1,
+    "HPset": 6,
+    "LR": 0.0008,
+    "WD": 0.0001,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 3,
+    "Fold": 2,
+    "HPset": 6,
+    "LR": 0.0008,
+    "WD": 0.0001,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 4,
+    "Fold": 3,
+    "HPset": 6,
+    "LR": 0.0008,
+    "WD": 0.0001,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 5,
+    "Fold": 0,
+    "HPset": 9,
+    "LR": 0.0008,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 6,
+    "Fold": 1,
+    "HPset": 9,
+    "LR": 0.0008,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 7,
+    "Fold": 2,
+    "HPset": 9,
+    "LR": 0.0008,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  },
+  {
+    "ExpID": 8,
+    "Fold": 3,
+    "HPset": 9,
+    "LR": 0.0008,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "TH": 0.5,
+    "epochs": 50,
+    "trained": true,
+    "evaluated": true
+  }
+]

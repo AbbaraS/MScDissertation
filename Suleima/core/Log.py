@@ -6,52 +6,43 @@ import os
 
 
 
-def root_logger():
-	"""Configures both the root logger and the dedicated folds logger."""
-
-	# --- Configure Root Logger (for general model.log and console) ---
+def setup_loggers():
 	root_logger = logging.getLogger('root')
+	INNERtrain = logging.getLogger('INNER_train')
+	OUTtrain = logging.getLogger('OUTER_train')
+	evaluate = logging.getLogger('OUTER_evaluate')
+
 	root_logger.setLevel(logging.INFO)
+	INNERtrain.setLevel(logging.INFO)
+	OUTtrain.setLevel(logging.INFO)
+	evaluate.setLevel(logging.INFO)
+
 	root_logger.propagate = False
+	evaluate.propagate = False
+	INNERtrain.propagate = False
+	OUTtrain.propagate = False
+
 	if not root_logger.hasHandlers():
 		root_logger.propagate = False
-		app_handler = logging.FileHandler('model.log', mode='a')
+		app_handler = logging.FileHandler('main.log', mode='a')
 		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
+
 		console_handler = logging.StreamHandler(sys.stdout)
 		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 		root_logger.addHandler(app_handler)
 		root_logger.addHandler(console_handler)
 
+	if not INNERtrain.hasHandlers():
+		INNERtrain.propagate = False
+		train_handler = logging.FileHandler('INNER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
+		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
+		INNERtrain.addHandler(train_handler)
 
-def folds_logger():
-	# --- Configure Folds Logger (for folds.log) ---
-	folds_logger = logging.getLogger('folds') # Give it a descriptive name
-	folds_logger.setLevel(logging.INFO)
-	folds_logger.propagate = False
-
-	if not folds_logger.hasHandlers():
-		folds_logger.propagate = False
-		folds_handler = logging.FileHandler('folds.log', mode='a')
-		folds_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
-		folds_logger.addHandler(folds_handler)
-
-
-
-def setup_loggers():
-	# --- Configure Logger
-	train = logging.getLogger('OUTER_train')
-	train.setLevel(logging.INFO)
-	train.propagate = False
-
-	evaluate = logging.getLogger('OUTER_evaluate')
-	evaluate.setLevel(logging.INFO)
-	evaluate.propagate = False
-
-	if not train.hasHandlers():
-		train.propagate = False
+	if not OUTtrain.hasHandlers():
+		OUTtrain.propagate = False
 		train_handler = logging.FileHandler('OUTER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
 		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		train.addHandler(train_handler)
+		OUTtrain.addHandler(train_handler)
 
 	if not evaluate.hasHandlers():
 		evaluate.propagate = False
@@ -59,66 +50,27 @@ def setup_loggers():
 		evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
 		evaluate.addHandler(evaluate_handler)
 
-	train = logging.getLogger('INNER_train')
-	train.setLevel(logging.INFO)
-	train.propagate = False
-
-	if not train.hasHandlers():
-		train.propagate = False
-		train_handler = logging.FileHandler('INNER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		train.addHandler(train_handler)
-
-
-
-logger = logging.getLogger('root')
-
-'''
-per epoch metrics:
-[fold_id, epoch_number , train_loss,  train_accuracy, val_loss, val_accuracy]
-
-Final Fold Performance:
-[fold_id, model_name, val_loss at which early stopping occurred] +
-	key classifier metrics:
-	AUC (Area Under the ROC Curve),
-	F1-Score, Precision, Recall, Accuracy,
-	positive predictive value, negative predictive value,
-	false positive rate, false negative rate,
-	uncalibrated_brier, calibrated_brier,
-Hyperparameters and Metadata:
-[learning_rate, weight_decay, batch_size, dropout_rate, image_size]
-
-
-Does the 64x64x64 volume still clearly show the anatomical features needed for diagnosis & classification in this set up?
-
-'''
 
 training = ['model', 'OUT_K', 'params_id', 'INNER_K', '', 'epoch', 'train_loss', 'train_acc', 'val_loss', 'val_acc']
 
 testing = ['model', 'fold_id', 'AUC', 'F1-Score', 'Precision',
 		   'Recall', 'Accuracy', 'Specificity', 'Sensitivity']
 
+PATHS = [
+	"training/OUT_5_HPSearch_EXPERIMENTS.json",
+	"training/OUTERS_4_experiments_results.json",
+	"training/outer4_hp_search_results.json",
+	"training/outer_5_INNER_experiments.json",
+	"training/outers_4_trainHistory.txt",
+	"training/outer5_innerHistory.txt",
+	"OUTERs_4_evaluating.txt",
+	"training/OUT_4parameter_grid.json"
 
-training_filename = 'training_logs.csv'
-
-RESULTS_FILEPATH = Path("training/hp_search_results.json")
-
-
-
-
-def load_dataset(pool="main"):
-	full_dl = load_dataset_info()
-	return [i for i in full_dl if i["pool"] == pool]
-
-json_files = [
-	"training/hp_search_results.json",
-	"training/OUTERSexperiments_results.json",
-	"training/parameter_grid.json",
-
-	]
+]
 
 
 
+filepath = Path("")
 
 def save_to_json(data, filename="training/OUTERSexperiments_results.json"):
 	#print(f"Saving to {filename}.")
@@ -135,8 +87,9 @@ def load_from_json(filename="training/OUTERSexperiments_results.json"):
 		print(f"Loaded {filename}.")
 		return results
 
-
-
+def load_dataset(pool="main"):
+	full_dl = load_dataset_info()
+	return [i for i in full_dl if i["pool"] == pool]
 
 
 
@@ -170,6 +123,7 @@ def filter_json_keys(input_path: str, output_path: str):
 	Loads data from a JSON file, filters it to keep only specified keys,
 	and saves the result to a new JSON file.
 	"""
+	logger = logging.getLogger('root')
 
 	keys_to_keep = ["ID", "label", "age", "gender", "directory",  "originals",  "cropped" ]
 	try:

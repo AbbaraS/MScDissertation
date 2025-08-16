@@ -6,7 +6,7 @@ from monai.transforms import (
 	CropForegroundd, NormalizeIntensityd, Resized, EnsureTyped,
 	RandAffined, RandGaussianNoiseD)
 from core.globals import *
-from core.modelUtils import *
+from core.model_utils import *
 import logging
 import numpy as np
 from core.CNNmodel import *
@@ -67,15 +67,15 @@ class DataLoaderFactory:
 		Generates train and test dataloaders for a specific outer fold.
 		"""
 		outer_fold_struct = self.all_folds_data[outer_fold_id]
-		fold_pool = [self.main_dataset[i] for i in outer_fold_struct['outer_train_indices']]
-		fold_pool_labels = [self.main_dataset[i]['label'] for i in outer_fold_struct['outer_train_indices']]
+		fold_pool = [self.main_dataset[i] for i in outer_fold_struct['OUTER_FOLD_TRAIN_idx']]
+		fold_pool_labels = [self.main_dataset[i]['label'] for i in outer_fold_struct['OUTER_FOLD_TRAIN_idx']]
 		train_fold_data, val_fold_data = train_test_split(
 			fold_pool,
 			test_size=0.1,
 			random_state=42,
 			stratify=fold_pool_labels)
-		test_fold_data = [self.main_dataset[i] for i in outer_fold_struct['outer_test_indices']]
-		outer_stats = outer_fold_struct['outer_fold_stats']
+		test_fold_data = [self.main_dataset[i] for i in outer_fold_struct['OUTER_FOLD_TEST_idx']]
+		outer_stats = outer_fold_struct['OUTER_FOLD_stats']
 
 		train_transforms = get_train_transforms(outer_stats)
 		train_dataset = CardiacCTDataset(train_fold_data, train_transforms, outer_stats)

@@ -1,9 +1,7 @@
 import pickle
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
-from pathlib import Path
-from core.Log import *
-from core.globals import *
+from core.Log import load_dataset
 pools = ["holdout", "main"]
 
 
@@ -32,7 +30,7 @@ def get_dataset_stats(datalist):
 
 
 
-def create_folds_stats(OUTER_K=5, INNER_K=3):
+def create_folds_stats(OUTER_K=4, INNER_K=3):
 
 	OUTER_cv = StratifiedKFold(n_splits=OUTER_K, shuffle=True, random_state=67)
 	INNER_cv = StratifiedKFold(n_splits=INNER_K, shuffle=True, random_state=67)
@@ -115,10 +113,3 @@ def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
 		return outer_fold_data['OUTER_FOLD_stats'], inner_fold_data['INNER_FOLD_stats']
 
 
-def get_all_tasks(grid=PARAM_GRID):
-	all_possible_tasks = []
-	for outer_id in range(OUTER_FOLDS):
-		for params in grid:
-			param_id = params['paramID']
-			all_possible_tasks.append((outer_id, param_id))
-	return all_possible_tasks

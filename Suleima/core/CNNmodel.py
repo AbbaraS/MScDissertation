@@ -81,3 +81,27 @@ class MultiViewCNN(nn.Module):
 		x = self.fc2(x)
 		return x
 
+
+
+class SingleViewClassifier(nn.Module):
+	def __init__(self, dropout_rate=0.4):
+		super(SingleViewClassifier, self).__init__()
+		self.view_features = SingleBranchCNN(dropout_rate)
+
+		total_features = 64  + 3
+
+		self.fc1 = nn.Linear(total_features, 64)
+		self.dropout = nn.Dropout(dropout_rate)
+		self.fc2 = nn.Linear(64, 1)
+
+	def forward(self, image, meta):
+
+		view_features = self.view_features(image)
+		view_features = view_features.view(view_features.size(0), -1)
+
+		combined_features = torch.cat([view_features, meta], dim=1)
+
+		x = F.relu(self.fc1(combined_features))
+		x = self.dropout(x)
+		x = self.fc2(x)
+		return x
