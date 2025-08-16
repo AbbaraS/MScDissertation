@@ -1,0 +1,322 @@
+[
+  {
+    "Model": "MLP_META",
+    "ExpID": 1,
+    "OUTER_FOLD": 0,
+    "hypers": {
+      "HPset": 101,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "MLP_META",
+    "ExpID": 2,
+    "OUTER_FOLD": 1,
+    "hypers": {
+      "HPset": 101,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "MLP_META",
+    "ExpID": 3,
+    "OUTER_FOLD": 2,
+    "hypers": {
+      "HPset": 101,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "MLP_META",
+    "ExpID": 4,
+    "OUTER_FOLD": 3,
+    "hypers": {
+      "HPset": 101,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Axial",
+    "ExpID": 5,
+    "OUTER_FOLD": 0,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Axial",
+    "ExpID": 6,
+    "OUTER_FOLD": 1,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Axial",
+    "ExpID": 7,
+    "OUTER_FOLD": 2,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Axial",
+    "ExpID": 8,
+    "OUTER_FOLD": 3,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Sagittal",
+    "ExpID": 9,
+    "OUTER_FOLD": 0,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Sagittal",
+    "ExpID": 10,
+    "OUTER_FOLD": 1,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Sagittal",
+    "ExpID": 11,
+    "OUTER_FOLD": 2,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Sagittal",
+    "ExpID": 12,
+    "OUTER_FOLD": 3,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Coronal",
+    "ExpID": 13,
+    "OUTER_FOLD": 0,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Coronal",
+    "ExpID": 14,
+    "OUTER_FOLD": 1,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Coronal",
+    "ExpID": 15,
+    "OUTER_FOLD": 2,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "SingleView_Coronal",
+    "ExpID": 16,
+    "OUTER_FOLD": 3,
+    "hypers": {
+      "HPset": 201,
+      "LR": 0.0005,
+      "WD": 1e-05,
+      "DR": 0.4,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "ResNet18",
+    "ExpID": 17,
+    "OUTER_FOLD": 0,
+    "hypers": {
+      "HPset": 301,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.5,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "ResNet18",
+    "ExpID": 18,
+    "OUTER_FOLD": 1,
+    "hypers": {
+      "HPset": 301,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.5,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "ResNet18",
+    "ExpID": 19,
+    "OUTER_FOLD": 2,
+    "hypers": {
+      "HPset": 301,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.5,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  },
+  {
+    "Model": "ResNet18",
+    "ExpID": 20,
+    "OUTER_FOLD": 3,
+    "hypers": {
+      "HPset": 301,
+      "LR": 0.001,
+      "WD": 1e-05,
+      "DR": 0.5,
+      "TH": 0.5,
+      "P": 3,
+      "Epochs": 50
+    },
+    "trained": true,
+    "evaluated": false
+  }
+]

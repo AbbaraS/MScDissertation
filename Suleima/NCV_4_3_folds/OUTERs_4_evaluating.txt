@@ -1,4 +1,4 @@
-Time  ;	ExpID;  HP_Set; OuterFold_4;CaseID;   							GroundTruth;			prediction;		probability
+Time;	ExpID;  HP_Set; Fold;		CaseID;   							GroundTruth;			prediction;		probability;
 20:59 ;	1;	 	6; 		0; 			TTS_MDW_22867501_81F; 				True;     	   			True;      		0.7456;
 20:59 ;	1;	 	6; 		0; 			CNTRL_LLM_24775207_66F;    			False;    	   			False;     		0.3255;
 20:59 ;	1;	 	6; 		0; 			TTS_JL_4008074_71F;       			True;     				True;      		0.6380;

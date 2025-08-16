@@ -132,39 +132,39 @@ class CardiacCTDataset(Dataset):
 
 	def __getitem__(self, idx):
 		case_dict = self.data_dicts[idx]
-		loaded_dict = self.loader({
-			"image": case_dict['cropped']['image'],
-			"mask": case_dict['cropped']['mask']})
+		#loaded_dict = self.loader({
+		#	"image": case_dict['cropped']['image'],
+		#	"mask": case_dict['cropped']['mask']})
 
-		processed_3D = self.transforms(loaded_dict)
-		image_3d = processed_3D["image"]
-		mask_3d = processed_3D["mask"]
-		slice_indices = select_slices(mask_3d)
+		#processed_3D = self.transforms(loaded_dict)
+		#image_3d = processed_3D["image"]
+		#mask_3d = processed_3D["mask"]
+		#slice_indices = select_slices(mask_3d)
 
 		# 4. Extract the 2D slices from the 3D IMAGE tensor
 		# MONAI standard orientation (RAS) is (H, W, D) which corresponds to
 		# Sagittal, Coronal, and Axial planes.
 
 		# Axial slices (from the Depth axis)
-		axial1 = image_3d[0, :, :, slice_indices['Axial'][0]]
-		axial2 = image_3d[0, :, :, slice_indices['Axial'][1]]
-		axial3 = image_3d[0, :, :, slice_indices['Axial'][2]]
+		#axial1 = image_3d[0, :, :, slice_indices['Axial'][0]]
+		#axial2 = image_3d[0, :, :, slice_indices['Axial'][1]]
+		#axial3 = image_3d[0, :, :, slice_indices['Axial'][2]]
 
-		# Coronal slices (from the Width axis)
-		coronal1 = image_3d[0, :, slice_indices['Coronal'][0], :]
-		coronal2 = image_3d[0, :, slice_indices['Coronal'][1], :]
-		coronal3 = image_3d[0, :, slice_indices['Coronal'][2], :]
+		## Coronal slices (from the Width axis)
+		#coronal1 = image_3d[0, :, slice_indices['Coronal'][0], :]
+		#coronal2 = image_3d[0, :, slice_indices['Coronal'][1], :]
+		#coronal3 = image_3d[0, :, slice_indices['Coronal'][2], :]
 
-		# Sagittal slices (from the Height axis)
-		sagittal1 = image_3d[0, slice_indices['Sagittal'][0], :, :]
-		sagittal2 = image_3d[0, slice_indices['Sagittal'][1], :, :]
-		sagittal3 = image_3d[0, slice_indices['Sagittal'][2], :, :]
+		## Sagittal slices (from the Height axis)
+		#sagittal1 = image_3d[0, slice_indices['Sagittal'][0], :, :]
+		#sagittal2 = image_3d[0, slice_indices['Sagittal'][1], :, :]
+		#sagittal3 = image_3d[0, slice_indices['Sagittal'][2], :, :]
 
 		# 5. create 3-channel 2D inputs per view
 		# Conv2d expects (C, H, W), stack on the channel dim=0
-		axial_image = torch.stack([axial1, axial2, axial3], dim=0)
-		coronal_image = torch.stack([coronal1, coronal2, coronal3], dim=0)
-		sagittal_image = torch.stack([sagittal1, sagittal2, sagittal3], dim=0)
+		#axial_image = torch.stack([axial1, axial2, axial3], dim=0)
+		#coronal_image = torch.stack([coronal1, coronal2, coronal3], dim=0)
+		#sagittal_image = torch.stack([sagittal1, sagittal2, sagittal3], dim=0)
 
 		# One-hot encode gender ('F' -> [1, 0], 'M' -> [0, 1])
 		gender = [1.0, 0.0] if case_dict['gender'] == 'F' else [0.0, 1.0]
@@ -174,9 +174,9 @@ class CardiacCTDataset(Dataset):
 		label = torch.tensor(case_dict['label'], dtype=torch.float32)
 
 		return {"CaseID": case_dict['ID'],
-			"axial_image": axial_image,
-			"coronal_image": coronal_image,
-			"sagittal_image": sagittal_image,
+			#"axial_image": axial_image,
+			#"coronal_image": coronal_image,
+			#"sagittal_image": sagittal_image,
 			"label": label, "meta": meta}
 
 def select_slices(mask):

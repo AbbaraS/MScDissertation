@@ -5,6 +5,10 @@ Suleima/model.log
 Suleima/folds.log
 Suleima/training/*
 **.log
+
+Suleima/pth_models/*
+Suleima/training/*
+Suleima//NCV_5_3_folds/*
 # Ignore everything inside Takotsubo-Syndrome/
 Takotsubo-Syndrome/*
 
