@@ -95,7 +95,7 @@ def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 	model.load_state_dict(best_model_state)
 	return model, best_model_state
 
-def EVALUATE_MODEL(model, test_loader, hypers):
+def EVALUATE_MODEL1(model, test_loader, hypers):
 	TH = hypers['TH']
 	ExpID = hypers['ExpID']
 	log = logging.getLogger('OUTER_evaluate')

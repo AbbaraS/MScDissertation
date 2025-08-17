@@ -1,0 +1,3309 @@
+[
+    {
+        "ID": "CNTRL_SD_37219755_36F",
+        "label": 0,
+        "age": 36,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SD_37219755_36F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SD_37219755_36F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SD_37219755_36F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SD_37219755_36F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SD_37219755_36F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1296642,
+            "sum": 111475152.0,
+            "sum_sq": 29352820736.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_ASSA_39309711_56F",
+        "label": 0,
+        "age": 56,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_ASSA_39309711_56F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_ASSA_39309711_56F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_ASSA_39309711_56F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_ASSA_39309711_56F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_ASSA_39309711_56F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1295186,
+            "sum": 150032320.0,
+            "sum_sq": 36482834432.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_JD_48020_100F",
+        "label": 1,
+        "age": 10,
+        "gender": "0",
+        "directory": "data\\cases\\TTS_JD_48020_100F",
+        "originals": {
+            "image": "data\\cases\\TTS_JD_48020_100F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JD_48020_100F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JD_48020_100F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JD_48020_100F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 869255,
+            "sum": 108950744.0,
+            "sum_sq": 25043666944.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_GB_10468072_81F",
+        "label": 1,
+        "age": 81,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_GB_10468072_81F",
+        "originals": {
+            "image": "data\\cases\\TTS_GB_10468072_81F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_GB_10468072_81F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_GB_10468072_81F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_GB_10468072_81F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1894783,
+            "sum": 173236576.0,
+            "sum_sq": 54375546880.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_AMH_36922300_85F",
+        "label": 1,
+        "age": 85,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_AMH_36922300_85F",
+        "originals": {
+            "image": "data\\cases\\TTS_AMH_36922300_85F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_AMH_36922300_85F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_AMH_36922300_85F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_AMH_36922300_85F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 361622,
+            "sum": 36197680.0,
+            "sum_sq": 5659978240.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MDW_22867501_81F",
+        "label": 1,
+        "age": 81,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MDW_22867501_81F",
+        "originals": {
+            "image": "data\\cases\\TTS_MDW_22867501_81F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MDW_22867501_81F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MDW_22867501_81F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MDW_22867501_81F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 988769,
+            "sum": 109777856.0,
+            "sum_sq": 26914037760.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DEMC_50496560_60M",
+        "label": 0,
+        "age": 60,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_DEMC_50496560_60M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DEMC_50496560_60M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DEMC_50496560_60M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DEMC_50496560_60M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DEMC_50496560_60M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2064146,
+            "sum": 224514224.0,
+            "sum_sq": 40118718464.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_AAP_50415783_61F",
+        "label": 0,
+        "age": 61,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_AAP_50415783_61F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_AAP_50415783_61F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_AAP_50415783_61F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_AAP_50415783_61F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_AAP_50415783_61F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 527924,
+            "sum": 36369284.0,
+            "sum_sq": 5596608512.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_LB_23518517_83F",
+        "label": 1,
+        "age": 83,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_LB_23518517_83F",
+        "originals": {
+            "image": "data\\cases\\TTS_LB_23518517_83F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_LB_23518517_83F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_LB_23518517_83F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_LB_23518517_83F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 742030,
+            "sum": 69418032.0,
+            "sum_sq": 12029336576.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_LLM_24775207_66F",
+        "label": 0,
+        "age": 66,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_LLM_24775207_66F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_LLM_24775207_66F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_LLM_24775207_66F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_LLM_24775207_66F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_LLM_24775207_66F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2715659,
+            "sum": 318222016.0,
+            "sum_sq": 76280922112.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_LMD_22194237_63F",
+        "label": 1,
+        "age": 63,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_LMD_22194237_63F",
+        "originals": {
+            "image": "data\\cases\\TTS_LMD_22194237_63F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_LMD_22194237_63F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_LMD_22194237_63F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_LMD_22194237_63F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 23230826,
+            "sum": 2803645440.0,
+            "sum_sq": 669019406336.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_AIB_36444628_88F",
+        "label": 0,
+        "age": 88,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_AIB_36444628_88F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_AIB_36444628_88F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_AIB_36444628_88F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_AIB_36444628_88F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_AIB_36444628_88F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2042998,
+            "sum": 262488256.0,
+            "sum_sq": 63645106176.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JNMP_22916312_54F",
+        "label": 1,
+        "age": 54,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JNMP_22916312_54F",
+        "originals": {
+            "image": "data\\cases\\TTS_JNMP_22916312_54F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JNMP_22916312_54F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JNMP_22916312_54F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JNMP_22916312_54F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 324714,
+            "sum": 35357796.0,
+            "sum_sq": 6652739072.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_RMG_22721187_61M",
+        "label": 1,
+        "age": 61,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_RMG_22721187_61M",
+        "originals": {
+            "image": "data\\cases\\TTS_RMG_22721187_61M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_RMG_22721187_61M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_RMG_22721187_61M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_RMG_22721187_61M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2546949,
+            "sum": 271461600.0,
+            "sum_sq": 61412823040.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_ELD_30527501_83F",
+        "label": 1,
+        "age": 83,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_ELD_30527501_83F",
+        "originals": {
+            "image": "data\\cases\\TTS_ELD_30527501_83F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_ELD_30527501_83F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_ELD_30527501_83F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_ELD_30527501_83F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 787972,
+            "sum": 118410808.0,
+            "sum_sq": 28552452096.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JL_4008074_71F",
+        "label": 1,
+        "age": 71,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JL_4008074_71F",
+        "originals": {
+            "image": "data\\cases\\TTS_JL_4008074_71F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JL_4008074_71F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JL_4008074_71F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JL_4008074_71F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2148549,
+            "sum": 223253072.0,
+            "sum_sq": 57839280128.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_NEA_10026953_70M",
+        "label": 0,
+        "age": 70,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_NEA_10026953_70M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_NEA_10026953_70M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_NEA_10026953_70M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_NEA_10026953_70M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_NEA_10026953_70M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 525599,
+            "sum": 50650072.0,
+            "sum_sq": 12890305536.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_NMC_90010075_73F",
+        "label": 1,
+        "age": 73,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_NMC_90010075_73F",
+        "originals": {
+            "image": "data\\cases\\TTS_NMC_90010075_73F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_NMC_90010075_73F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_NMC_90010075_73F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_NMC_90010075_73F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1954673,
+            "sum": 198100960.0,
+            "sum_sq": 46956875776.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_XZC_32444390_94F",
+        "label": 1,
+        "age": 94,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_XZC_32444390_94F",
+        "originals": {
+            "image": "data\\cases\\TTS_XZC_32444390_94F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_XZC_32444390_94F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_XZC_32444390_94F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_XZC_32444390_94F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 4118439,
+            "sum": 391666592.0,
+            "sum_sq": 76476661760.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MB_12229480_96F",
+        "label": 1,
+        "age": 96,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MB_12229480_96F",
+        "originals": {
+            "image": "data\\cases\\TTS_MB_12229480_96F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MB_12229480_96F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MB_12229480_96F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MB_12229480_96F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2244231,
+            "sum": 175473440.0,
+            "sum_sq": 39616872448.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MGR_2545663_93M",
+        "label": 1,
+        "age": 93,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_MGR_2545663_93M",
+        "originals": {
+            "image": "data\\cases\\TTS_MGR_2545663_93M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MGR_2545663_93M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MGR_2545663_93M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MGR_2545663_93M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1746335,
+            "sum": 155996688.0,
+            "sum_sq": 43698614272.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_PEB_5809140_94F",
+        "label": 1,
+        "age": 94,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_PEB_5809140_94F",
+        "originals": {
+            "image": "data\\cases\\TTS_PEB_5809140_94F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_PEB_5809140_94F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_PEB_5809140_94F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_PEB_5809140_94F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2951572,
+            "sum": 229084032.0,
+            "sum_sq": 60988092416.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_EB_07296072_74F",
+        "label": 0,
+        "age": 74,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_EB_07296072_74F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_EB_07296072_74F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_EB_07296072_74F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_EB_07296072_74F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_EB_07296072_74F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 363436,
+            "sum": 15517809.0,
+            "sum_sq": 3682204160.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_SRS_09390469_32F",
+        "label": 0,
+        "age": 32,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SRS_09390469_32F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SRS_09390469_32F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SRS_09390469_32F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SRS_09390469_32F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SRS_09390469_32F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1675535,
+            "sum": 173569856.0,
+            "sum_sq": 39892484096.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_GML_05667308_58F",
+        "label": 0,
+        "age": 58,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_GML_05667308_58F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_GML_05667308_58F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_GML_05667308_58F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_GML_05667308_58F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_GML_05667308_58F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1984093,
+            "sum": 207660256.0,
+            "sum_sq": 39311560704.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_BMB_26209098_65M",
+        "label": 0,
+        "age": 65,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_BMB_26209098_65M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_BMB_26209098_65M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_BMB_26209098_65M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_BMB_26209098_65M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_BMB_26209098_65M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1972344,
+            "sum": 150053408.0,
+            "sum_sq": 37343440896.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MK_25733700_98F",
+        "label": 1,
+        "age": 98,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MK_25733700_98F",
+        "originals": {
+            "image": "data\\cases\\TTS_MK_25733700_98F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MK_25733700_98F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MK_25733700_98F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MK_25733700_98F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 185646,
+            "sum": 14912818.0,
+            "sum_sq": 3426195200.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_DJM_34687566_90M",
+        "label": 1,
+        "age": 90,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_DJM_34687566_90M",
+        "originals": {
+            "image": "data\\cases\\TTS_DJM_34687566_90M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DJM_34687566_90M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DJM_34687566_90M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DJM_34687566_90M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 4350571,
+            "sum": 403172992.0,
+            "sum_sq": 87850713088.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_AMB_08058471_74M",
+        "label": 0,
+        "age": 74,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_AMB_08058471_74M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_AMB_08058471_74M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_AMB_08058471_74M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_AMB_08058471_74M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_AMB_08058471_74M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1383647,
+            "sum": 78897888.0,
+            "sum_sq": 25442324480.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_EIC_26844753_77F",
+        "label": 1,
+        "age": 77,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_EIC_26844753_77F",
+        "originals": {
+            "image": "data\\cases\\TTS_EIC_26844753_77F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_EIC_26844753_77F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_EIC_26844753_77F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_EIC_26844753_77F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3737138,
+            "sum": 396979648.0,
+            "sum_sq": 108311142400.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_APH_3516218_67F",
+        "label": 1,
+        "age": 67,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_APH_3516218_67F",
+        "originals": {
+            "image": "data\\cases\\TTS_APH_3516218_67F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_APH_3516218_67F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_APH_3516218_67F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_APH_3516218_67F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1471677,
+            "sum": 125687648.0,
+            "sum_sq": 36888735744.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JMC_10182384_90F",
+        "label": 1,
+        "age": 90,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JMC_10182384_90F",
+        "originals": {
+            "image": "data\\cases\\TTS_JMC_10182384_90F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JMC_10182384_90F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JMC_10182384_90F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JMC_10182384_90F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 991889,
+            "sum": 139954544.0,
+            "sum_sq": 33450508288.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_RRJ_07177728_78M",
+        "label": 0,
+        "age": 78,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_RRJ_07177728_78M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_RRJ_07177728_78M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_RRJ_07177728_78M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_RRJ_07177728_78M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_RRJ_07177728_78M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1896515,
+            "sum": 122696400.0,
+            "sum_sq": 37378351104.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_LMA_3884426_78F",
+        "label": 1,
+        "age": 78,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_LMA_3884426_78F",
+        "originals": {
+            "image": "data\\cases\\TTS_LMA_3884426_78F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_LMA_3884426_78F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_LMA_3884426_78F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_LMA_3884426_78F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2075789,
+            "sum": 219537088.0,
+            "sum_sq": 49495023616.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JDMB_137882_72F",
+        "label": 1,
+        "age": 72,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JDMB_137882_72F",
+        "originals": {
+            "image": "data\\cases\\TTS_JDMB_137882_72F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JDMB_137882_72F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JDMB_137882_72F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JDMB_137882_72F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2207597,
+            "sum": 245711424.0,
+            "sum_sq": 69876604928.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_LFA_41168659_66F",
+        "label": 0,
+        "age": 66,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_LFA_41168659_66F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_LFA_41168659_66F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_LFA_41168659_66F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_LFA_41168659_66F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_LFA_41168659_66F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 507224,
+            "sum": 33031056.0,
+            "sum_sq": 6450334208.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CAB_30473847_51F",
+        "label": 0,
+        "age": 51,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CAB_30473847_51F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CAB_30473847_51F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CAB_30473847_51F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CAB_30473847_51F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CAB_30473847_51F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 582376,
+            "sum": 37043792.0,
+            "sum_sq": 6528593920.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_JMCF_8687782_62F",
+        "label": 1,
+        "age": 62,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JMCF_8687782_62F",
+        "originals": {
+            "image": "data\\cases\\TTS_JMCF_8687782_62F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JMCF_8687782_62F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JMCF_8687782_62F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JMCF_8687782_62F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 931352,
+            "sum": 106908856.0,
+            "sum_sq": 25661550592.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_CMS_4664231_91F",
+        "label": 1,
+        "age": 91,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_CMS_4664231_91F",
+        "originals": {
+            "image": "data\\cases\\TTS_CMS_4664231_91F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_CMS_4664231_91F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_CMS_4664231_91F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_CMS_4664231_91F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 550425,
+            "sum": 77386000.0,
+            "sum_sq": 16915442688.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_CAMcD_10747764_80F",
+        "label": 1,
+        "age": 80,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_CAMcD_10747764_80F",
+        "originals": {
+            "image": "data\\cases\\TTS_CAMcD_10747764_80F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_CAMcD_10747764_80F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_CAMcD_10747764_80F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_CAMcD_10747764_80F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1668254,
+            "sum": 206978992.0,
+            "sum_sq": 53122711552.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JOS_38124012_68M",
+        "label": 1,
+        "age": 68,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_JOS_38124012_68M",
+        "originals": {
+            "image": "data\\cases\\TTS_JOS_38124012_68M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JOS_38124012_68M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JOS_38124012_68M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JOS_38124012_68M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1243519,
+            "sum": 119367096.0,
+            "sum_sq": 21788870656.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_HSM_3468857_83F",
+        "label": 1,
+        "age": 83,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_HSM_3468857_83F",
+        "originals": {
+            "image": "data\\cases\\TTS_HSM_3468857_83F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_HSM_3468857_83F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_HSM_3468857_83F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_HSM_3468857_83F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 348265,
+            "sum": 24256280.0,
+            "sum_sq": 4159159552.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_GKW_27839323_65M",
+        "label": 0,
+        "age": 65,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_GKW_27839323_65M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_GKW_27839323_65M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_GKW_27839323_65M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_GKW_27839323_65M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_GKW_27839323_65M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1856697,
+            "sum": 188208688.0,
+            "sum_sq": 45260214272.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DL_232051_72F",
+        "label": 0,
+        "age": 72,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_DL_232051_72F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DL_232051_72F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DL_232051_72F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DL_232051_72F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DL_232051_72F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3543434,
+            "sum": 325720992.0,
+            "sum_sq": 86021849088.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_ZCI_50491172_20F",
+        "label": 0,
+        "age": 20,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_ZCI_50491172_20F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_ZCI_50491172_20F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_ZCI_50491172_20F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_ZCI_50491172_20F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_ZCI_50491172_20F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 955099,
+            "sum": 119746944.0,
+            "sum_sq": 24169594880.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_DJD_6122410_88F",
+        "label": 1,
+        "age": 88,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_DJD_6122410_88F",
+        "originals": {
+            "image": "data\\cases\\TTS_DJD_6122410_88F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DJD_6122410_88F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DJD_6122410_88F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DJD_6122410_88F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1645670,
+            "sum": 125800568.0,
+            "sum_sq": 31429343232.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_LBH_22392393_71F",
+        "label": 0,
+        "age": 71,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_LBH_22392393_71F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_LBH_22392393_71F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_LBH_22392393_71F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_LBH_22392393_71F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_LBH_22392393_71F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 659836,
+            "sum": 59461336.0,
+            "sum_sq": 10564554752.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_MJL_32231441_45F",
+        "label": 0,
+        "age": 45,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_MJL_32231441_45F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_MJL_32231441_45F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_MJL_32231441_45F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_MJL_32231441_45F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_MJL_32231441_45F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1158587,
+            "sum": 134282112.0,
+            "sum_sq": 33213155328.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CAD_35811017_49F",
+        "label": 0,
+        "age": 49,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CAD_35811017_49F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CAD_35811017_49F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CAD_35811017_49F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CAD_35811017_49F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CAD_35811017_49F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 849975,
+            "sum": 96765536.0,
+            "sum_sq": 22927362048.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_AG_11370442_68F",
+        "label": 1,
+        "age": 68,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_AG_11370442_68F",
+        "originals": {
+            "image": "data\\cases\\TTS_AG_11370442_68F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_AG_11370442_68F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_AG_11370442_68F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_AG_11370442_68F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1633551,
+            "sum": 165478544.0,
+            "sum_sq": 40486924288.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_YS_2685329_53M",
+        "label": 1,
+        "age": 53,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_YS_2685329_53M",
+        "originals": {
+            "image": "data\\cases\\TTS_YS_2685329_53M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_YS_2685329_53M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_YS_2685329_53M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_YS_2685329_53M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 225381,
+            "sum": 26609814.0,
+            "sum_sq": 4880571392.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_AMS_22722383_75F",
+        "label": 1,
+        "age": 75,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_AMS_22722383_75F",
+        "originals": {
+            "image": "data\\cases\\TTS_AMS_22722383_75F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_AMS_22722383_75F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_AMS_22722383_75F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_AMS_22722383_75F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2044735,
+            "sum": 288643200.0,
+            "sum_sq": 75771658240.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_DCA_9939935_86F",
+        "label": 1,
+        "age": 86,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_DCA_9939935_86F",
+        "originals": {
+            "image": "data\\cases\\TTS_DCA_9939935_86F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DCA_9939935_86F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DCA_9939935_86F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DCA_9939935_86F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 290154,
+            "sum": 12246154.0,
+            "sum_sq": 3199927296.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_BA_37586690_62M",
+        "label": 0,
+        "age": 62,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_BA_37586690_62M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_BA_37586690_62M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_BA_37586690_62M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_BA_37586690_62M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_BA_37586690_62M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3132959,
+            "sum": 190294208.0,
+            "sum_sq": 35800571904.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_ECW_33674557_89F",
+        "label": 1,
+        "age": 89,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_ECW_33674557_89F",
+        "originals": {
+            "image": "data\\cases\\TTS_ECW_33674557_89F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_ECW_33674557_89F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_ECW_33674557_89F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_ECW_33674557_89F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2695377,
+            "sum": 280551648.0,
+            "sum_sq": 57865269248.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_NLR_08251902_69F",
+        "label": 0,
+        "age": 69,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_NLR_08251902_69F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_NLR_08251902_69F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_NLR_08251902_69F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_NLR_08251902_69F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_NLR_08251902_69F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1080526,
+            "sum": 124189488.0,
+            "sum_sq": 25225754624.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_PMS_6674980_78F",
+        "label": 1,
+        "age": 78,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_PMS_6674980_78F",
+        "originals": {
+            "image": "data\\cases\\TTS_PMS_6674980_78F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_PMS_6674980_78F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_PMS_6674980_78F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_PMS_6674980_78F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 19448332,
+            "sum": 2555858688.0,
+            "sum_sq": 610075148288.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_KLB_02269181_63F",
+        "label": 0,
+        "age": 63,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_KLB_02269181_63F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_KLB_02269181_63F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_KLB_02269181_63F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_KLB_02269181_63F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_KLB_02269181_63F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1464059,
+            "sum": 156061696.0,
+            "sum_sq": 34575265792.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_MRB_05633250_74M",
+        "label": 0,
+        "age": 74,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_MRB_05633250_74M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_MRB_05633250_74M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_MRB_05633250_74M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_MRB_05633250_74M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_MRB_05633250_74M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 632808,
+            "sum": 46822824.0,
+            "sum_sq": 11498921984.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_MDB_50252695_27M",
+        "label": 0,
+        "age": 27,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_MDB_50252695_27M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_MDB_50252695_27M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_MDB_50252695_27M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_MDB_50252695_27M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_MDB_50252695_27M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 543442,
+            "sum": 48631648.0,
+            "sum_sq": 6528379392.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_KEK_5853320_74F",
+        "label": 1,
+        "age": 74,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_KEK_5853320_74F",
+        "originals": {
+            "image": "data\\cases\\TTS_KEK_5853320_74F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_KEK_5853320_74F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_KEK_5853320_74F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_KEK_5853320_74F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 110252,
+            "sum": 11040500.0,
+            "sum_sq": 1719055360.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_GHM_4514352_81F",
+        "label": 1,
+        "age": 81,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_GHM_4514352_81F",
+        "originals": {
+            "image": "data\\cases\\TTS_GHM_4514352_81F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_GHM_4514352_81F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_GHM_4514352_81F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_GHM_4514352_81F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1675163,
+            "sum": 207943856.0,
+            "sum_sq": 49727459328.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_SBMD_50080962_45F",
+        "label": 0,
+        "age": 45,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SBMD_50080962_45F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SBMD_50080962_45F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SBMD_50080962_45F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SBMD_50080962_45F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SBMD_50080962_45F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1223046,
+            "sum": 163264304.0,
+            "sum_sq": 38060388352.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_WL_260776_64F",
+        "label": 0,
+        "age": 64,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_WL_260776_64F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_WL_260776_64F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_WL_260776_64F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_WL_260776_64F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_WL_260776_64F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3975945,
+            "sum": 317437056.0,
+            "sum_sq": 75109892096.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_HTNA_39573258_80F",
+        "label": 0,
+        "age": 80,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_HTNA_39573258_80F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_HTNA_39573258_80F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_HTNA_39573258_80F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_HTNA_39573258_80F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_HTNA_39573258_80F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1796986,
+            "sum": 173174176.0,
+            "sum_sq": 45502464000.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_LAAB_06958326_90M",
+        "label": 0,
+        "age": 90,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_LAAB_06958326_90M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_LAAB_06958326_90M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_LAAB_06958326_90M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_LAAB_06958326_90M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_LAAB_06958326_90M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 850334,
+            "sum": 100826792.0,
+            "sum_sq": 23043794944.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_NGC_50376742_65F",
+        "label": 0,
+        "age": 65,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_NGC_50376742_65F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_NGC_50376742_65F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_NGC_50376742_65F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_NGC_50376742_65F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_NGC_50376742_65F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1041926,
+            "sum": 120235208.0,
+            "sum_sq": 26782119936.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_EFD_12132080_80F",
+        "label": 0,
+        "age": 80,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_EFD_12132080_80F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_EFD_12132080_80F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_EFD_12132080_80F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_EFD_12132080_80F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_EFD_12132080_80F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3375133,
+            "sum": 239914576.0,
+            "sum_sq": 58300428288.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_KA_28110559_59F",
+        "label": 1,
+        "age": 59,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_KA_28110559_59F",
+        "originals": {
+            "image": "data\\cases\\TTS_KA_28110559_59F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_KA_28110559_59F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_KA_28110559_59F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_KA_28110559_59F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1987848,
+            "sum": 218859808.0,
+            "sum_sq": 51615858688.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_RBB_5420187_86M",
+        "label": 1,
+        "age": 86,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_RBB_5420187_86M",
+        "originals": {
+            "image": "data\\cases\\TTS_RBB_5420187_86M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_RBB_5420187_86M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_RBB_5420187_86M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_RBB_5420187_86M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1631697,
+            "sum": 217400336.0,
+            "sum_sq": 46006755328.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_RNA_36366185_34F",
+        "label": 0,
+        "age": 34,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_RNA_36366185_34F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_RNA_36366185_34F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_RNA_36366185_34F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_RNA_36366185_34F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_RNA_36366185_34F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1349959,
+            "sum": 222172976.0,
+            "sum_sq": 51199418368.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JML_11878832_61F",
+        "label": 1,
+        "age": 61,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JML_11878832_61F",
+        "originals": {
+            "image": "data\\cases\\TTS_JML_11878832_61F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JML_11878832_61F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JML_11878832_61F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JML_11878832_61F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1119066,
+            "sum": 127855616.0,
+            "sum_sq": 31981314048.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_IK_6526404_85F",
+        "label": 1,
+        "age": 85,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_IK_6526404_85F",
+        "originals": {
+            "image": "data\\cases\\TTS_IK_6526404_85F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_IK_6526404_85F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_IK_6526404_85F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_IK_6526404_85F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 326887,
+            "sum": 32447132.0,
+            "sum_sq": 6248401408.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JET_40340663_84F",
+        "label": 1,
+        "age": 84,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JET_40340663_84F",
+        "originals": {
+            "image": "data\\cases\\TTS_JET_40340663_84F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JET_40340663_84F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JET_40340663_84F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JET_40340663_84F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1546472,
+            "sum": 147919264.0,
+            "sum_sq": 33108420608.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_SS_10937555_61F",
+        "label": 0,
+        "age": 61,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SS_10937555_61F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SS_10937555_61F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SS_10937555_61F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SS_10937555_61F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SS_10937555_61F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 605698,
+            "sum": 82303072.0,
+            "sum_sq": 19006461952.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_VI_22589683_86F",
+        "label": 0,
+        "age": 86,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_VI_22589683_86F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_VI_22589683_86F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_VI_22589683_86F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_VI_22589683_86F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_VI_22589683_86F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1762378,
+            "sum": 150548304.0,
+            "sum_sq": 32789245952.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CMLB_50124639_67F",
+        "label": 0,
+        "age": 67,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CMLB_50124639_67F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CMLB_50124639_67F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CMLB_50124639_67F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CMLB_50124639_67F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CMLB_50124639_67F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 640555,
+            "sum": 70623000.0,
+            "sum_sq": 15381183488.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CEEB_08099780_60F",
+        "label": 0,
+        "age": 60,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CEEB_08099780_60F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CEEB_08099780_60F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CEEB_08099780_60F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CEEB_08099780_60F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CEEB_08099780_60F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 454388,
+            "sum": 59244040.0,
+            "sum_sq": 12634389504.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_BJB_42898_78F",
+        "label": 0,
+        "age": 78,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_BJB_42898_78F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_BJB_42898_78F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_BJB_42898_78F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_BJB_42898_78F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_BJB_42898_78F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 633761,
+            "sum": 75968056.0,
+            "sum_sq": 18066044928.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_TLW_07935802_99F",
+        "label": 0,
+        "age": 99,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_TLW_07935802_99F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_TLW_07935802_99F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_TLW_07935802_99F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_TLW_07935802_99F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_TLW_07935802_99F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1940218,
+            "sum": 210945712.0,
+            "sum_sq": 50565320704.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_PLB_32190472_65F",
+        "label": 0,
+        "age": 65,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_PLB_32190472_65F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_PLB_32190472_65F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_PLB_32190472_65F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_PLB_32190472_65F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_PLB_32190472_65F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 443291,
+            "sum": 28420534.0,
+            "sum_sq": 4739045888.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_ASJ_05633540_68F",
+        "label": 0,
+        "age": 68,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_ASJ_05633540_68F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_ASJ_05633540_68F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_ASJ_05633540_68F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_ASJ_05633540_68F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_ASJ_05633540_68F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1631420,
+            "sum": 154836672.0,
+            "sum_sq": 36834562048.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JOL_25671702_69F",
+        "label": 1,
+        "age": 69,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JOL_25671702_69F",
+        "originals": {
+            "image": "data\\cases\\TTS_JOL_25671702_69F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JOL_25671702_69F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JOL_25671702_69F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JOL_25671702_69F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1527325,
+            "sum": 153031632.0,
+            "sum_sq": 39462150144.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_SH_39969431_78F",
+        "label": 1,
+        "age": 78,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_SH_39969431_78F",
+        "originals": {
+            "image": "data\\cases\\TTS_SH_39969431_78F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_SH_39969431_78F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_SH_39969431_78F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_SH_39969431_78F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1800815,
+            "sum": 171095104.0,
+            "sum_sq": 45517066240.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JG_11495009_90F",
+        "label": 1,
+        "age": 90,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JG_11495009_90F",
+        "originals": {
+            "image": "data\\cases\\TTS_JG_11495009_90F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JG_11495009_90F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JG_11495009_90F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JG_11495009_90F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1784216,
+            "sum": 134418752.0,
+            "sum_sq": 42660405248.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DMJ_07659402_76F",
+        "label": 0,
+        "age": 76,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_DMJ_07659402_76F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DMJ_07659402_76F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DMJ_07659402_76F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DMJ_07659402_76F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DMJ_07659402_76F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1116765,
+            "sum": 109812184.0,
+            "sum_sq": 30958231552.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_GJI_25633926_66F",
+        "label": 1,
+        "age": 66,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_GJI_25633926_66F",
+        "originals": {
+            "image": "data\\cases\\TTS_GJI_25633926_66F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_GJI_25633926_66F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_GJI_25633926_66F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_GJI_25633926_66F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1281715,
+            "sum": 207821840.0,
+            "sum_sq": 47544524800.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_DAB_37356987_82F",
+        "label": 0,
+        "age": 82,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_DAB_37356987_82F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DAB_37356987_82F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DAB_37356987_82F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DAB_37356987_82F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DAB_37356987_82F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 808626,
+            "sum": 82703416.0,
+            "sum_sq": 16265080832.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_BWB_08372559_71M",
+        "label": 0,
+        "age": 71,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_BWB_08372559_71M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_BWB_08372559_71M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_BWB_08372559_71M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_BWB_08372559_71M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_BWB_08372559_71M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1584810,
+            "sum": 127613080.0,
+            "sum_sq": 28303278080.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_TS_2438216_76F",
+        "label": 1,
+        "age": 76,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_TS_2438216_76F",
+        "originals": {
+            "image": "data\\cases\\TTS_TS_2438216_76F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_TS_2438216_76F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_TS_2438216_76F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_TS_2438216_76F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1763474,
+            "sum": 239891072.0,
+            "sum_sq": 55904980992.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_LD_22194237_63F",
+        "label": 1,
+        "age": 63,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_LD_22194237_63F",
+        "originals": {
+            "image": "data\\cases\\TTS_LD_22194237_63F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_LD_22194237_63F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_LD_22194237_63F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_LD_22194237_63F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1202329,
+            "sum": 145801280.0,
+            "sum_sq": 34376347648.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_JAB_07917586_74M",
+        "label": 0,
+        "age": 74,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_JAB_07917586_74M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_JAB_07917586_74M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_JAB_07917586_74M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_JAB_07917586_74M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_JAB_07917586_74M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 856198,
+            "sum": 96508048.0,
+            "sum_sq": 20648269824.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JNMP_2291631_54F",
+        "label": 1,
+        "age": 54,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JNMP_2291631_54F",
+        "originals": {
+            "image": "data\\cases\\TTS_JNMP_2291631_54F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JNMP_2291631_54F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JNMP_2291631_54F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JNMP_2291631_54F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 488490,
+            "sum": 6354130.0,
+            "sum_sq": 1452620928.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DB_24229841_67F",
+        "label": 0,
+        "age": 67,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_DB_24229841_67F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DB_24229841_67F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DB_24229841_67F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DB_24229841_67F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DB_24229841_67F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 579634,
+            "sum": 42160208.0,
+            "sum_sq": 7001529856.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DVMcC_39192026_54M",
+        "label": 0,
+        "age": 54,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_DVMcC_39192026_54M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DVMcC_39192026_54M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DVMcC_39192026_54M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DVMcC_39192026_54M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DVMcC_39192026_54M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1039279,
+            "sum": 36509800.0,
+            "sum_sq": 11826322432.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_BEH_4037842_77F",
+        "label": 1,
+        "age": 77,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_BEH_4037842_77F",
+        "originals": {
+            "image": "data\\cases\\TTS_BEH_4037842_77F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_BEH_4037842_77F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_BEH_4037842_77F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_BEH_4037842_77F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1241127,
+            "sum": 149105920.0,
+            "sum_sq": 34485612544.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_DIW_10053411_89F",
+        "label": 1,
+        "age": 89,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_DIW_10053411_89F",
+        "originals": {
+            "image": "data\\cases\\TTS_DIW_10053411_89F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DIW_10053411_89F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DIW_10053411_89F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DIW_10053411_89F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2133128,
+            "sum": 124823240.0,
+            "sum_sq": 38822682624.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CEK_02226835_80F",
+        "label": 0,
+        "age": 80,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CEK_02226835_80F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CEK_02226835_80F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CEK_02226835_80F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CEK_02226835_80F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CEK_02226835_80F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1677361,
+            "sum": 218477120.0,
+            "sum_sq": 51509886976.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_SBAE_22469423_79F",
+        "label": 0,
+        "age": 79,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SBAE_22469423_79F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SBAE_22469423_79F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SBAE_22469423_79F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SBAE_22469423_79F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SBAE_22469423_79F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 479980,
+            "sum": 51632524.0,
+            "sum_sq": 7859913728.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_YPC_50401036_90M",
+        "label": 0,
+        "age": 90,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_YPC_50401036_90M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_YPC_50401036_90M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_YPC_50401036_90M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_YPC_50401036_90M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_YPC_50401036_90M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2560647,
+            "sum": 294238720.0,
+            "sum_sq": 67412758528.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CAM_29734621_78F",
+        "label": 0,
+        "age": 78,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CAM_29734621_78F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CAM_29734621_78F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CAM_29734621_78F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CAM_29734621_78F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CAM_29734621_78F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1430146,
+            "sum": 139381872.0,
+            "sum_sq": 36548001792.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_KAL_7224116_57F",
+        "label": 1,
+        "age": 57,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_KAL_7224116_57F",
+        "originals": {
+            "image": "data\\cases\\TTS_KAL_7224116_57F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_KAL_7224116_57F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_KAL_7224116_57F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_KAL_7224116_57F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 952851,
+            "sum": 96064272.0,
+            "sum_sq": 20255617024.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_JBM_11929965_71M",
+        "label": 0,
+        "age": 71,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_JBM_11929965_71M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_JBM_11929965_71M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_JBM_11929965_71M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_JBM_11929965_71M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_JBM_11929965_71M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 830842,
+            "sum": 51980664.0,
+            "sum_sq": 19146500096.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_JDMB_13788_72F",
+        "label": 1,
+        "age": 72,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JDMB_13788_72F",
+        "originals": {
+            "image": "data\\cases\\TTS_JDMB_13788_72F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JDMB_13788_72F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JDMB_13788_72F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JDMB_13788_72F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3371381,
+            "sum": 462680704.0,
+            "sum_sq": 116380852224.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MMStM_35433_70F",
+        "label": 1,
+        "age": 70,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MMStM_35433_70F",
+        "originals": {
+            "image": "data\\cases\\TTS_MMStM_35433_70F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MMStM_35433_70F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MMStM_35433_70F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MMStM_35433_70F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1313151,
+            "sum": 155413168.0,
+            "sum_sq": 40814571520.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_LMC_3629185_66F",
+        "label": 1,
+        "age": 66,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_LMC_3629185_66F",
+        "originals": {
+            "image": "data\\cases\\TTS_LMC_3629185_66F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_LMC_3629185_66F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_LMC_3629185_66F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_LMC_3629185_66F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1239529,
+            "sum": 146615664.0,
+            "sum_sq": 32958636032.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_HMD_22248504_77F",
+        "label": 0,
+        "age": 77,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_HMD_22248504_77F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_HMD_22248504_77F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_HMD_22248504_77F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_HMD_22248504_77F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_HMD_22248504_77F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2098783,
+            "sum": 183317968.0,
+            "sum_sq": 48201179136.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_RMB_09729021_67F",
+        "label": 0,
+        "age": 67,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_RMB_09729021_67F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_RMB_09729021_67F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_RMB_09729021_67F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_RMB_09729021_67F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_RMB_09729021_67F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1383647,
+            "sum": 78897888.0,
+            "sum_sq": 25442324480.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JAQ_3124096_93F",
+        "label": 1,
+        "age": 93,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JAQ_3124096_93F",
+        "originals": {
+            "image": "data\\cases\\TTS_JAQ_3124096_93F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JAQ_3124096_93F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JAQ_3124096_93F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JAQ_3124096_93F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1548288,
+            "sum": 149678416.0,
+            "sum_sq": 43480268800.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_BB_8903260_78F",
+        "label": 1,
+        "age": 78,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_BB_8903260_78F",
+        "originals": {
+            "image": "data\\cases\\TTS_BB_8903260_78F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_BB_8903260_78F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_BB_8903260_78F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_BB_8903260_78F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2760778,
+            "sum": 226104208.0,
+            "sum_sq": 46054002688.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_FFJ_11086170_86F",
+        "label": 1,
+        "age": 86,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_FFJ_11086170_86F",
+        "originals": {
+            "image": "data\\cases\\TTS_FFJ_11086170_86F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_FFJ_11086170_86F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_FFJ_11086170_86F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_FFJ_11086170_86F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 396652,
+            "sum": 28402692.0,
+            "sum_sq": 3943201792.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JAL_6996466_69F",
+        "label": 1,
+        "age": 69,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JAL_6996466_69F",
+        "originals": {
+            "image": "data\\cases\\TTS_JAL_6996466_69F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JAL_6996466_69F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JAL_6996466_69F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JAL_6996466_69F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1472115,
+            "sum": 92371184.0,
+            "sum_sq": 27681406976.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_PL_36050987_73M",
+        "label": 0,
+        "age": 73,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_PL_36050987_73M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_PL_36050987_73M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_PL_36050987_73M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_PL_36050987_73M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_PL_36050987_73M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3442090,
+            "sum": 195507728.0,
+            "sum_sq": 52406468608.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_SC_7249766_82F",
+        "label": 1,
+        "age": 82,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_SC_7249766_82F",
+        "originals": {
+            "image": "data\\cases\\TTS_SC_7249766_82F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_SC_7249766_82F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_SC_7249766_82F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_SC_7249766_82F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1521977,
+            "sum": 173160544.0,
+            "sum_sq": 47047970816.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_HB_50159284_62F",
+        "label": 0,
+        "age": 62,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_HB_50159284_62F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_HB_50159284_62F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_HB_50159284_62F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_HB_50159284_62F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_HB_50159284_62F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 442023,
+            "sum": 48697796.0,
+            "sum_sq": 10063232000.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MVM_10108272_77F",
+        "label": 1,
+        "age": 77,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MVM_10108272_77F",
+        "originals": {
+            "image": "data\\cases\\TTS_MVM_10108272_77F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MVM_10108272_77F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MVM_10108272_77F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MVM_10108272_77F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 284831,
+            "sum": 31439530.0,
+            "sum_sq": 8805685248.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_DJK_2493_53F",
+        "label": 1,
+        "age": 53,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_DJK_2493_53F",
+        "originals": {
+            "image": "data\\cases\\TTS_DJK_2493_53F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DJK_2493_53F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DJK_2493_53F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DJK_2493_53F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 544438,
+            "sum": 77771376.0,
+            "sum_sq": 19515809792.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_SKLL_5171467_81F",
+        "label": 1,
+        "age": 81,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_SKLL_5171467_81F",
+        "originals": {
+            "image": "data\\cases\\TTS_SKLL_5171467_81F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_SKLL_5171467_81F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_SKLL_5171467_81F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_SKLL_5171467_81F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2143218,
+            "sum": 295916544.0,
+            "sum_sq": 73154125824.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_SDA_50042444_68M",
+        "label": 0,
+        "age": 68,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_SDA_50042444_68M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SDA_50042444_68M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SDA_50042444_68M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SDA_50042444_68M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SDA_50042444_68M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 585507,
+            "sum": 63148952.0,
+            "sum_sq": 14936947712.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_CML_11113354_88F",
+        "label": 1,
+        "age": 88,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_CML_11113354_88F",
+        "originals": {
+            "image": "data\\cases\\TTS_CML_11113354_88F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_CML_11113354_88F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_CML_11113354_88F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_CML_11113354_88F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 238885,
+            "sum": 29755832.0,
+            "sum_sq": 5252937216.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_MA_00147663_60F",
+        "label": 0,
+        "age": 60,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_MA_00147663_60F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_MA_00147663_60F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_MA_00147663_60F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_MA_00147663_60F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_MA_00147663_60F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1582932,
+            "sum": 180435152.0,
+            "sum_sq": 44171177984.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_SES_28300911_74F",
+        "label": 1,
+        "age": 74,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_SES_28300911_74F",
+        "originals": {
+            "image": "data\\cases\\TTS_SES_28300911_74F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_SES_28300911_74F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_SES_28300911_74F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_SES_28300911_74F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 447712,
+            "sum": 57531684.0,
+            "sum_sq": 15776700416.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_RJCB_32157976_40M",
+        "label": 0,
+        "age": 40,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_RJCB_32157976_40M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_RJCB_32157976_40M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_RJCB_32157976_40M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_RJCB_32157976_40M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_RJCB_32157976_40M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1237214,
+            "sum": 105926192.0,
+            "sum_sq": 22994704384.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_DEM_9902248_72F",
+        "label": 1,
+        "age": 72,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_DEM_9902248_72F",
+        "originals": {
+            "image": "data\\cases\\TTS_DEM_9902248_72F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DEM_9902248_72F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DEM_9902248_72F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DEM_9902248_72F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 15755850,
+            "sum": 2067292416.0,
+            "sum_sq": 491097063424.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_KJS_32709594_63F",
+        "label": 0,
+        "age": 63,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_KJS_32709594_63F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_KJS_32709594_63F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_KJS_32709594_63F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_KJS_32709594_63F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_KJS_32709594_63F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1948731,
+            "sum": 165579072.0,
+            "sum_sq": 42083385344.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_LAM_5515176_65F",
+        "label": 1,
+        "age": 65,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_LAM_5515176_65F",
+        "originals": {
+            "image": "data\\cases\\TTS_LAM_5515176_65F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_LAM_5515176_65F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_LAM_5515176_65F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_LAM_5515176_65F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1931001,
+            "sum": 231123264.0,
+            "sum_sq": 47458246656.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_BLT_11022191_60F",
+        "label": 1,
+        "age": 60,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_BLT_11022191_60F",
+        "originals": {
+            "image": "data\\cases\\TTS_BLT_11022191_60F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_BLT_11022191_60F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_BLT_11022191_60F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_BLT_11022191_60F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3540825,
+            "sum": 220738240.0,
+            "sum_sq": 47273140224.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_VM_50032811_93F",
+        "label": 0,
+        "age": 93,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_VM_50032811_93F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_VM_50032811_93F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_VM_50032811_93F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_VM_50032811_93F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_VM_50032811_93F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 5633130,
+            "sum": 942521536.0,
+            "sum_sq": 226605236224.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_DJM_50424301_78M",
+        "label": 0,
+        "age": 78,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_DJM_50424301_78M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DJM_50424301_78M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DJM_50424301_78M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DJM_50424301_78M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DJM_50424301_78M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1657390,
+            "sum": 156503008.0,
+            "sum_sq": 41006379008.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_SA_33363250_46F",
+        "label": 0,
+        "age": 46,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SA_33363250_46F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SA_33363250_46F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SA_33363250_46F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SA_33363250_46F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SA_33363250_46F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1100526,
+            "sum": 86529888.0,
+            "sum_sq": 20917798912.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_PLM_36340719_61F",
+        "label": 1,
+        "age": 61,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_PLM_36340719_61F",
+        "originals": {
+            "image": "data\\cases\\TTS_PLM_36340719_61F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_PLM_36340719_61F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_PLM_36340719_61F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_PLM_36340719_61F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 21444691,
+            "sum": 1601903360.0,
+            "sum_sq": 446977277952.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MMF_40610578_75F",
+        "label": 1,
+        "age": 75,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MMF_40610578_75F",
+        "originals": {
+            "image": "data\\cases\\TTS_MMF_40610578_75F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MMF_40610578_75F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MMF_40610578_75F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MMF_40610578_75F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1096747,
+            "sum": 73010704.0,
+            "sum_sq": 11654973440.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_GAB_25512591_90F",
+        "label": 1,
+        "age": 90,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_GAB_25512591_90F",
+        "originals": {
+            "image": "data\\cases\\TTS_GAB_25512591_90F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_GAB_25512591_90F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_GAB_25512591_90F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_GAB_25512591_90F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2452058,
+            "sum": 314843744.0,
+            "sum_sq": 71630503936.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_PDG_27972884_76F",
+        "label": 0,
+        "age": 76,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_PDG_27972884_76F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_PDG_27972884_76F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_PDG_27972884_76F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_PDG_27972884_76F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_PDG_27972884_76F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1382472,
+            "sum": 142004448.0,
+            "sum_sq": 39124176896.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DCE_22600738_50M",
+        "label": 0,
+        "age": 50,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_DCE_22600738_50M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DCE_22600738_50M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DCE_22600738_50M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DCE_22600738_50M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DCE_22600738_50M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1286127,
+            "sum": 132226744.0,
+            "sum_sq": 30095960064.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_EMB_34404780_87F",
+        "label": 1,
+        "age": 87,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_EMB_34404780_87F",
+        "originals": {
+            "image": "data\\cases\\TTS_EMB_34404780_87F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_EMB_34404780_87F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_EMB_34404780_87F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_EMB_34404780_87F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 3538390,
+            "sum": 329461536.0,
+            "sum_sq": 76014108672.0
+        },
+        "pool": "holdout"
+    },
+    {
+        "ID": "CNTRL_NU00147883_60F",
+        "label": 0,
+        "age": 60,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_NU00147883_60F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_NU00147883_60F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_NU00147883_60F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_NU00147883_60F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_NU00147883_60F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1582932,
+            "sum": 180435152.0,
+            "sum_sq": 44171177984.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_FB_192978_73M",
+        "label": 0,
+        "age": 73,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_FB_192978_73M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_FB_192978_73M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_FB_192978_73M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_FB_192978_73M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_FB_192978_73M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2497692,
+            "sum": 236285216.0,
+            "sum_sq": 58430332928.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_BFM_10624765_79F",
+        "label": 1,
+        "age": 79,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_BFM_10624765_79F",
+        "originals": {
+            "image": "data\\cases\\TTS_BFM_10624765_79F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_BFM_10624765_79F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_BFM_10624765_79F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_BFM_10624765_79F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 4761006,
+            "sum": 459340800.0,
+            "sum_sq": 111200731136.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_CLB_50002879_65F",
+        "label": 1,
+        "age": 65,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_CLB_50002879_65F",
+        "originals": {
+            "image": "data\\cases\\TTS_CLB_50002879_65F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_CLB_50002879_65F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_CLB_50002879_65F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_CLB_50002879_65F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2503162,
+            "sum": 252612864.0,
+            "sum_sq": 59233030144.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_VMI_00101342_37F",
+        "label": 0,
+        "age": 37,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_VMI_00101342_37F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_VMI_00101342_37F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_VMI_00101342_37F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_VMI_00101342_37F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_VMI_00101342_37F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1648623,
+            "sum": 101797528.0,
+            "sum_sq": 12331950080.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_WF_10497121_62F",
+        "label": 1,
+        "age": 62,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_WF_10497121_62F",
+        "originals": {
+            "image": "data\\cases\\TTS_WF_10497121_62F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_WF_10497121_62F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_WF_10497121_62F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_WF_10497121_62F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 251745,
+            "sum": 26310128.0,
+            "sum_sq": 3991956480.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_AG_519880_37F",
+        "label": 0,
+        "age": 37,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_AG_519880_37F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_AG_519880_37F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_AG_519880_37F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_AG_519880_37F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_AG_519880_37F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2242306,
+            "sum": 299268352.0,
+            "sum_sq": 65283735552.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JMB_38365177_73F",
+        "label": 1,
+        "age": 73,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JMB_38365177_73F",
+        "originals": {
+            "image": "data\\cases\\TTS_JMB_38365177_73F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JMB_38365177_73F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JMB_38365177_73F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JMB_38365177_73F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 158525,
+            "sum": 21986492.0,
+            "sum_sq": 4544404992.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_GJB_30653190_88M",
+        "label": 1,
+        "age": 88,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_GJB_30653190_88M",
+        "originals": {
+            "image": "data\\cases\\TTS_GJB_30653190_88M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_GJB_30653190_88M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_GJB_30653190_88M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_GJB_30653190_88M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 725243,
+            "sum": 80060288.0,
+            "sum_sq": 20515872768.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_RSK_31115199_35M",
+        "label": 0,
+        "age": 35,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_RSK_31115199_35M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_RSK_31115199_35M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_RSK_31115199_35M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_RSK_31115199_35M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_RSK_31115199_35M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1989223,
+            "sum": 269056096.0,
+            "sum_sq": 69460353024.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_JMMcC_4147591_77F",
+        "label": 1,
+        "age": 77,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_JMMcC_4147591_77F",
+        "originals": {
+            "image": "data\\cases\\TTS_JMMcC_4147591_77F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_JMMcC_4147591_77F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_JMMcC_4147591_77F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_JMMcC_4147591_77F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1668254,
+            "sum": 206978992.0,
+            "sum_sq": 53122711552.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_CB_11607017_75F",
+        "label": 0,
+        "age": 75,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_CB_11607017_75F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_CB_11607017_75F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_CB_11607017_75F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_CB_11607017_75F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_CB_11607017_75F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1527408,
+            "sum": 195651328.0,
+            "sum_sq": 45138870272.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MG_22519714_73M",
+        "label": 1,
+        "age": 73,
+        "gender": "M",
+        "directory": "data\\cases\\TTS_MG_22519714_73M",
+        "originals": {
+            "image": "data\\cases\\TTS_MG_22519714_73M\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MG_22519714_73M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MG_22519714_73M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MG_22519714_73M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 261564,
+            "sum": 27913342.0,
+            "sum_sq": 4746632192.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_MC_3887643_88F",
+        "label": 1,
+        "age": 88,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_MC_3887643_88F",
+        "originals": {
+            "image": "data\\cases\\TTS_MC_3887643_88F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_MC_3887643_88F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_MC_3887643_88F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_MC_3887643_88F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2234294,
+            "sum": 240382432.0,
+            "sum_sq": 61939671040.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "TTS_DD_26362236_63F",
+        "label": 1,
+        "age": 63,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_DD_26362236_63F",
+        "originals": {
+            "image": "data\\cases\\TTS_DD_26362236_63F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_DD_26362236_63F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_DD_26362236_63F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_DD_26362236_63F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1014938,
+            "sum": 103757216.0,
+            "sum_sq": 21397614592.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_PAL_10614444_97F",
+        "label": 1,
+        "age": 97,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_PAL_10614444_97F",
+        "originals": {
+            "image": "data\\cases\\TTS_PAL_10614444_97F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_PAL_10614444_97F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_PAL_10614444_97F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_PAL_10614444_97F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1907902,
+            "sum": 221035296.0,
+            "sum_sq": 56769118208.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_SLE_50347443_59F",
+        "label": 0,
+        "age": 59,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_SLE_50347443_59F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_SLE_50347443_59F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_SLE_50347443_59F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_SLE_50347443_59F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_SLE_50347443_59F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 867036,
+            "sum": 96546552.0,
+            "sum_sq": 22782685184.0
+        },
+        "datalist": "final test",
+        "pool": "holdout"
+    },
+    {
+        "ID": "TTS_AD_12191953_51F",
+        "label": 1,
+        "age": 51,
+        "gender": "F",
+        "directory": "data\\cases\\TTS_AD_12191953_51F",
+        "originals": {
+            "image": "data\\cases\\TTS_AD_12191953_51F\\fullCT.nii.gz",
+            "mask": "data\\cases\\TTS_AD_12191953_51F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\TTS_AD_12191953_51F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\TTS_AD_12191953_51F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 626896,
+            "sum": 97848448.0,
+            "sum_sq": 24651175936.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_DEA_9230_52M",
+        "label": 0,
+        "age": 52,
+        "gender": "M",
+        "directory": "data\\cases\\CNTRL_DEA_9230_52M",
+        "originals": {
+            "image": "data\\cases\\CNTRL_DEA_9230_52M\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_DEA_9230_52M\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_DEA_9230_52M\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_DEA_9230_52M\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 2154058,
+            "sum": 251204672.0,
+            "sum_sq": 55992549376.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_AB_10470318_90F",
+        "label": 0,
+        "age": 90,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_AB_10470318_90F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_AB_10470318_90F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_AB_10470318_90F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_AB_10470318_90F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_AB_10470318_90F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 1616467,
+            "sum": 184999008.0,
+            "sum_sq": 46224019456.0
+        },
+        "pool": "main"
+    },
+    {
+        "ID": "CNTRL_JSA_91708HDGH_67F",
+        "label": 0,
+        "age": 67,
+        "gender": "F",
+        "directory": "data\\cases\\CNTRL_JSA_91708HDGH_67F",
+        "originals": {
+            "image": "data\\cases\\CNTRL_JSA_91708HDGH_67F\\fullCT.nii.gz",
+            "mask": "data\\cases\\CNTRL_JSA_91708HDGH_67F\\label_mask.nii.gz"
+        },
+        "cropped": {
+            "image": "data\\cases\\CNTRL_JSA_91708HDGH_67F\\cropped\\CTcrop.nii.gz",
+            "mask": "data\\cases\\CNTRL_JSA_91708HDGH_67F\\cropped\\MSKcrop.nii.gz"
+        },
+        "stats": {
+            "count": 847407,
+            "sum": 45809648.0,
+            "sum_sq": 10075257856.0
+        },
+        "pool": "main"
+    }
+]

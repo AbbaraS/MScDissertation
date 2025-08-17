@@ -1,13 +1,13 @@
 import pickle
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
-from core.Log import load_dataset
+from pathlib import Path
+import json
+
+from core.Log import *
+
+
 pools = ["holdout", "main"]
-
-
-
-
-
 
 def get_dataset_stats(datalist):
 	'''DONE. ONLY UPDATE IF ERROR OCCURS.'''
@@ -30,11 +30,12 @@ def get_dataset_stats(datalist):
 
 
 
-def create_folds_stats(OUTER_K=4, INNER_K=3):
+def create_folds_stats(OUTER_K=5, INNER_K=3):
 
-	OUTER_cv = StratifiedKFold(n_splits=OUTER_K, shuffle=True, random_state=67)
-	INNER_cv = StratifiedKFold(n_splits=INNER_K, shuffle=True, random_state=67)
-	main_training_set = load_dataset("main")
+	OUTER_cv = StratifiedKFold(n_splits=OUTER_K, shuffle=True, random_state=42)
+	INNER_cv = StratifiedKFold(n_splits=INNER_K, shuffle=True, random_state=42)
+	main_dataset = load_from_json(filename="NCV_5_3_folds/data_info_5-3NCV.json")
+	main_training_set = [i for i in main_dataset if i["pool"] == "main"]
 	main_training_labels = [i["label"] for i in main_training_set]
 	all_folds_data = []
 
@@ -68,7 +69,7 @@ def create_folds_stats(OUTER_K=4, INNER_K=3):
 
 		all_folds_data.append(outer_fold_data)
 
-	with open("training/folds_indices_stats.pkl", "wb") as f:
+	with open("NCV_5_3_folds/folds_indices_stats.pkl", "wb") as f:
 		pickle.dump(all_folds_data, f)
 
 
@@ -79,7 +80,7 @@ def get_fold_indices(outer_fold_id, inner_fold_id):
 		(inner_train_indices, inner_val_indices)
 	for the specified fold.
 	"""
-	with open("training/fold_indices.pkl", "rb") as f:
+	with open("NCV_5_3_folds/fold_indices.pkl", "rb") as f:
 		all_folds_data = pickle.load(f)
 	outer_fold_data = all_folds_data[outer_fold_id]
 	inner_fold_data = outer_fold_data['INNER_FOLDS'][inner_fold_id]
@@ -96,7 +97,8 @@ def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
 		(outer_fold_stats, inner_fold_stats)
 	for the specified fold.
 	"""
-	with open("training/folds_indices_stats.pkl", "rb") as f:
+	#with open("training/folds_indices_stats.pkl", "rb") as f:
+	with open("NCV_5_3_folds/folds_indices_stats.pkl", "rb") as f:
 		all_folds_data = pickle.load(f)
 	if outer_fold_id is None and inner_fold_id is None:
 		return all_folds_data
