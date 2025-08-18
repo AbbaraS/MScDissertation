@@ -18,16 +18,14 @@ def get_dataset_stats(datalist):
 	sum_global = sum(s['sum'] for s in stats)
 	sum_sq_global = sum(s['sum_sq'] for s in stats)
 
-	UHmean = sum_global / count
-	HUvar = (sum_sq_global / count) - (UHmean ** 2)
+	HUmean = sum_global / count
+	HUvar = (sum_sq_global / count) - (HUmean ** 2)
 	HUstd = np.sqrt(max(0.0, HUvar))
 
-	return {'HUmean':  float(UHmean),
+	return {'HUmean':  float(HUmean),
 			'HUstd':   float(HUstd),
 			'AGEmean': float(np.mean(ages)),
 			'AGEstd':  float(np.std(ages))}
-
-
 
 
 def create_folds_stats(OUTER_K=5, INNER_K=3):
@@ -74,22 +72,22 @@ def create_folds_stats(OUTER_K=5, INNER_K=3):
 
 
 
-def get_fold_indices(outer_fold_id, inner_fold_id):
-	"""
-	Returns a tuple containing
-		(inner_train_indices, inner_val_indices)
-	for the specified fold.
-	"""
-	with open("NCV_5_3_folds/fold_indices.pkl", "rb") as f:
-		all_folds_data = pickle.load(f)
-	outer_fold_data = all_folds_data[outer_fold_id]
-	inner_fold_data = outer_fold_data['INNER_FOLDS'][inner_fold_id]
-
-	train_indices = inner_fold_data['INNER_FOLD_TRAIN_idx']
-	val_indices = inner_fold_data['INNER_FOLD_VAL_idx']
-
-	return train_indices, val_indices
-
+#def get_fold_indices(outer_fold_id, inner_fold_id):
+#	"""
+#	Returns a tuple containing
+#		(inner_train_indices, inner_val_indices)
+#	for the specified fold.
+#	"""
+#	with open("NCV_5_3_folds/fold_indices.pkl", "rb") as f:
+#		all_folds_data = pickle.load(f)
+#	outer_fold_data = all_folds_data[outer_fold_id]
+#	inner_fold_data = outer_fold_data['INNER_FOLDS'][inner_fold_id]
+#
+#	train_indices = inner_fold_data['INNER_FOLD_TRAIN_idx']
+#	val_indices = inner_fold_data['INNER_FOLD_VAL_idx']
+#
+#	return train_indices, val_indices
+#
 
 def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
 	"""

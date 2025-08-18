@@ -12,7 +12,7 @@ import numpy as np
 from core.CNNmodel import *
 from core.preprocessing import *
 from torch.utils.data import Dataset, DataLoader
-logger = logging.getLogger('root')
+
 
 
 
@@ -21,9 +21,9 @@ class DataLoaderFactory:
 	Creates PyTorch DataLoaders for specific folds of a pre-computed
 	cross-validation setup.
 	"""
-	def __init__(self, main_dataset, all_folds_data):
+	def __init__(self, main_dataset):
 		self.main_dataset = main_dataset
-		self.all_folds_data = all_folds_data
+		#self.all_folds_data = all_folds_data
 		# You can also store constants like num_workers here
 		self.num_workers = 4
 
@@ -31,8 +31,11 @@ class DataLoaderFactory:
 		"""
 		Generates train and validation dataloaders for a specific inner fold.
 		"""
+		with open("NCV_5_3_folds/folds_indices_stats.pkl", "rb") as f:
+			all_folds_data = pickle.load(f)
 		# --- 1. Get the correct data for the specified fold ---
-		outer_fold_struct = self.all_folds_data[outer_fold_id]
+		outer_fold_struct = all_folds_data[outer_fold_id]
+		#outer_fold_struct = self.all_folds_data[outer_fold_id]
 		inner_fold_struct = outer_fold_struct['INNER_FOLDS'][inner_fold_id]
 
 		# The outer_train_pool is the dataset from which inner folds are made
@@ -66,7 +69,8 @@ class DataLoaderFactory:
 		"""
 		Generates train and test dataloaders for a specific outer fold.
 		"""
-		outer_fold_struct = self.all_folds_data[outer_fold_id]
+		outer_fold_struct = get_fold_stats(outer_fold_id, inner_fold_id=None)
+		#outer_fold_struct = self.all_folds_data[outer_fold_id]
 		fold_pool = [self.main_dataset[i] for i in outer_fold_struct['OUTER_FOLD_TRAIN_idx']]
 		fold_pool_labels = [self.main_dataset[i]['label'] for i in outer_fold_struct['OUTER_FOLD_TRAIN_idx']]
 		train_fold_data, val_fold_data = train_test_split(
@@ -88,6 +92,31 @@ class DataLoaderFactory:
 		test_loader = DataLoader(test_dataset, batch_size=8, shuffle=False, num_workers=self.num_workers)
 
 		return train_loader, val_loader, test_loader
+
+def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
+	"""
+	Returns a tuple containing
+		(outer_fold_stats, inner_fold_stats)
+	for the specified fold.
+	"""
+	#with open("training/folds_indices_stats.pkl", "rb") as f:
+	with open("NCV_5_3_folds/folds_indices_stats.pkl", "rb") as f:
+		all_folds_data = pickle.load(f)
+	if outer_fold_id is None and inner_fold_id is None:
+		return all_folds_data
+	elif outer_fold_id is None:
+		# Return all outer folds stats
+		return [fold['OUTER_FOLD_stats'] for fold in all_folds_data]
+	elif inner_fold_id is None:
+		# Return all inner folds stats for the specified outer fold
+		return [fold['INNER_FOLD_stats'] for fold in all_folds_data[outer_fold_id]['INNER_FOLDS']]
+	else:
+		# Return stats for the specified outer and inner fold
+		outer_fold_data = all_folds_data[outer_fold_id]
+		inner_fold_data = outer_fold_data['INNER_FOLDS'][inner_fold_id]
+		return outer_fold_data['OUTER_FOLD_stats'], inner_fold_data['INNER_FOLD_stats']
+
+
 
 
 
@@ -206,6 +235,27 @@ def select_slices(mask):
 
 
 
+
+class METADataset(Dataset):
+	def __init__(self, data_dicts, stats):
+		self.data_dicts = data_dicts
+		self.stats = stats
+
+	def __len__(self):
+		return len(self.data_dicts)
+
+	def __getitem__(self, idx):
+		case_dict = self.data_dicts[idx]
+
+		# One-hot encode gender ('F' -> [1, 0], 'M' -> [0, 1])
+		gender = [1.0, 0.0] if case_dict['gender'] == 'F' else [0.0, 1.0]
+		age = (case_dict['age'] - self.stats['AGEmean']) / self.stats['AGEstd']
+
+		meta = torch.tensor([age] + gender, dtype=torch.float32)
+		label = torch.tensor(case_dict['label'], dtype=torch.float32)
+
+		return {"CaseID": case_dict['ID'],
+			"label": label, "meta": meta}
 
 
 

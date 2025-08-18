@@ -94,6 +94,23 @@ TARGETORIEN = "RAS"
 
 
 
+MLP_PARAM_GRID = [
+	{"paramID": 101, "LR": 3e-4,  "WD": 1e-5, "DR": 0.4},
+	#{"paramID": 102, "LR": 0.0005, "WD": 1e-4, "DR": 0.4},
+	{"paramID": 103, "LR": 3e-3,  "WD": 1e-6, "DR": 0.4},
+]
+
+SINGLEVIEW_PARAM_GRID = [
+	#{"paramID": 203, "LR": 0.0003, "WD": 1e-4, "DR": 0.3},
+	{"paramID": 201, "LR": 0.0005, "WD": 1e-5, "DR": 0.4},
+	#{"paramID": 202, "LR": 0.0007, "WD": 1e-6, "DR": 0.2},
+]
+
+RESNET_PARAM_GRID = [
+	#{"paramID": 303, "LR": 0.0005, "WD": 1e-4, "DR": 0.6},
+	{"paramID": 301, "LR": 0.001,  "WD": 1e-5, "DR": 0.5},
+	#{"paramID": 302, "LR": 0.005,  "WD": 1e-5, "DR": 0.4},
+]
 
 
 

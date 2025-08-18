@@ -80,29 +80,7 @@ def crop_training(datalist):
 		save_metatensor_as_nifti(cropped_mask, p2)
 		case_data["cropped"] = {"image": str(p1),"mask": str(p2)}
 
-def save_slice_as_nifti(
-	volume_tensor,
-	slice_index: int,
-	slice_axis: int,
-	output_path: Path):
-	"""
-	Extracts a 2D slice from a 3D volume, correctly adjusts its affine matrix,
-	and saves it as a spatially-aware 3D NIfTI file with a thickness of 1.
-	"""
-	if 'affine' not in volume_tensor.meta:
-		raise ValueError("Input tensor must be a MetaTensor with an 'affine' key in its metadata.")
-	slice_data = np.take(volume_tensor.cpu().numpy().squeeze(0), slice_index, axis=slice_axis)
-	slice_data_3d = np.expand_dims(slice_data, axis=slice_axis)
-	original_affine = volume_tensor.meta['affine'].cpu().numpy()
-	new_affine = original_affine.copy()
-	corner_voxel_coord = np.array([0, 0, 0, 1])
-	corner_voxel_coord[slice_axis] = slice_index
-	new_physical_origin = np.dot(original_affine, corner_voxel_coord)
-	new_affine[:, 3] = new_physical_origin
-	output_path.parent.mkdir(parents=True, exist_ok=True)
-	nifti_img = nib.Nifti1Image(slice_data_3d, new_affine)
-	nib.save(nifti_img, output_path)
-	# print(f"Saved slice to: {output_path}")
+
 
 def get_demographics(ID: str):
 	try:
@@ -173,3 +151,26 @@ def create_multilabel_heart_mask(casepath: Path):
 
 
 
+def save_slice_as_nifti(
+	volume_tensor,
+	slice_index: int,
+	slice_axis: int,
+	output_path: Path):
+	"""
+	Extracts a 2D slice from a 3D volume, correctly adjusts its affine matrix,
+	and saves it as a spatially-aware 3D NIfTI file with a thickness of 1.
+	"""
+	if 'affine' not in volume_tensor.meta:
+		raise ValueError("Input tensor must be a MetaTensor with an 'affine' key in its metadata.")
+	slice_data = np.take(volume_tensor.cpu().numpy().squeeze(0), slice_index, axis=slice_axis)
+	slice_data_3d = np.expand_dims(slice_data, axis=slice_axis)
+	original_affine = volume_tensor.meta['affine'].cpu().numpy()
+	new_affine = original_affine.copy()
+	corner_voxel_coord = np.array([0, 0, 0, 1])
+	corner_voxel_coord[slice_axis] = slice_index
+	new_physical_origin = np.dot(original_affine, corner_voxel_coord)
+	new_affine[:, 3] = new_physical_origin
+	output_path.parent.mkdir(parents=True, exist_ok=True)
+	nifti_img = nib.Nifti1Image(slice_data_3d, new_affine)
+	nib.save(nifti_img, output_path)
+	# print(f"Saved slice to: {output_path}")
