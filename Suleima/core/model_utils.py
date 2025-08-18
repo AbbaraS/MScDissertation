@@ -28,9 +28,11 @@ def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 	ExpID = hypers['ExpID']
 	P = hypers['P']
 	epochs = hypers['epochs']
+
 	optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=WD)
 	scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=P, factor=0.5)
 	criterion = nn.BCEWithLogitsLoss()
+
 	best_V_loss = float('inf')
 	P_counter = 0
 	val_N=len(val_loader.dataset)
@@ -142,8 +144,6 @@ def EVALUATE_MODEL1(model, test_loader, hypers):
 				prob = probability[i].item()
 				log.info(f"     {ExpID}; {hypers['HPset']}; {hypers['Fold']}; {case_id}; {pred}; {prob:.4f};")
 
-
-			#log.info(f"		{ExpID}; {hypers['HPset']}; {hypers['Fold']}; {CaseID}; {prediction}; {probability};")
 
 	final_loss = running_loss / eval_N
 	return final_loss, all_probabilities, all_labels, all_predictions

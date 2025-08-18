@@ -55,18 +55,18 @@ def setup_loggers():
 
 def setup_loggers5K():
 	root_logger = logging.getLogger('root')
-	INNERtrain = logging.getLogger('INNER_5Ktrain')
+
 	OUTtrain = logging.getLogger('OUTER_5Ktrain')
 	evaluate = logging.getLogger('OUTER_5Kevaluate')
 
 	root_logger.setLevel(logging.INFO)
-	INNERtrain.setLevel(logging.INFO)
+
 	OUTtrain.setLevel(logging.INFO)
 	evaluate.setLevel(logging.INFO)
 
 	root_logger.propagate = False
 	evaluate.propagate = False
-	INNERtrain.propagate = False
+
 	OUTtrain.propagate = False
 
 	if not root_logger.hasHandlers():
@@ -78,12 +78,6 @@ def setup_loggers5K():
 		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
 		root_logger.addHandler(app_handler)
 		root_logger.addHandler(console_handler)
-
-	if not INNERtrain.hasHandlers():
-		INNERtrain.propagate = False
-		train_handler = logging.FileHandler('INNER_5Ktrain.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		INNERtrain.addHandler(train_handler)
 
 	if not OUTtrain.hasHandlers():
 		OUTtrain.propagate = False
