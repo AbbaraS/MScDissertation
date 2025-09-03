@@ -41,10 +41,7 @@ def get_HU_stats(datalist):
 			"sum_sq": torch.sum(fg_voxs ** 2).item()}
 
 
-def get_vols(itm, loader=tensor_loader):
-	paths = {"image": Path(itm["image"]),
-			 "mask":  Path(itm["mask"])}
-	return loader(paths)
+
 
 def save_metatensor_as_nifti(tensor, output_path: Path):
 	"""
@@ -65,7 +62,7 @@ def crop_training(datalist):
 	transforms = Compose([
 		LoadImaged(keys=["image", "mask"]),
 		EnsureChannelFirstd(keys=["image", "mask"]),
-		Orientationd(keys=["image", "mask"], axcodes="RAS"),
+		Orientationd(keys=["image", "mask"], axcodes="LAS"),
 		Lambdad(keys=["image"], func=lambda x: torch.clamp(x, min=-175.0, max=250.0)),
 		CropForegroundd(keys=["image", "mask"], source_key="mask")
 	])
@@ -82,24 +79,23 @@ def crop_training(datalist):
 
 
 
-def get_demographics(ID: str):
-	try:
-		parts = ID.split("_")
-		type = parts[0]
+SEGMENT_FILES = {
+	"myocardium":       	"heart_myocardium.nii.gz",
+	"left_ventricle":   	"heart_ventricle_left.nii.gz",
+	"right_ventricle":  	"heart_ventricle_right.nii.gz",
+	"left_atrium":      	"heart_atrium_left.nii.gz",
+	"right_atrium":     	"heart_atrium_right.nii.gz",
+}
 
-		if len(parts) == 3: # e.g., "CNTRL_AAP50415783_61F"
-			info = parts[2]
-		elif len(parts) == 4: # e.g., "CNTRL_AAP_50415783_61F"
-			info = parts[3]
-		label = 0 if type == "CNTRL" else 1
-		return {
-			"label": label,         # control = 0, tts = 1
-			"age": int(info[:2]),   # age = first two digits of info
-			"gender": info[2]       # 'F' or 'M'
-			}
-	except Exception as e:
-		logger.error(f"Error parsing: '{parts}' - should be AgeGender")
-		return None
+LABEL_MAP = {
+	#"other_heart": 1,
+	"myocardium": 1,
+	"left_ventricle": 2,
+	"right_ventricle": 3,
+	"left_atrium": 4,
+	"right_atrium": 5
+}
+
 
 def create_multilabel_heart_mask(casepath: Path):
 	"""
@@ -149,7 +145,29 @@ def create_multilabel_heart_mask(casepath: Path):
 	output_path = casepath / "label_mask.nii.gz"
 	nib.save(output_nii, output_path)
 
+def get_vols(itm, loader=tensor_loader):
+	paths = {"image": Path(itm["image"]),
+			 "mask":  Path(itm["mask"])}
+	return loader(paths)
 
+def get_demographics(ID: str):
+	try:
+		parts = ID.split("_")
+		type = parts[0]
+
+		if len(parts) == 3: # e.g., "CNTRL_AAP50415783_61F"
+			info = parts[2]
+		elif len(parts) == 4: # e.g., "CNTRL_AAP_50415783_61F"
+			info = parts[3]
+		label = 0 if type == "CNTRL" else 1
+		return {
+			"label": label,         # control = 0, tts = 1
+			"age": int(info[:2]),   # age = first two digits of info
+			"gender": info[2]       # 'F' or 'M'
+			}
+	except Exception as e:
+		logger.error(f"Error parsing: '{parts}' - should be AgeGender")
+		return None
 
 def save_slice_as_nifti(
 	volume_tensor,

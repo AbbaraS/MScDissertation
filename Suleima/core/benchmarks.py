@@ -35,28 +35,33 @@ def create_adapted_resnet18(device):
 	Creates a pre-trained ResNet-18 model adapted for binary classification.
 	"""
 	# Load a pre-trained ResNet-18 model
-	feature_extractor = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+	m = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+	W = m.conv1.weight.data.mean(dim=1, keepdim=True)  # [64,1,7,7]
+	m.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
+	m.conv1.weight.data = W
 
 	# Freeze all the parameters in the model
 	# This prevents the pre-trained weights from changing during training
 	#print("Freezing existing model layers...")
-	for param in feature_extractor.parameters():
-		param.requires_grad = False
-
+	for p in m.parameters(): p.requires_grad = False
+	for p in m.layer4.parameters(): p.requires_grad = True  # optionally layer3 too
+	optimizer = torch.optim.Adam([
+    {"params": m.layer4.parameters(), "lr": 1e-4},
+    {"params": classifier.parameters(), "lr": 5e-4}], weight_decay=1e-4)
 
 	# Get the number of input features for the final layer
-	num_ftrs = feature_extractor.fc.in_features    ## This will be 512
-	feature_extractor.fc = nn.Identity()
+	num_ftrs = m.fc.in_features    ## This will be 512
+	m.fc = nn.Identity()
 	num_views = 3
 	total_input_features = (num_ftrs * num_views) + 3     # (512 * 3) + 3 = 1539
 
 	classifier = nn.Sequential(
-		nn.BatchNorm1d(total_input_features), # 512 resnet features + 2 meta features
+		nn.LayerNorm(total_input_features), # 512 resnet features + 2 meta features
 		nn.Linear(total_input_features, 256),
 		nn.ReLU(),
 		nn.Dropout(0.3),
 		nn.Linear(256, 1)
 	)
 
-	return feature_extractor.to(device), classifier.to(device)
+	return m.to(device), classifier.to(device)
 

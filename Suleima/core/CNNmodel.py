@@ -11,6 +11,7 @@ class SingleBranchCNN(nn.Module):
 		super().__init__()
 
 		self.dropout_rate = dropout_rate
+
 		self.conv1 = nn.Conv2d(3, 16, kernel_size=3, padding=1)
 		self.bn1 = nn.BatchNorm2d(16)
 		self.pool1 = nn.MaxPool2d(2)

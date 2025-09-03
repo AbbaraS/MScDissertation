@@ -1,0 +1,1282 @@
+############################### OUTER FOLD -0/4- ############################################ OUTER FOLD -0-
+-------------------------------  PARAM ID  -1-  ---------------------------------
+04:18 | {'paramID': 1, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+04:18 | F-0 | Data loaders created. Starting model training...
+04:19 | 	E: 0 | Val loss: 0.6938917771462472 | P_counter: 0
+04:19 | 	E: 1 | Val loss: 0.6849624514579773 | P_counter: 0
+04:20 | 	E: 2 | Val loss: 0.6737695913161    | P_counter: 0
+04:21 | 	E: 3 | Val loss: 0.6713715234110432 | P_counter: 0
+04:22 | 	E: 4 | Val loss: 0.6651239991188049 | P_counter: 0
+04:23 | 	E: 5 | Val loss: 0.6524295133929099 | P_counter: 0
+04:23 | 	E: 6 | Val loss: 0.6441573769815506 | P_counter: 0
+04:24 | 	E: 7 | Val loss: 0.6284093760674999 | P_counter: 0
+04:25 | 	E: 8 | Val loss: 0.6272601715980037 | P_counter: 0
+04:25 | 	E: 9 | Val loss: 0.6173108181645793 | P_counter: 0
+04:25 | best_val_loss: 0.6173
+04:25 | F-1 | Data loaders created. Starting model training...
+04:26 | 	E: 0 | Val loss: 0.6872119557472968 | P_counter: 0
+04:27 | 	E: 1 | Val loss: 0.6797260122914468 | P_counter: 0
+04:27 | 	E: 2 | Val loss: 0.667720127490259 | P_counter: 0
+04:28 | 	E: 3 | Val loss: 0.6596552229696705 | P_counter: 0
+04:29 | 	E: 4 | Val loss: 0.6517618067802922 | P_counter: 0
+04:29 | 	E: 5 | Val loss: 0.6479547965911127 | P_counter: 0
+04:30 | 	E: 6 | Val loss: 0.6402264448904222 | P_counter: 0
+04:31 | 	E: 7 | Val loss: 0.653822866178328 | P_counter: 0
+04:31 | 	E: 8 | Val loss: 0.6327723207012299 | P_counter: 1
+04:32 | 	E: 9 | Val loss: 0.6121225933874807 | P_counter: 0
+04:32 | best_val_loss: 0.6121
+04:32 | F-2 | Data loaders created. Starting model training...
+04:33 | 	E: 0 | Val loss: 0.6920229907958738 | P_counter: 0
+04:33 | 	E: 1 | Val loss: 0.6896567767666232 | P_counter: 0
+04:34 | 	E: 2 | Val loss: 0.6862948171554073 | P_counter: 0
+04:35 | 	E: 3 | Val loss: 0.6885818973664315 | P_counter: 0
+04:35 | 	E: 4 | Val loss: 0.6847562155415935 | P_counter: 1
+04:36 | 	E: 5 | Val loss: 0.6795647894182513 | P_counter: 0
+04:37 | 	E: 6 | Val loss: 0.6977485245273959 | P_counter: 0
+04:38 | 	E: 7 | Val loss: 0.6926504661959987 | P_counter: 1
+04:39 | 	E: 8 | Val loss: 0.6902046299749806 | P_counter: 2
+04:39 | best_val_loss: 0.6796
+04:39 | inner_loop_results: [0.6173108181645793, 0.6121225933874807, 0.6795647894182513]
+04:39 | FOLD 0 | ParamID 1 | Avg Val Loss: 0.6363
+-------------------------------  PARAM ID  -2-  ---------------------------------
+04:39 | {'paramID': 2, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.3, 'epochs': 10}
+04:39 | F-0 | Data loaders created. Starting model training...
+04:39 | 	E: 0 | Val loss: 0.6936414030290419 | P_counter: 0
+04:40 | 	E: 1 | Val loss: 0.6918245092515023 | P_counter: 0
+04:41 | 	E: 2 | Val loss: 0.6884594367396447 | P_counter: 0
+04:41 | 	E: 3 | Val loss: 0.6829067699370845 | P_counter: 0
+04:42 | 	E: 4 | Val loss: 0.6814357080767232 | P_counter: 0
+04:43 | 	E: 5 | Val loss: 0.6809411702617523 | P_counter: 0
+04:43 | 	E: 6 | Val loss: 0.6757741743518461 | P_counter: 0
+04:44 | 	E: 7 | Val loss: 0.6724787258332775 | P_counter: 0
+04:45 | 	E: 8 | Val loss: 0.6755285166924999 | P_counter: 0
+04:46 | 	E: 9 | Val loss: 0.6766337733114919 | P_counter: 1
+04:46 | best_val_loss: 0.6725
+04:46 | F-1 | Data loaders created. Starting model training...
+04:46 | 	E: 0 | Val loss: 0.6939078896276413 | P_counter: 0
+04:47 | 	E: 1 | Val loss: 0.6883701412908493 | P_counter: 0
+04:48 | 	E: 2 | Val loss: 0.6794494525078805 | P_counter: 0
+04:48 | 	E: 3 | Val loss: 0.6687406878317556 | P_counter: 0
+04:49 | 	E: 4 | Val loss: 0.6586925175882155 | P_counter: 0
+04:50 | 	E: 5 | Val loss: 0.648218322184778 | P_counter: 0
+04:50 | 	E: 6 | Val loss: 0.6421606521452626 | P_counter: 0
+04:51 | 	E: 7 | Val loss: 0.6325267168783373 | P_counter: 0
+04:52 | 	E: 8 | Val loss: 0.6295973004833344 | P_counter: 0
+04:52 | 	E: 9 | Val loss: 0.6282503893298488 | P_counter: 0
+04:52 | best_val_loss: 0.6283
+04:52 | F-2 | Data loaders created. Starting model training...
+04:53 | 	E: 0 | Val loss: 0.6909957912660414 | P_counter: 0
+04:54 | 	E: 1 | Val loss: 0.6875966422019466 | P_counter: 0
+04:55 | 	E: 2 | Val loss: 0.6829310174911253 | P_counter: 0
+04:55 | 	E: 3 | Val loss: 0.679227432897014 | P_counter: 0
+04:56 | 	E: 4 | Val loss: 0.6774434620334256 | P_counter: 0
+04:56 | 	E: 5 | Val loss: 0.6759451608504018 | P_counter: 0
+04:57 | 	E: 6 | Val loss: 0.6800379330112089 | P_counter: 0
+04:58 | 	E: 7 | Val loss: 0.6751129954091964 | P_counter: 1
+04:58 | 	E: 8 | Val loss: 0.6615718160906146 | P_counter: 0
+04:59 | 	E: 9 | Val loss: 0.6613299596694208 | P_counter: 0
+04:59 | best_val_loss: 0.6613
+04:59 | inner_loop_results: [0.6724787258332775, 0.6282503893298488, 0.6613299596694208]
+04:59 | FOLD 0 | ParamID 2 | Avg Val Loss: 0.6540
+-------------------------------  PARAM ID  -3-  ---------------------------------
+04:59 | {'paramID': 3, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.4, 'epochs': 10}
+04:59 | F-0 | Data loaders created. Starting model training...
+05:00 | 	E: 0 | Val loss: 0.695153913190288 | P_counter: 0
+05:00 | 	E: 1 | Val loss: 0.6881065464788868 | P_counter: 0
+05:01 | 	E: 2 | Val loss: 0.6792734707555463 | P_counter: 0
+05:02 | 	E: 3 | Val loss: 0.6680070469456334 | P_counter: 0
+05:02 | 	E: 4 | Val loss: 0.6615283046999285 | P_counter: 0
+05:03 | 	E: 5 | Val loss: 0.6540074329222402 | P_counter: 0
+05:04 | 	E: 6 | Val loss: 0.656575414442247 | P_counter: 0
+05:04 | 	E: 7 | Val loss: 0.6512460054889802 | P_counter: 1
+05:05 | 	E: 8 | Val loss: 0.6417656194779181 | P_counter: 0
+05:06 | 	E: 9 | Val loss: 0.628627021466532 | P_counter: 0
+05:06 | best_val_loss: 0.6286
+05:06 | F-1 | Data loaders created. Starting model training...
+05:06 | 	E: 0 | Val loss: 0.6942605510834725 | P_counter: 0
+05:07 | 	E: 1 | Val loss: 0.6899459746576124 | P_counter: 0
+05:08 | 	E: 2 | Val loss: 0.6843300596360238 | P_counter: 0
+05:08 | 	E: 3 | Val loss: 0.6773158696389967 | P_counter: 0
+05:09 | 	E: 4 | Val loss: 0.668110595595452 | P_counter: 0
+05:10 | 	E: 5 | Val loss: 0.6634251513788777 | P_counter: 0
+05:10 | 	E: 6 | Val loss: 0.6627892121191947 | P_counter: 0
+05:11 | 	E: 7 | Val loss: 0.657326502184714 | P_counter: 0
+05:12 | 	E: 8 | Val loss: 0.6479431467671548 | P_counter: 0
+05:12 | 	E: 9 | Val loss: 0.6397476196289062 | P_counter: 0
+05:12 | best_val_loss: 0.6397
+05:12 | F-2 | Data loaders created. Starting model training...
+05:13 | 	E: 0 | Val loss: 0.6925809748711125 | P_counter: 0
+05:14 | 	E: 1 | Val loss: 0.6912758831054934 | P_counter: 0
+05:14 | 	E: 2 | Val loss: 0.6899795205362381 | P_counter: 0
+05:15 | 	E: 3 | Val loss: 0.6904030192282892 | P_counter: 0
+05:16 | 	E: 4 | Val loss: 0.6922327356953775 | P_counter: 1
+05:16 | 	E: 5 | Val loss: 0.6972518640179788 | P_counter: 2
+05:16 | best_val_loss: 0.6900
+05:16 | inner_loop_results: [0.628627021466532, 0.6397476196289062, 0.6899795205362381]
+05:16 | FOLD 0 | ParamID 3 | Avg Val Loss: 0.6528
+-------------------------------  PARAM ID  -4-  ---------------------------------
+05:16 | {'paramID': 4, 'LR': 0.0005, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+05:16 | F-0 | Data loaders created. Starting model training...
+05:17 | 	E: 0 | Val loss: 0.6909535354183566 | P_counter: 0
+05:18 | 	E: 1 | Val loss: 0.6858956775357646 | P_counter: 0
+05:18 | 	E: 2 | Val loss: 0.6825907672605207 | P_counter: 0
+05:19 | 	E: 3 | Val loss: 0.6749709902271148 | P_counter: 0
+05:20 | 	E: 4 | Val loss: 0.6702430901988861 | P_counter: 0
+05:21 | 	E: 5 | Val loss: 0.6580509812601151 | P_counter: 0
+05:21 | 	E: 6 | Val loss: 0.6710044491675592 | P_counter: 0
+05:22 | 	E: 7 | Val loss: 0.6665979546885337 | P_counter: 1
+05:22 | 	E: 8 | Val loss: 0.6571051055385221 | P_counter: 2
+05:23 | 	E: 9 | Val loss: 0.6545454398278268 | P_counter: 0
+05:23 | best_val_loss: 0.6545
+05:23 | F-1 | Data loaders created. Starting model training...
+05:24 | 	E: 0 | Val loss: 0.6887653893040072 | P_counter: 0
+05:24 | 	E: 1 | Val loss: 0.6776576965085922 | P_counter: 0
+05:25 | 	E: 2 | Val loss: 0.6648382044607594 | P_counter: 0
+05:25 | 	E: 3 | Val loss: 0.6528744063069744 | P_counter: 0
+05:26 | 	E: 4 | Val loss: 0.6435684696320565 | P_counter: 0
+05:27 | 	E: 5 | Val loss: 0.6405328992874392 | P_counter: 0
+05:27 | 	E: 6 | Val loss: 0.628041725004873 | P_counter: 0
+05:28 | 	E: 7 | Val loss: 0.6130398531113902 | P_counter: 0
+05:29 | 	E: 8 | Val loss: 0.5958601082524946 | P_counter: 0
+05:29 | 	E: 9 | Val loss: 0.6053047756994924 | P_counter: 0
+05:29 | best_val_loss: 0.5959
+05:29 | F-2 | Data loaders created. Starting model training...
+05:30 | 	E: 0 | Val loss: 0.6924295290823905 | P_counter: 0
+05:30 | 	E: 1 | Val loss: 0.6887779178157929 | P_counter: 0
+05:31 | 	E: 2 | Val loss: 0.6893815032897457 | P_counter: 0
+05:32 | 	E: 3 | Val loss: 0.6884229413924678 | P_counter: 1
+05:32 | 	E: 4 | Val loss: 0.6914800501638844 | P_counter: 0
+05:33 | 	E: 5 | Val loss: 0.6805763975266488 | P_counter: 1
+05:33 | 	E: 6 | Val loss: 0.6788757174245773 | P_counter: 0
+05:34 | 	E: 7 | Val loss: 0.652077434524413 | P_counter: 0
+05:34 | 	E: 8 | Val loss: 0.6435746569787303 | P_counter: 0
+05:35 | 	E: 9 | Val loss: 0.6529881088964401 | P_counter: 0
+05:35 | best_val_loss: 0.6436
+05:35 | inner_loop_results: [0.6545454398278268, 0.5958601082524946, 0.6435746569787303]
+05:35 | FOLD 0 | ParamID 4 | Avg Val Loss: 0.6313
+-------------------------------  PARAM ID  -5-  ---------------------------------
+05:35 | {'paramID': 5, 'LR': 0.0002, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+05:35 | F-0 | Data loaders created. Starting model training...
+05:36 | 	E: 0 | Val loss: 0.68578036562089 | P_counter: 0
+05:36 | 	E: 1 | Val loss: 0.6833367174671542 | P_counter: 0
+05:38 | 	E: 2 | Val loss: 0.6788837486697782 | P_counter: 0
+05:39 | 	E: 3 | Val loss: 0.6734705009768086 | P_counter: 0
+05:39 | 	E: 4 | Val loss: 0.6686648649554099 | P_counter: 0
+05:40 | 	E: 5 | Val loss: 0.6635093823555978 | P_counter: 0
+05:41 | 	E: 6 | Val loss: 0.658488554339255 | P_counter: 0
+05:41 | 	E: 7 | Val loss: 0.6555526006606317 | P_counter: 0
+05:42 | 	E: 8 | Val loss: 0.6521398348193015 | P_counter: 0
+05:43 | 	E: 9 | Val loss: 0.6507035820714889 | P_counter: 0
+05:43 | best_val_loss: 0.6507
+05:43 | F-1 | Data loaders created. Starting model training...
+05:43 | 	E: 0 | Val loss: 0.693235122388409 | P_counter: 0
+05:44 | 	E: 1 | Val loss: 0.6918998379861155 | P_counter: 0
+05:44 | 	E: 2 | Val loss: 0.689290588901889 | P_counter: 0
+05:45 | 	E: 3 | Val loss: 0.6855429237888705 | P_counter: 0
+05:45 | 	E: 4 | Val loss: 0.6814116624093824 | P_counter: 0
+05:46 | 	E: 5 | Val loss: 0.6744874888850797 | P_counter: 0
+05:47 | 	E: 6 | Val loss: 0.6694410174123703 | P_counter: 0
+05:47 | 	E: 7 | Val loss: 0.6641458407525094 | P_counter: 0
+05:48 | 	E: 8 | Val loss: 0.6569922950959974 | P_counter: 0
+05:49 | 	E: 9 | Val loss: 0.6520584014154249 | P_counter: 0
+05:49 | best_val_loss: 0.6521
+05:49 | F-2 | Data loaders created. Starting model training...
+05:49 | 	E: 0 | Val loss: 0.6959436805017533 | P_counter: 0
+05:50 | 	E: 1 | Val loss: 0.6939005121108024 | P_counter: 0
+05:51 | 	E: 2 | Val loss: 0.6910485490675895 | P_counter: 0
+05:51 | 	E: 3 | Val loss: 0.6898634395291728 | P_counter: 0
+05:52 | 	E: 4 | Val loss: 0.688413800731782 | P_counter: 0
+05:53 | 	E: 5 | Val loss: 0.6842479244355233 | P_counter: 0
+05:53 | 	E: 6 | Val loss: 0.6828711878868842 | P_counter: 0
+05:54 | 	E: 7 | Val loss: 0.6815444788625163 | P_counter: 0
+05:54 | 	E: 8 | Val loss: 0.6823333521043101 | P_counter: 0
+05:55 | 	E: 9 | Val loss: 0.6806101183737477 | P_counter: 1
+05:55 | best_val_loss: 0.6806
+05:55 | inner_loop_results: [0.6507035820714889, 0.6520584014154249, 0.6806101183737477]
+05:55 | FOLD 0 | ParamID 5 | Avg Val Loss: 0.6611
+-------------------------------  PARAM ID  -6-  ---------------------------------
+05:55 | {'paramID': 6, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+05:55 | F-0 | Data loaders created. Starting model training...
+05:56 | 	E: 0 | Val loss: 0.6853285393407268 | P_counter: 0
+05:56 | 	E: 1 | Val loss: 0.6754782680542238 | P_counter: 0
+05:57 | 	E: 2 | Val loss: 0.6631998362079743 | P_counter: 0
+05:57 | 	E: 3 | Val loss: 0.6528442944249799 | P_counter: 0
+05:58 | 	E: 4 | Val loss: 0.6407761170018104 | P_counter: 0
+05:59 | 	E: 5 | Val loss: 0.6490193336240707 | P_counter: 0
+05:59 | 	E: 6 | Val loss: 0.6199222264751312 | P_counter: 1
+06:00 | 	E: 7 | Val loss: 0.6105454852504115 | P_counter: 0
+06:01 | 	E: 8 | Val loss: 0.5972179962742713 | P_counter: 0
+06:01 | 	E: 9 | Val loss: 0.5826404959924759 | P_counter: 0
+06:01 | best_val_loss: 0.5826
+06:01 | F-1 | Data loaders created. Starting model training...
+06:02 | 	E: 0 | Val loss: 0.6895791426781686 | P_counter: 0
+06:03 | 	E: 1 | Val loss: 0.6767370796972706 | P_counter: 0
+06:03 | 	E: 2 | Val loss: 0.6572926621283254 | P_counter: 0
+06:04 | 	E: 3 | Val loss: 0.6371915571151241 | P_counter: 0
+06:04 | 	E: 4 | Val loss: 0.6238413414647502 | P_counter: 0
+06:05 | 	E: 5 | Val loss: 0.6187542619243744 | P_counter: 0
+06:06 | 	E: 6 | Val loss: 0.5942513269762839 | P_counter: 0
+06:06 | 	E: 7 | Val loss: 0.6041173261980857 | P_counter: 0
+06:07 | 	E: 8 | Val loss: 0.5707673911125429 | P_counter: 1
+06:08 | 	E: 9 | Val loss: 0.5976754542320005 | P_counter: 0
+06:08 | best_val_loss: 0.5708
+06:08 | F-2 | Data loaders created. Starting model training...
+06:08 | 	E: 0 | Val loss: 0.6906241774559021 | P_counter: 0
+06:09 | 	E: 1 | Val loss: 0.6860285978163442 | P_counter: 0
+06:09 | 	E: 2 | Val loss: 0.6820986367041065 | P_counter: 0
+06:10 | 	E: 3 | Val loss: 0.6812216658746043 | P_counter: 0
+06:11 | 	E: 4 | Val loss: 0.6804573401328056 | P_counter: 0
+06:11 | 	E: 5 | Val loss: 0.6985365556132409 | P_counter: 0
+06:12 | 	E: 6 | Val loss: 0.6662395942595697 | P_counter: 1
+06:13 | 	E: 7 | Val loss: 0.6777482244276232 | P_counter: 0
+06:13 | 	E: 8 | Val loss: 0.6972416773919137 | P_counter: 1
+06:14 | 	E: 9 | Val loss: 0.6821295253692135 | P_counter: 2
+06:14 | best_val_loss: 0.6662
+06:14 | inner_loop_results: [0.5826404959924759, 0.5707673911125429, 0.6662395942595697]
+06:14 | FOLD 0 | ParamID 6 | Avg Val Loss: 0.6065
+-------------------------------  PARAM ID  -7-  ---------------------------------
+17:22 | {'paramID': 7, 'LR': 0.0007, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+17:08 | F-0 | Creating Data Loaders...
+17:08 | F-0 | Data loaders created.
+17:09 | 	E: 0 | Val loss: 0.6872971500119855 | P_counter: 0
+17:09 | 	E: 1 | Val loss: 0.6780248322794514 | P_counter: 0
+17:09 | 	E: 2 | Val loss: 0.6666193181468595 | P_counter: 0
+17:10 | 	E: 3 | Val loss: 0.6552343426212188 | P_counter: 0
+17:10 | 	E: 4 | Val loss: 0.6439904243715348 | P_counter: 0
+17:11 | 	E: 5 | Val loss: 0.6357338216996962 | P_counter: 0
+17:11 | 	E: 6 | Val loss: 0.6332652126589129 | P_counter: 0
+17:12 | 	E: 7 | Val loss: 0.6119341235007009 | P_counter: 0
+17:12 | 	E: 8 | Val loss: 0.6051997792336249 | P_counter: 0
+17:13 | 	E: 9 | Val loss: 0.606454893465965 | P_counter: 1
+17:13 | best_val_loss: 0.6052
+17:13 | F-1 | Creating Data Loaders...
+17:13 | F-1 | Data loaders created.
+17:13 | 	E: 0 | Val loss: 0.6867049624842982 | P_counter: 0
+17:14 | 	E: 1 | Val loss: 0.6713433669459435 | P_counter: 0
+17:14 | 	E: 2 | Val loss: 0.6604573303653348 | P_counter: 0
+17:15 | 	E: 3 | Val loss: 0.6531074027861318 | P_counter: 0
+17:15 | 	E: 4 | Val loss: 0.6403360097639023 | P_counter: 0
+17:16 | 	E: 5 | Val loss: 0.6224107876900704 | P_counter: 0
+17:16 | 	E: 6 | Val loss: 0.6105680273425195 | P_counter: 0
+17:17 | 	E: 7 | Val loss: 0.6569497008477488 | P_counter: 1
+17:17 | 	E: 8 | Val loss: 0.6533345118645699 | P_counter: 2
+17:17 | 	E: 9 | Val loss: 0.5792876683896587 | P_counter: 0
+17:17 | best_val_loss: 0.5793
+17:17 | F-2 | Creating Data Loaders...
+17:17 | F-2 | Data loaders created.
+17:18 | 	E: 0 | Val loss: 0.6930623054504395 | P_counter: 0
+17:18 | 	E: 1 | Val loss: 0.6898057941467531 | P_counter: 0
+17:19 | 	E: 2 | Val loss: 0.6866074319808714 | P_counter: 0
+17:19 | 	E: 3 | Val loss: 0.6930611421985011 | P_counter: 1
+17:20 | 	E: 4 | Val loss: 0.6814063210641185 | P_counter: 0
+17:20 | 	E: 5 | Val loss: 0.6787415223736917 | P_counter: 0
+17:21 | 	E: 6 | Val loss: 0.6718487989517951 | P_counter: 0
+17:21 | 	E: 7 | Val loss: 0.6585664653008984 | P_counter: 0
+17:22 | 	E: 8 | Val loss: 0.6466570958014457 | P_counter: 0
+17:22 | 	E: 9 | Val loss: 0.6408072767719146 | P_counter: 0
+17:22 | best_val_loss: 0.6408
+17:22 | inner_loop_results: [0.6051997792336249, 0.5792876683896587, 0.6408072767719146]
+17:22 | FOLD 0 | ParamID 7 | Avg Val Loss: 0.6084
+-------------------------------  PARAM ID  -8-  ---------------------------------
+17:36 | {'paramID': 8, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.3, 'epochs': 10}
+17:22 | F-0 | Creating Data Loaders...
+17:22 | F-0 | Data loaders created.
+17:23 | 	E: 0 | Val loss: 0.685433724234181 | P_counter: 0
+17:23 | 	E: 1 | Val loss: 0.6780233171678358 | P_counter: 0
+17:24 | 	E: 2 | Val loss: 0.6719180691626764 | P_counter: 0
+17:25 | 	E: 3 | Val loss: 0.6666939681576144 | P_counter: 0
+17:25 | 	E: 4 | Val loss: 0.664663685906318 | P_counter: 0
+17:26 | 	E: 5 | Val loss: 0.6543178519895 | P_counter: 0
+17:26 | 	E: 6 | Val loss: 0.6406284109238656 | P_counter: 0
+17:27 | 	E: 7 | Val loss: 0.6430665696820905 | P_counter: 1
+17:27 | 	E: 8 | Val loss: 0.6527292632287548 | P_counter: 2
+17:28 | 	E: 9 | Val loss: 0.6193508236638962 | P_counter: 0
+17:28 | best_val_loss: 0.6194
+17:28 | F-1 | Creating Data Loaders...
+17:28 | F-1 | Data loaders created.
+17:28 | 	E: 0 | Val loss: 0.6879136639256631 | P_counter: 0
+17:29 | 	E: 1 | Val loss: 0.678282706968246 | P_counter: 0
+17:29 | 	E: 2 | Val loss: 0.6680097214637264 | P_counter: 0
+17:30 | 	E: 3 | Val loss: 0.6484363271344092 | P_counter: 0
+17:30 | 	E: 4 | Val loss: 0.6318577797182144 | P_counter: 0
+17:31 | 	E: 5 | Val loss: 0.6128922873927701 | P_counter: 0
+17:31 | 	E: 6 | Val loss: 0.5964342548001197 | P_counter: 0
+17:32 | 	E: 7 | Val loss: 0.580596387386322 | P_counter: 0
+17:32 | 	E: 8 | Val loss: 0.5654687727651289 | P_counter: 0
+17:33 | 	E: 9 | Val loss: 0.5369774872256864 | P_counter: 0
+17:33 | best_val_loss: 0.5370
+17:33 | F-2 | Creating Data Loaders...
+17:33 | F-2 | Data loaders created.
+17:33 | 	E: 0 | Val loss: 0.6937791512858483 | P_counter: 0
+17:34 | 	E: 1 | Val loss: 0.69156410232667 | P_counter: 0
+17:34 | 	E: 2 | Val loss: 0.6903382866613327 | P_counter: 0
+17:35 | 	E: 3 | Val loss: 0.6968743531934677 | P_counter: 1
+17:35 | 	E: 4 | Val loss: 0.7034943507563683 | P_counter: 2
+17:36 | 	E: 5 | Val loss: 0.7040814218982574 | P_counter: 3 | Early stopping triggered.
+17:36 | best_val_loss: 0.6903
+17:36 | inner_loop_results: [0.6193508236638962, 0.5369774872256864, 0.6903382866613327]
+17:36 | FOLD 0 | ParamID 8 | Avg Val Loss: 0.6156
+-------------------------------  PARAM ID  -9-  ---------------------------------
+17:53 | {'paramID': 9, 'LR': 0.0008, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+17:36 | F-0 | Creating Data Loaders...
+17:36 | F-0 | Data loaders created.
+17:37 | 	E: 0 | Val loss: 0.6887799693692115 | P_counter: 0
+17:37 | 	E: 1 | Val loss: 0.6782388264133085 | P_counter: 0
+17:38 | 	E: 2 | Val loss: 0.6652811284988157 | P_counter: 0
+17:38 | 	E: 3 | Val loss: 0.6593268167588019 | P_counter: 0
+17:39 | 	E: 4 | Val loss: 0.6335007298377252 | P_counter: 0
+17:40 | 	E: 5 | Val loss: 0.6251377271067712 | P_counter: 0
+17:40 | 	E: 6 | Val loss: 0.6276001411099588 | P_counter: 1
+17:41 | 	E: 7 | Val loss: 0.6131079446884894 | P_counter: 0
+17:41 | 	E: 8 | Val loss: 0.6029806040948437 | P_counter: 0
+17:42 | 	E: 9 | Val loss: 0.5806012019034354 | P_counter: 0
+17:42 | best_val_loss: 0.5806
+17:42 | F-1 | Creating Data Loaders...
+17:42 | F-1 | Data loaders created.
+17:42 | 	E: 0 | Val loss: 0.6807731005453295 | P_counter: 0
+17:43 | 	E: 1 | Val loss: 0.6696788322541022 | P_counter: 0
+17:43 | 	E: 2 | Val loss: 0.6529009919012746 | P_counter: 0
+17:44 | 	E: 3 | Val loss: 0.6396924737961062 | P_counter: 0
+17:45 | 	E: 4 | Val loss: 0.6363340193225492 | P_counter: 0
+17:45 | 	E: 5 | Val loss: 0.629946477951542 | P_counter: 0
+17:46 | 	E: 6 | Val loss: 0.6228515832654892 | P_counter: 0
+17:46 | 	E: 7 | Val loss: 0.605268249588628 | P_counter: 0
+17:47 | 	E: 8 | Val loss: 0.5944324616462954 | P_counter: 0
+17:47 | 	E: 9 | Val loss: 0.5504627381601641 | P_counter: 0
+17:47 | best_val_loss: 0.5505
+17:47 | F-2 | Creating Data Loaders...
+17:47 | F-2 | Data loaders created.
+17:48 | 	E: 0 | Val loss: 0.6903925768790706 | P_counter: 0
+17:48 | 	E: 1 | Val loss: 0.6855277149908005 | P_counter: 0
+17:49 | 	E: 2 | Val loss: 0.688280088286246 | P_counter: 1
+17:50 | 	E: 3 | Val loss: 0.6828696612388857 | P_counter: 0
+17:50 | 	E: 4 | Val loss: 0.6636381168519297 | P_counter: 0
+17:51 | 	E: 5 | Val loss: 0.6793011176970697 | P_counter: 1
+17:51 | 	E: 6 | Val loss: 0.6721631903802195 | P_counter: 2
+17:52 | 	E: 7 | Val loss: 0.6280446888939026 | P_counter: 0
+17:52 | 	E: 8 | Val loss: 0.6024823015735995 | P_counter: 0
+17:53 | 	E: 9 | Val loss: 0.5730758876569809 | P_counter: 0
+17:53 | best_val_loss: 0.5731
+17:53 | inner_loop_results: [0.5806012019034354, 0.5504627381601641, 0.5730758876569809]
+17:53 | FOLD 0 | ParamID 9 | Avg Val Loss: 0.5680
+############################### OUTER FOLD -1- ############################################ OUTER FOLD -1-
+-------------------------------  PARAM ID  -1-  ---------------------------------
+06:14 | {'paramID': 1, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+06:14 | F-0 | Data loaders created. Starting model training...
+06:14 | 	E: 0 | Val loss: 0.6897792220115662 | P_counter: 0
+06:15 | 	E: 1 | Val loss: 0.6790162473917007 | P_counter: 0
+06:16 | 	E: 2 | Val loss: 0.6606814861297607 | P_counter: 0
+06:16 | 	E: 3 | Val loss: 0.6446920186281204 | P_counter: 0
+06:17 | 	E: 4 | Val loss: 0.6357696354389191 | P_counter: 0
+06:18 | 	E: 5 | Val loss: 0.6242300868034363 | P_counter: 0
+06:18 | 	E: 6 | Val loss: 0.6113474518060684 | P_counter: 0
+06:19 | 	E: 7 | Val loss: 0.6030273288488388 | P_counter: 0
+06:20 | 	E: 8 | Val loss: 0.5945227891206741 | P_counter: 0
+06:20 | 	E: 9 | Val loss: 0.5944157242774963 | P_counter: 0
+06:20 | best_val_loss: 0.5944
+06:20 | F-1 | Data loaders created. Starting model training...
+06:21 | 	E: 0 | Val loss: 0.6826630042445275 | P_counter: 0
+06:22 | 	E: 1 | Val loss: 0.6699687953918211 | P_counter: 0
+06:22 | 	E: 2 | Val loss: 0.6514293455308483 | P_counter: 0
+06:23 | 	E: 3 | Val loss: 0.638018379288335 | P_counter: 0
+06:23 | 	E: 4 | Val loss: 0.6293249534022424 | P_counter: 0
+06:24 | 	E: 5 | Val loss: 0.6148436627080364 | P_counter: 0
+06:25 | 	E: 6 | Val loss: 0.6080439475274855 | P_counter: 0
+06:25 | 	E: 7 | Val loss: 0.5974681415865498 | P_counter: 0
+06:26 | 	E: 8 | Val loss: 0.5805155538743542 | P_counter: 0
+06:26 | 	E: 9 | Val loss: 0.5909101924588603 | P_counter: 0
+06:26 | best_val_loss: 0.5805
+06:26 | F-2 | Data loaders created. Starting model training...
+06:27 | 	E: 0 | Val loss: 0.6899381741400687 | P_counter: 0
+06:28 | 	E: 1 | Val loss: 0.680880734997411 | P_counter: 0
+06:28 | 	E: 2 | Val loss: 0.6713706639505201 | P_counter: 0
+06:29 | 	E: 3 | Val loss: 0.6629152663292424 | P_counter: 0
+06:30 | 	E: 4 | Val loss: 0.6492161846929981 | P_counter: 0
+06:30 | 	E: 5 | Val loss: 0.6391231379201335 | P_counter: 0
+06:31 | 	E: 6 | Val loss: 0.6258275393516787 | P_counter: 0
+06:32 | 	E: 7 | Val loss: 0.6121529590698981 | P_counter: 0
+06:32 | 	E: 8 | Val loss: 0.6012763534822771 | P_counter: 0
+06:33 | 	E: 9 | Val loss: 0.6074411830594463 | P_counter: 0
+06:33 | best_val_loss: 0.6013
+06:33 | inner_loop_results: [0.5944157242774963, 0.5805155538743542, 0.6012763534822771]
+06:33 | FOLD 1 | ParamID 1 | Avg Val Loss: 0.5921
+-------------------------------  PARAM ID  -2-  ---------------------------------
+06:33 | {'paramID': 2, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.3, 'epochs': 10}
+06:33 | F-0 | Data loaders created. Starting model training...
+06:33 | 	E: 0 | Val loss: 0.6864933222532272 | P_counter: 0
+06:34 | 	E: 1 | Val loss: 0.6738422214984894 | P_counter: 0
+06:35 | 	E: 2 | Val loss: 0.6594903320074081 | P_counter: 0
+06:35 | 	E: 3 | Val loss: 0.6423627734184265 | P_counter: 0
+06:36 | 	E: 4 | Val loss: 0.6309812515974045 | P_counter: 0
+06:37 | 	E: 5 | Val loss: 0.6174513697624207 | P_counter: 0
+06:37 | 	E: 6 | Val loss: 0.5979699194431305 | P_counter: 0
+06:38 | 	E: 7 | Val loss: 0.5833876132965088 | P_counter: 0
+06:38 | 	E: 8 | Val loss: 0.5737981051206589 | P_counter: 0
+06:39 | 	E: 9 | Val loss: 0.5618049576878548 | P_counter: 0
+06:39 | best_val_loss: 0.5618
+06:39 | F-1 | Data loaders created. Starting model training...
+06:40 | 	E: 0 | Val loss: 0.6863659062693196 | P_counter: 0
+06:40 | 	E: 1 | Val loss: 0.6781050620540496 | P_counter: 0
+06:41 | 	E: 2 | Val loss: 0.6686696602452186 | P_counter: 0
+06:42 | 	E: 3 | Val loss: 0.6625089491567304 | P_counter: 0
+06:42 | 	E: 4 | Val loss: 0.6546412321829027 | P_counter: 0
+06:43 | 	E: 5 | Val loss: 0.6500009625188766 | P_counter: 0
+06:44 | 	E: 6 | Val loss: 0.6538405610669044 | P_counter: 0
+06:44 | 	E: 7 | Val loss: 0.6448840825788437 | P_counter: 1
+06:45 | 	E: 8 | Val loss: 0.6237100016686224 | P_counter: 0
+06:46 | 	E: 9 | Val loss: 0.6083463353495444 | P_counter: 0
+06:46 | best_val_loss: 0.6083
+06:46 | F-2 | Data loaders created. Starting model training...
+06:46 | 	E: 0 | Val loss: 0.6864947330567145 | P_counter: 0
+06:47 | 	E: 1 | Val loss: 0.6780875209839113 | P_counter: 0
+06:48 | 	E: 2 | Val loss: 0.6690710398458666 | P_counter: 0
+06:49 | 	E: 3 | Val loss: 0.6653506428964676 | P_counter: 0
+06:49 | 	E: 4 | Val loss: 0.6527738878803868 | P_counter: 0
+06:50 | 	E: 5 | Val loss: 0.6475616481996351 | P_counter: 0
+06:51 | 	E: 6 | Val loss: 0.6352423025715735 | P_counter: 0
+06:51 | 	E: 7 | Val loss: 0.6324074441386808 | P_counter: 0
+06:52 | 	E: 8 | Val loss: 0.5993778397960048 | P_counter: 0
+06:53 | 	E: 9 | Val loss: 0.6083112551319984 | P_counter: 0
+06:53 | best_val_loss: 0.5994
+06:53 | inner_loop_results: [0.5618049576878548, 0.6083463353495444, 0.5993778397960048]
+06:53 | FOLD 1 | ParamID 2 | Avg Val Loss: 0.5898
+-------------------------------  PARAM ID  -3-  ---------------------------------
+06:53 | {'paramID': 3, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.4, 'epochs': 10}
+06:53 | F-0 | Data loaders created. Starting model training...
+06:53 | 	E: 0 | Val loss: 0.6938970983028412 | P_counter: 0
+06:54 | 	E: 1 | Val loss: 0.6832591742277145 | P_counter: 0
+06:55 | 	E: 2 | Val loss: 0.670607402920723 | P_counter: 0
+06:55 | 	E: 3 | Val loss: 0.6586485505104065 | P_counter: 0
+06:56 | 	E: 4 | Val loss: 0.648372232913971 | P_counter: 0
+06:57 | 	E: 5 | Val loss: 0.6377180069684982 | P_counter: 0
+06:57 | 	E: 6 | Val loss: 0.6271127164363861 | P_counter: 0
+06:58 | 	E: 7 | Val loss: 0.6202710717916489 | P_counter: 0
+06:59 | 	E: 8 | Val loss: 0.6155098974704742 | P_counter: 0
+06:59 | 	E: 9 | Val loss: 0.598029226064682 | P_counter: 0
+06:59 | best_val_loss: 0.5980
+06:59 | F-1 | Data loaders created. Starting model training...
+07:00 | 	E: 0 | Val loss: 0.6878751574024078 | P_counter: 0
+07:01 | 	E: 1 | Val loss: 0.6798942915854915 | P_counter: 0
+07:01 | 	E: 2 | Val loss: 0.6693652252997121 | P_counter: 0
+07:02 | 	E: 3 | Val loss: 0.6569799511663376 | P_counter: 0
+07:03 | 	E: 4 | Val loss: 0.6471539332020667 | P_counter: 0
+07:03 | 	E: 5 | Val loss: 0.6394667933064122 | P_counter: 0
+07:04 | 	E: 6 | Val loss: 0.6366854829172934 | P_counter: 0
+07:05 | 	E: 7 | Val loss: 0.6182506103669444 | P_counter: 0
+07:05 | 	E: 8 | Val loss: 0.609885775273846 | P_counter: 0
+07:06 | 	E: 9 | Val loss: 0.5993747691954335 | P_counter: 0
+07:06 | best_val_loss: 0.5994
+07:06 | F-2 | Data loaders created. Starting model training...
+07:07 | 	E: 0 | Val loss: 0.6880361668525203 | P_counter: 0
+07:07 | 	E: 1 | Val loss: 0.6807560824578808 | P_counter: 0
+07:08 | 	E: 2 | Val loss: 0.6742334212026289 | P_counter: 0
+07:09 | 	E: 3 | Val loss: 0.6666476322758582 | P_counter: 0
+07:09 | 	E: 4 | Val loss: 0.660387106480137 | P_counter: 0
+07:10 | 	E: 5 | Val loss: 0.6530319644558814 | P_counter: 0
+07:11 | 	E: 6 | Val loss: 0.6474642926646818 | P_counter: 0
+07:11 | 	E: 7 | Val loss: 0.6395081377798512 | P_counter: 0
+07:12 | 	E: 8 | Val loss: 0.6336069318556017 | P_counter: 0
+07:13 | 	E: 9 | Val loss: 0.6260092469953722 | P_counter: 0
+07:13 | best_val_loss: 0.6260
+07:13 | inner_loop_results: [0.598029226064682, 0.5993747691954335, 0.6260092469953722]
+07:13 | FOLD 1 | ParamID 3 | Avg Val Loss: 0.6078
+-------------------------------  PARAM ID  -4-  ---------------------------------
+07:13 | {'paramID': 4, 'LR': 0.0005, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+07:13 | F-0 | Data loaders created. Starting model training...
+07:13 | 	E: 0 | Val loss: 0.690012589097023 | P_counter: 0
+07:14 | 	E: 1 | Val loss: 0.6759366989135742 | P_counter: 0
+07:15 | 	E: 2 | Val loss: 0.6655426323413849 | P_counter: 0
+07:16 | 	E: 3 | Val loss: 0.6570885628461838 | P_counter: 0
+07:16 | 	E: 4 | Val loss: 0.6464779675006866 | P_counter: 0
+07:17 | 	E: 5 | Val loss: 0.6341434121131897 | P_counter: 0
+07:18 | 	E: 6 | Val loss: 0.6273278295993805 | P_counter: 0
+07:18 | 	E: 7 | Val loss: 0.6151906847953796 | P_counter: 0
+07:19 | 	E: 8 | Val loss: 0.6014793664216995 | P_counter: 0
+07:20 | 	E: 9 | Val loss: 0.5847764760255814 | P_counter: 0
+07:20 | best_val_loss: 0.5848
+07:20 | F-1 | Data loaders created. Starting model training...
+07:20 | 	E: 0 | Val loss: 0.6862188096969358 | P_counter: 0
+07:21 | 	E: 1 | Val loss: 0.6737468838691711 | P_counter: 0
+07:22 | 	E: 2 | Val loss: 0.6584226027611764 | P_counter: 0
+07:22 | 	E: 3 | Val loss: 0.6406303009679241 | P_counter: 0
+07:23 | 	E: 4 | Val loss: 0.6396564822043141 | P_counter: 0
+07:24 | 	E: 5 | Val loss: 0.6196853114712623 | P_counter: 0
+07:24 | 	E: 6 | Val loss: 0.6082300793740057 | P_counter: 0
+07:25 | 	E: 7 | Val loss: 0.5876361939214891 | P_counter: 0
+07:26 | 	E: 8 | Val loss: 0.5893814486842002 | P_counter: 0
+07:26 | 	E: 9 | Val loss: 0.5787579724865575 | P_counter: 1
+07:26 | best_val_loss: 0.5788
+07:26 | F-2 | Data loaders created. Starting model training...
+07:27 | 	E: 0 | Val loss: 0.6867636346047924 | P_counter: 0
+07:28 | 	E: 1 | Val loss: 0.6777553154576209 | P_counter: 0
+07:28 | 	E: 2 | Val loss: 0.666318791527902 | P_counter: 0
+07:29 | 	E: 3 | Val loss: 0.6529975994940727 | P_counter: 0
+07:30 | 	E: 4 | Val loss: 0.6433159420567174 | P_counter: 0
+07:30 | 	E: 5 | Val loss: 0.6331078910058544 | P_counter: 0
+07:31 | 	E: 6 | Val loss: 0.6217792303331436 | P_counter: 0
+07:32 | 	E: 7 | Val loss: 0.6145890624292435 | P_counter: 0
+07:32 | 	E: 8 | Val loss: 0.6002412169210373 | P_counter: 0
+07:33 | 	E: 9 | Val loss: 0.5831556224053905 | P_counter: 0
+07:33 | best_val_loss: 0.5832
+07:33 | inner_loop_results: [0.5847764760255814, 0.5787579724865575, 0.5831556224053905]
+07:33 | FOLD 1 | ParamID 4 | Avg Val Loss: 0.5822
+-------------------------------  PARAM ID  -5-  ---------------------------------
+07:33 | {'paramID': 5, 'LR': 0.0002, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+07:33 | F-0 | Data loaders created. Starting model training...
+07:34 | 	E: 0 | Val loss: 0.6909635066986084 | P_counter: 0
+07:34 | 	E: 1 | Val loss: 0.6859946846961975 | P_counter: 0
+07:35 | 	E: 2 | Val loss: 0.6768606603145599 | P_counter: 0
+07:36 | 	E: 3 | Val loss: 0.6687086224555969 | P_counter: 0
+07:36 | 	E: 4 | Val loss: 0.662339374423027 | P_counter: 0
+07:37 | 	E: 5 | Val loss: 0.6569271385669708 | P_counter: 0
+07:38 | 	E: 6 | Val loss: 0.6518844068050385 | P_counter: 0
+07:38 | 	E: 7 | Val loss: 0.6467080861330032 | P_counter: 0
+07:39 | 	E: 8 | Val loss: 0.6419570595026016 | P_counter: 0
+07:40 | 	E: 9 | Val loss: 0.6376830190420151 | P_counter: 0
+07:40 | best_val_loss: 0.6377
+07:40 | F-1 | Data loaders created. Starting model training...
+07:40 | 	E: 0 | Val loss: 0.6880555672030295 | P_counter: 0
+07:41 | 	E: 1 | Val loss: 0.6809766484845069 | P_counter: 0
+07:42 | 	E: 2 | Val loss: 0.6716596734139227 | P_counter: 0
+07:42 | 	E: 3 | Val loss: 0.6635015760698626 | P_counter: 0
+07:43 | 	E: 4 | Val loss: 0.6567763686180115 | P_counter: 0
+07:44 | 	E: 5 | Val loss: 0.6523398180161754 | P_counter: 0
+07:44 | 	E: 6 | Val loss: 0.6438435066130853 | P_counter: 0
+07:45 | 	E: 7 | Val loss: 0.6412635022594083 | P_counter: 0
+07:46 | 	E: 8 | Val loss: 0.6380058161674007 | P_counter: 0
+07:47 | 	E: 9 | Val loss: 0.6328583494309457 | P_counter: 0
+07:47 | best_val_loss: 0.6329
+07:47 | F-2 | Data loaders created. Starting model training...
+07:47 | 	E: 0 | Val loss: 0.6959680837969626 | P_counter: 0
+07:48 | 	E: 1 | Val loss: 0.6902784743616658 | P_counter: 0
+07:49 | 	E: 2 | Val loss: 0.6839250902975759 | P_counter: 0
+07:49 | 	E: 3 | Val loss: 0.677132902606841 | P_counter: 0
+07:50 | 	E: 4 | Val loss: 0.6709779193324428 | P_counter: 0
+07:51 | 	E: 5 | Val loss: 0.6661314656657558 | P_counter: 0
+07:51 | 	E: 6 | Val loss: 0.6611605459643949 | P_counter: 0
+07:52 | 	E: 7 | Val loss: 0.6567680431950477 | P_counter: 0
+07:53 | 	E: 8 | Val loss: 0.6527889467054798 | P_counter: 0
+07:53 | 	E: 9 | Val loss: 0.6481319877409166 | P_counter: 0
+07:53 | best_val_loss: 0.6481
+07:53 | inner_loop_results: [0.6376830190420151, 0.6328583494309457, 0.6481319877409166]
+07:53 | FOLD 1 | ParamID 5 | Avg Val Loss: 0.6396
+-------------------------------  PARAM ID  -6-  ---------------------------------
+07:53 | {'paramID': 6, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+07:53 | F-0 | Data loaders created. Starting model training...
+07:54 | 	E: 0 | Val loss: 0.6797020882368088 | P_counter: 0
+07:55 | 	E: 1 | Val loss: 0.664789229631424 | P_counter: 0
+07:55 | 	E: 2 | Val loss: 0.6453594863414764 | P_counter: 0
+07:56 | 	E: 3 | Val loss: 0.6293215453624725 | P_counter: 0
+07:57 | 	E: 4 | Val loss: 0.6108873337507248 | P_counter: 0
+07:57 | 	E: 5 | Val loss: 0.5978608280420303 | P_counter: 0
+07:58 | 	E: 6 | Val loss: 0.5807792991399765 | P_counter: 0
+07:59 | 	E: 7 | Val loss: 0.5798366516828537 | P_counter: 0
+08:00 | 	E: 8 | Val loss: 0.5325230658054352 | P_counter: 0
+08:00 | 	E: 9 | Val loss: 0.5202333405613899 | P_counter: 0
+08:00 | best_val_loss: 0.5202
+08:00 | F-1 | Data loaders created. Starting model training...
+08:01 | 	E: 0 | Val loss: 0.6827292865322482 | P_counter: 0
+08:02 | 	E: 1 | Val loss: 0.6639598108107044 | P_counter: 0
+08:02 | 	E: 2 | Val loss: 0.6421785796842268 | P_counter: 0
+08:03 | 	E: 3 | Val loss: 0.6243846147291122 | P_counter: 0
+08:04 | 	E: 4 | Val loss: 0.6000754717857607 | P_counter: 0
+08:04 | 	E: 5 | Val loss: 0.5978879351769725 | P_counter: 0
+08:05 | 	E: 6 | Val loss: 0.555807480888982 | P_counter: 0
+08:06 | 	E: 7 | Val loss: 0.5447260968146785 | P_counter: 0
+08:06 | 	E: 8 | Val loss: 0.5501749880852238 | P_counter: 0
+08:07 | 	E: 9 | Val loss: 0.5085129161034861 | P_counter: 1
+08:07 | best_val_loss: 0.5085
+08:07 | F-2 | Data loaders created. Starting model training...
+08:08 | 	E: 0 | Val loss: 0.6883464224876896 | P_counter: 0
+08:08 | 	E: 1 | Val loss: 0.6739234905089101 | P_counter: 0
+08:09 | 	E: 2 | Val loss: 0.6591537075657998 | P_counter: 0
+08:10 | 	E: 3 | Val loss: 0.6449487997639564 | P_counter: 0
+08:10 | 	E: 4 | Val loss: 0.6290379762649536 | P_counter: 0
+08:11 | 	E: 5 | Val loss: 0.6141639832527407 | P_counter: 0
+08:12 | 	E: 6 | Val loss: 0.5900520317016109 | P_counter: 0
+08:13 | 	E: 7 | Val loss: 0.5663547323596093 | P_counter: 0
+08:13 | 	E: 8 | Val loss: 0.5651667848710091 | P_counter: 0
+08:14 | 	E: 9 | Val loss: 0.57522681836159 | P_counter: 0
+08:14 | best_val_loss: 0.5652
+08:14 | inner_loop_results: [0.5202333405613899, 0.5085129161034861, 0.5651667848710091]
+08:14 | FOLD 1 | ParamID 6 | Avg Val Loss: 0.5313
+-------------------------------  PARAM ID  -7-  ---------------------------------
+18:09 | {'paramID': 7, 'LR': 0.0007, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+17:53 | F-0 | Creating Data Loaders...
+17:53 | F-0 | Data loaders created.
+17:53 | 	E: 0 | Val loss: 0.6843678653240204 | P_counter: 0
+17:54 | 	E: 1 | Val loss: 0.6730088293552399 | P_counter: 0
+17:54 | 	E: 2 | Val loss: 0.6605234891176224 | P_counter: 0
+17:55 | 	E: 3 | Val loss: 0.6521744430065155 | P_counter: 0
+17:55 | 	E: 4 | Val loss: 0.6444085240364075 | P_counter: 0
+17:56 | 	E: 5 | Val loss: 0.6360124349594116 | P_counter: 0
+17:57 | 	E: 6 | Val loss: 0.6292571574449539 | P_counter: 0
+17:57 | 	E: 7 | Val loss: 0.6206071674823761 | P_counter: 0
+17:58 | 	E: 8 | Val loss: 0.6123179793357849 | P_counter: 0
+17:58 | 	E: 9 | Val loss: 0.6540697515010834 | P_counter: 1
+17:58 | best_val_loss: 0.6123
+17:58 | F-1 | Creating Data Loaders...
+17:58 | F-1 | Data loaders created.
+17:59 | 	E: 0 | Val loss: 0.684715784365131 | P_counter: 0
+17:59 | 	E: 1 | Val loss: 0.6709128522103832 | P_counter: 0
+18:00 | 	E: 2 | Val loss: 0.6611720092834965 | P_counter: 0
+18:00 | 	E: 3 | Val loss: 0.6491843327399223 | P_counter: 0
+18:01 | 	E: 4 | Val loss: 0.6433193145259735 | P_counter: 0
+18:01 | 	E: 5 | Val loss: 0.6314836067538108 | P_counter: 0
+18:02 | 	E: 6 | Val loss: 0.6174680071492349 | P_counter: 0
+18:02 | 	E: 7 | Val loss: 0.6063617006424935 | P_counter: 0
+18:03 | 	E: 8 | Val loss: 0.5886179747120026 | P_counter: 0
+18:04 | 	E: 9 | Val loss: 0.5757403700582443 | P_counter: 0
+18:04 | best_val_loss: 0.5757
+18:04 | F-2 | Creating Data Loaders...
+18:04 | F-2 | Data loaders created.
+18:04 | 	E: 0 | Val loss: 0.6827465680337721 | P_counter: 0
+18:05 | 	E: 1 | Val loss: 0.6674396203410241 | P_counter: 0
+18:05 | 	E: 2 | Val loss: 0.6469574955201918 | P_counter: 0
+18:06 | 	E: 3 | Val loss: 0.629866244331483 | P_counter: 0
+18:06 | 	E: 4 | Val loss: 0.6126188751189939 | P_counter: 0
+18:07 | 	E: 5 | Val loss: 0.5928357339674427 | P_counter: 0
+18:07 | 	E: 6 | Val loss: 0.5816537161027232 | P_counter: 0
+18:08 | 	E: 7 | Val loss: 0.5597503992819017 | P_counter: 0
+18:08 | 	E: 8 | Val loss: 0.5970350215511937 | P_counter: 1
+18:09 | 	E: 9 | Val loss: 0.542259810432311 | P_counter: 0
+18:09 | best_val_loss: 0.5423
+18:09 | inner_loop_results: [0.6123179793357849, 0.5757403700582443, 0.542259810432311]
+18:09 | FOLD 1 | ParamID 7 | Avg Val Loss: 0.5768
+-------------------------------  PARAM ID  -8-  ---------------------------------
+18:25 | {'paramID': 8, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.3, 'epochs': 10}
+18:09 | F-0 | Creating Data Loaders...
+18:09 | F-0 | Data loaders created.
+18:09 | 	E: 0 | Val loss: 0.6857707798480988 | P_counter: 0
+18:10 | 	E: 1 | Val loss: 0.6733187437057495 | P_counter: 0
+18:11 | 	E: 2 | Val loss: 0.6572711765766144 | P_counter: 0
+18:11 | 	E: 3 | Val loss: 0.6397952735424042 | P_counter: 0
+18:12 | 	E: 4 | Val loss: 0.6253255009651184 | P_counter: 0
+18:12 | 	E: 5 | Val loss: 0.6096899807453156 | P_counter: 0
+18:13 | 	E: 6 | Val loss: 0.6035220175981522 | P_counter: 0
+18:13 | 	E: 7 | Val loss: 0.5825529396533966 | P_counter: 0
+18:14 | 	E: 8 | Val loss: 0.58086858689785 | P_counter: 0
+18:14 | 	E: 9 | Val loss: 0.5710152089595795 | P_counter: 0
+18:14 | best_val_loss: 0.5710
+18:14 | F-1 | Creating Data Loaders...
+18:14 | F-1 | Data loaders created.
+18:15 | 	E: 0 | Val loss: 0.6862033432529818 | P_counter: 0
+18:15 | 	E: 1 | Val loss: 0.6699824698509709 | P_counter: 0
+18:16 | 	E: 2 | Val loss: 0.6539811453511638 | P_counter: 0
+18:16 | 	E: 3 | Val loss: 0.6296841713689989 | P_counter: 0
+18:17 | 	E: 4 | Val loss: 0.6209299602816182 | P_counter: 0
+18:18 | 	E: 5 | Val loss: 0.6004205365334788 | P_counter: 0
+18:18 | 	E: 6 | Val loss: 0.5794904866526204 | P_counter: 0
+18:19 | 	E: 7 | Val loss: 0.563975324553828 | P_counter: 0
+18:19 | 	E: 8 | Val loss: 0.5448968468173858 | P_counter: 0
+18:20 | 	E: 9 | Val loss: 0.539292908483936 | P_counter: 0
+18:20 | best_val_loss: 0.5393
+18:20 | F-2 | Creating Data Loaders...
+18:20 | F-2 | Data loaders created.
+18:20 | 	E: 0 | Val loss: 0.6890976025212195 | P_counter: 0
+18:21 | 	E: 1 | Val loss: 0.6697287674873106 | P_counter: 0
+18:21 | 	E: 2 | Val loss: 0.6407845289476456 | P_counter: 0
+18:22 | 	E: 3 | Val loss: 0.615038889069711 | P_counter: 0
+18:23 | 	E: 4 | Val loss: 0.5908518452798167 | P_counter: 0
+18:23 | 	E: 5 | Val loss: 0.5812314960264391 | P_counter: 0
+18:24 | 	E: 6 | Val loss: 0.5454039996670138 | P_counter: 0
+18:24 | 	E: 7 | Val loss: 0.5884940893419327 | P_counter: 1
+18:25 | 	E: 8 | Val loss: 0.6722549719195212 | P_counter: 2
+18:25 | 	E: 9 | Val loss: 0.49134676687179074 | P_counter: 0
+18:25 | best_val_loss: 0.4913
+18:25 | inner_loop_results: [0.5710152089595795, 0.539292908483936, 0.49134676687179074]
+18:25 | FOLD 1 | ParamID 8 | Avg Val Loss: 0.5339
+-------------------------------  PARAM ID  -9-  ---------------------------------
+
+
+
+############################### OUTER FOLD -2- ############################################
+-------------------------------  PARAM ID  -1-  ---------------------------------
+08:14 | {'paramID': 1, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+08:14 | F-0 | Data loaders created. Starting model training...
+08:15 | 	E: 0 | Val loss: 0.6949091553688049 | P_counter: 0
+08:15 | 	E: 1 | Val loss: 0.684845820069313 | P_counter: 0
+08:16 | 	E: 2 | Val loss: 0.669401690363884 | P_counter: 0
+08:17 | 	E: 3 | Val loss: 0.6465546786785126 | P_counter: 0
+08:17 | 	E: 4 | Val loss: 0.6308641731739044 | P_counter: 0
+08:18 | 	E: 5 | Val loss: 0.6166395395994186 | P_counter: 0
+08:19 | 	E: 6 | Val loss: 0.6064163073897362 | P_counter: 0
+08:19 | 	E: 7 | Val loss: 0.5957919210195541 | P_counter: 0
+08:20 | 	E: 8 | Val loss: 0.593585878610611 | P_counter: 0
+08:21 | 	E: 9 | Val loss: 0.5860026180744171 | P_counter: 0
+08:21 | best_val_loss: 0.5860
+08:21 | F-1 | Data loaders created. Starting model training...
+08:22 | 	E: 0 | Val loss: 0.6876045792333542 | P_counter: 0
+08:22 | 	E: 1 | Val loss: 0.6781982164229116 | P_counter: 0
+08:23 | 	E: 2 | Val loss: 0.6686912409720882 | P_counter: 0
+08:24 | 	E: 3 | Val loss: 0.6629624885897483 | P_counter: 0
+08:24 | 	E: 4 | Val loss: 0.6525834587312513 | P_counter: 0
+08:25 | 	E: 5 | Val loss: 0.6486517344751666 | P_counter: 0
+08:26 | 	E: 6 | Val loss: 0.6423243880271912 | P_counter: 0
+08:26 | 	E: 7 | Val loss: 0.6376187570633427 | P_counter: 0
+08:27 | 	E: 8 | Val loss: 0.6345397618509108 | P_counter: 0
+08:28 | 	E: 9 | Val loss: 0.6354321722061403 | P_counter: 0
+08:28 | best_val_loss: 0.6345
+08:28 | F-2 | Data loaders created. Starting model training...
+08:29 | 	E: 0 | Val loss: 0.690588322377974 | P_counter: 0
+08:29 | 	E: 1 | Val loss: 0.6826498643044503 | P_counter: 0
+08:30 | 	E: 2 | Val loss: 0.6735081018940094 | P_counter: 0
+08:31 | 	E: 3 | Val loss: 0.6636193298524425 | P_counter: 0
+08:33 | 	E: 4 | Val loss: 0.6586716751898488 | P_counter: 0
+08:34 | 	E: 5 | Val loss: 0.6527956935667223 | P_counter: 0
+08:35 | 	E: 6 | Val loss: 0.6416636916898912 | P_counter: 0
+08:35 | 	E: 7 | Val loss: 0.6360611550269588 | P_counter: 0
+08:36 | 	E: 8 | Val loss: 0.6326399407079143 | P_counter: 0
+08:37 | 	E: 9 | Val loss: 0.6289959626813089 | P_counter: 0
+08:37 | best_val_loss: 0.6290
+08:37 | inner_loop_results: [0.5860026180744171, 0.6345397618509108, 0.6289959626813089]
+08:37 | FOLD 2 | ParamID 1 | Avg Val Loss: 0.6165
+-------------------------------  PARAM ID  -2-  ---------------------------------
+08:37 | {'paramID': 2, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.3, 'epochs': 10}
+08:37 | F-0 | Data loaders created. Starting model training...
+08:37 | 	E: 0 | Val loss: 0.6926821917295456 | P_counter: 0
+08:38 | 	E: 1 | Val loss: 0.6856721043586731 | P_counter: 0
+08:39 | 	E: 2 | Val loss: 0.675875186920166 | P_counter: 0
+08:40 | 	E: 3 | Val loss: 0.6667856127023697 | P_counter: 0
+08:40 | 	E: 4 | Val loss: 0.6615307480096817 | P_counter: 0
+08:41 | 	E: 5 | Val loss: 0.654483363032341 | P_counter: 0
+08:42 | 	E: 6 | Val loss: 0.6513632386922836 | P_counter: 0
+08:42 | 	E: 7 | Val loss: 0.6430800408124924 | P_counter: 0
+08:43 | 	E: 8 | Val loss: 0.6326115876436234 | P_counter: 0
+08:44 | 	E: 9 | Val loss: 0.627501368522644 | P_counter: 0
+08:44 | best_val_loss: 0.6275
+08:44 | F-1 | Data loaders created. Starting model training...
+08:44 | 	E: 0 | Val loss: 0.6875346418349974 | P_counter: 0
+08:45 | 	E: 1 | Val loss: 0.6803657162574029 | P_counter: 0
+08:46 | 	E: 2 | Val loss: 0.670646273320721 | P_counter: 0
+08:47 | 	E: 3 | Val loss: 0.6618046856695606 | P_counter: 0
+08:47 | 	E: 4 | Val loss: 0.657167871152201 | P_counter: 0
+08:48 | 	E: 5 | Val loss: 0.6476227083513814 | P_counter: 0
+08:49 | 	E: 6 | Val loss: 0.6273953530096239 | P_counter: 0
+08:50 | 	E: 7 | Val loss: 0.6092281399234649 | P_counter: 0
+08:50 | 	E: 8 | Val loss: 0.6038143288704657 | P_counter: 0
+08:51 | 	E: 9 | Val loss: 0.5920357761844512 | P_counter: 0
+08:51 | best_val_loss: 0.5920
+08:51 | F-2 | Data loaders created. Starting model training...
+08:52 | 	E: 0 | Val loss: 0.6896156976299901 | P_counter: 0
+08:53 | 	E: 1 | Val loss: 0.6828560463843807 | P_counter: 0
+08:53 | 	E: 2 | Val loss: 0.673927455179153 | P_counter: 0
+08:54 | 	E: 3 | Val loss: 0.6656158931793705 | P_counter: 0
+08:55 | 	E: 4 | Val loss: 0.6575433996415907 | P_counter: 0
+08:56 | 	E: 5 | Val loss: 0.6505199709246235 | P_counter: 0
+08:56 | 	E: 6 | Val loss: 0.6442196234580009 | P_counter: 0
+08:57 | 	E: 7 | Val loss: 0.6296444823665004 | P_counter: 0
+08:58 | 	E: 8 | Val loss: 0.6279914513711007 | P_counter: 0
+08:58 | 	E: 9 | Val loss: 0.6186774046190323 | P_counter: 0
+08:58 | best_val_loss: 0.6187
+08:58 | inner_loop_results: [0.627501368522644, 0.5920357761844512, 0.6186774046190323]
+08:58 | FOLD 2 | ParamID 2 | Avg Val Loss: 0.6127
+-------------------------------  PARAM ID  -3-  ---------------------------------
+08:58 | {'paramID': 3, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.4, 'epochs': 10}
+08:58 | F-0 | Data loaders created. Starting model training...
+08:59 | 	E: 0 | Val loss: 0.689087301492691 | P_counter: 0
+09:00 | 	E: 1 | Val loss: 0.6824621260166168 | P_counter: 0
+09:01 | 	E: 2 | Val loss: 0.6730471700429916 | P_counter: 0
+09:01 | 	E: 3 | Val loss: 0.662607729434967 | P_counter: 0
+09:02 | 	E: 4 | Val loss: 0.6515862941741943 | P_counter: 0
+09:03 | 	E: 5 | Val loss: 0.639311283826828 | P_counter: 0
+09:03 | 	E: 6 | Val loss: 0.632298469543457 | P_counter: 0
+09:04 | 	E: 7 | Val loss: 0.623335599899292 | P_counter: 0
+09:05 | 	E: 8 | Val loss: 0.6147336512804031 | P_counter: 0
+09:06 | 	E: 9 | Val loss: 0.5982388705015182 | P_counter: 0
+09:06 | best_val_loss: 0.5982
+09:06 | F-1 | Data loaders created. Starting model training...
+09:06 | 	E: 0 | Val loss: 0.6896624372851464 | P_counter: 0
+09:07 | 	E: 1 | Val loss: 0.6842325637417455 | P_counter: 0
+09:08 | 	E: 2 | Val loss: 0.6779069804376171 | P_counter: 0
+09:09 | 	E: 3 | Val loss: 0.6742540482551821 | P_counter: 0
+09:09 | 	E: 4 | Val loss: 0.6739586572493276 | P_counter: 0
+09:10 | 	E: 5 | Val loss: 0.664891408335778 | P_counter: 0
+09:11 | 	E: 6 | Val loss: 0.6600217242394725 | P_counter: 0
+09:11 | 	E: 7 | Val loss: 0.659554656474821 | P_counter: 0
+09:12 | 	E: 8 | Val loss: 0.6598093471219463 | P_counter: 0
+09:13 | 	E: 9 | Val loss: 0.657251121536378 | P_counter: 1
+09:13 | best_val_loss: 0.6573
+09:13 | F-2 | Data loaders created. Starting model training...
+09:14 | 	E: 0 | Val loss: 0.6929308041449516 | P_counter: 0
+09:14 | 	E: 1 | Val loss: 0.6866391416518919 | P_counter: 0
+09:15 | 	E: 2 | Val loss: 0.6767888242198575 | P_counter: 0
+09:16 | 	E: 3 | Val loss: 0.6673283788465685 | P_counter: 0
+09:17 | 	E: 4 | Val loss: 0.6583519154979337 | P_counter: 0
+09:17 | 	E: 5 | Val loss: 0.6471542869844744 | P_counter: 0
+09:18 | 	E: 6 | Val loss: 0.636435003049912 | P_counter: 0
+09:19 | 	E: 7 | Val loss: 0.6285897358771293 | P_counter: 0
+09:20 | 	E: 8 | Val loss: 0.6206554385923571 | P_counter: 0
+09:20 | 	E: 9 | Val loss: 0.6158428942003558 | P_counter: 0
+09:20 | best_val_loss: 0.6158
+09:20 | inner_loop_results: [0.5982388705015182, 0.657251121536378, 0.6158428942003558]
+09:20 | FOLD 2 | ParamID 3 | Avg Val Loss: 0.6238
+-------------------------------  PARAM ID  -4-  ---------------------------------
+09:20 | {'paramID': 4, 'LR': 0.0005, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+09:20 | F-0 | Data loaders created. Starting model training...
+09:21 | 	E: 0 | Val loss: 0.6870041638612747 | P_counter: 0
+09:22 | 	E: 1 | Val loss: 0.6791364550590515 | P_counter: 0
+09:23 | 	E: 2 | Val loss: 0.6686492711305618 | P_counter: 0
+09:23 | 	E: 3 | Val loss: 0.6571841686964035 | P_counter: 0
+09:24 | 	E: 4 | Val loss: 0.6499907225370407 | P_counter: 0
+09:25 | 	E: 5 | Val loss: 0.6458829194307327 | P_counter: 0
+09:26 | 	E: 6 | Val loss: 0.6405821144580841 | P_counter: 0
+09:26 | 	E: 7 | Val loss: 0.6302260011434555 | P_counter: 0
+09:27 | 	E: 8 | Val loss: 0.6209297627210617 | P_counter: 0
+09:28 | 	E: 9 | Val loss: 0.6130462065339088 | P_counter: 0
+09:28 | best_val_loss: 0.6130
+09:28 | F-1 | Data loaders created. Starting model training...
+09:29 | 	E: 0 | Val loss: 0.6879702825700084 | P_counter: 0
+09:30 | 	E: 1 | Val loss: 0.6749401803939573 | P_counter: 0
+09:30 | 	E: 2 | Val loss: 0.6570772951649081 | P_counter: 0
+09:31 | 	E: 3 | Val loss: 0.646802592662073 | P_counter: 0
+09:32 | 	E: 4 | Val loss: 0.6377752404059133 | P_counter: 0
+09:32 | 	E: 5 | Val loss: 0.6095526333778135 | P_counter: 0
+09:33 | 	E: 6 | Val loss: 0.595341024860259 | P_counter: 0
+09:34 | 	E: 7 | Val loss: 0.5791440586889943 | P_counter: 0
+09:35 | 	E: 8 | Val loss: 0.5608502338009496 | P_counter: 0
+09:35 | 	E: 9 | Val loss: 0.5565186623604067 | P_counter: 0
+09:35 | best_val_loss: 0.5565
+09:35 | F-2 | Data loaders created. Starting model training...
+09:36 | 	E: 0 | Val loss: 0.6899552979776936 | P_counter: 0
+09:37 | 	E: 1 | Val loss: 0.6836389533935054 | P_counter: 0
+09:38 | 	E: 2 | Val loss: 0.6747466710305983 | P_counter: 0
+09:38 | 	E: 3 | Val loss: 0.6625184570589373 | P_counter: 0
+09:39 | 	E: 4 | Val loss: 0.6518089636679618 | P_counter: 0
+09:40 | 	E: 5 | Val loss: 0.6411094031026286 | P_counter: 0
+09:41 | 	E: 6 | Val loss: 0.6391931060821779 | P_counter: 0
+09:41 | 	E: 7 | Val loss: 0.641291452992347 | P_counter: 0
+09:42 | 	E: 8 | Val loss: 0.6167098360676919 | P_counter: 1
+09:43 | 	E: 9 | Val loss: 0.6075944612103124 | P_counter: 0
+09:43 | best_val_loss: 0.6076
+09:43 | inner_loop_results: [0.6130462065339088, 0.5565186623604067, 0.6075944612103124]
+09:43 | FOLD 2 | ParamID 4 | Avg Val Loss: 0.5924
+-------------------------------  PARAM ID  -5-  ---------------------------------
+09:43 | {'paramID': 5, 'LR': 0.0002, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+09:43 | F-0 | Data loaders created. Starting model training...
+09:44 | 	E: 0 | Val loss: 0.6940803974866867 | P_counter: 0
+09:44 | 	E: 1 | Val loss: 0.6915394365787506 | P_counter: 0
+09:45 | 	E: 2 | Val loss: 0.6861161887645721 | P_counter: 0
+09:46 | 	E: 3 | Val loss: 0.6803156733512878 | P_counter: 0
+09:47 | 	E: 4 | Val loss: 0.675215020775795 | P_counter: 0
+09:47 | 	E: 5 | Val loss: 0.670878678560257 | P_counter: 0
+09:48 | 	E: 6 | Val loss: 0.667362704873085 | P_counter: 0
+09:49 | 	E: 7 | Val loss: 0.6629724949598312 | P_counter: 0
+09:50 | 	E: 8 | Val loss: 0.6581340879201889 | P_counter: 0
+09:50 | 	E: 9 | Val loss: 0.6532518416643143 | P_counter: 0
+09:50 | best_val_loss: 0.6533
+09:50 | F-1 | Data loaders created. Starting model training...
+09:51 | 	E: 0 | Val loss: 0.6920444946135244 | P_counter: 0
+09:52 | 	E: 1 | Val loss: 0.6903554201126099 | P_counter: 0
+09:53 | 	E: 2 | Val loss: 0.6870590429152211 | P_counter: 0
+09:53 | 	E: 3 | Val loss: 0.68249915107604 | P_counter: 0
+09:54 | 	E: 4 | Val loss: 0.6773308592457925 | P_counter: 0
+09:55 | 	E: 5 | Val loss: 0.6726788551576676 | P_counter: 0
+09:56 | 	E: 6 | Val loss: 0.6673503383513419 | P_counter: 0
+09:56 | 	E: 7 | Val loss: 0.6645018516048309 | P_counter: 0
+09:57 | 	E: 8 | Val loss: 0.6625753045082092 | P_counter: 0
+09:58 | 	E: 9 | Val loss: 0.6579989502506871 | P_counter: 0
+09:58 | best_val_loss: 0.6580
+09:58 | F-2 | Data loaders created. Starting model training...
+09:59 | 	E: 0 | Val loss: 0.687401867681934 | P_counter: 0
+09:59 | 	E: 1 | Val loss: 0.6852517301036466 | P_counter: 0
+10:00 | 	E: 2 | Val loss: 0.6816500752202926 | P_counter: 0
+10:01 | 	E: 3 | Val loss: 0.6770124877652814 | P_counter: 0
+10:02 | 	E: 4 | Val loss: 0.6727161388243398 | P_counter: 0
+10:02 | 	E: 5 | Val loss: 0.6680687166029408 | P_counter: 0
+10:03 | 	E: 6 | Val loss: 0.6642368974224213 | P_counter: 0
+10:04 | 	E: 7 | Val loss: 0.6603414416313171 | P_counter: 0
+10:05 | 	E: 8 | Val loss: 0.6563614279993119 | P_counter: 0
+10:05 | 	E: 9 | Val loss: 0.6534896781367641 | P_counter: 0
+10:05 | best_val_loss: 0.6535
+10:05 | inner_loop_results: [0.6532518416643143, 0.6579989502506871, 0.6534896781367641]
+10:05 | FOLD 2 | ParamID 5 | Avg Val Loss: 0.6549
+-------------------------------  PARAM ID  -6-  ---------------------------------
+10:05 | {'paramID': 6, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+10:05 | F-0 | Data loaders created. Starting model training...
+10:06 | 	E: 0 | Val loss: 0.6827468723058701 | P_counter: 0
+10:07 | 	E: 1 | Val loss: 0.6639446169137955 | P_counter: 0
+10:08 | 	E: 2 | Val loss: 0.643784373998642 | P_counter: 0
+10:08 | 	E: 3 | Val loss: 0.62476646900177 | P_counter: 0
+10:09 | 	E: 4 | Val loss: 0.6039886474609375 | P_counter: 0
+10:10 | 	E: 5 | Val loss: 0.5793469548225403 | P_counter: 0
+10:11 | 	E: 6 | Val loss: 0.5728545784950256 | P_counter: 0
+10:11 | 	E: 7 | Val loss: 0.576058492064476 | P_counter: 0
+10:12 | 	E: 8 | Val loss: 0.5768641754984856 | P_counter: 1
+10:13 | 	E: 9 | Val loss: 0.5506897047162056 | P_counter: 2
+10:13 | best_val_loss: 0.5507
+10:13 | F-1 | Data loaders created. Starting model training...
+10:14 | 	E: 0 | Val loss: 0.6893916533839318 | P_counter: 0
+10:14 | 	E: 1 | Val loss: 0.6784640569840709 | P_counter: 0
+10:15 | 	E: 2 | Val loss: 0.6684186285541903 | P_counter: 0
+10:16 | 	E: 3 | Val loss: 0.6652427930985728 | P_counter: 0
+10:17 | 	E: 4 | Val loss: 0.6390164898287866 | P_counter: 0
+10:17 | 	E: 5 | Val loss: 0.638672165332302 | P_counter: 0
+10:18 | 	E: 6 | Val loss: 0.6166523022036399 | P_counter: 0
+10:19 | 	E: 7 | Val loss: 0.6195906862135856 | P_counter: 0
+10:20 | 	E: 8 | Val loss: 0.646181212317559 | P_counter: 1
+10:20 | 	E: 9 | Val loss: 0.6642178297042847 | P_counter: 2
+10:20 | best_val_loss: 0.6167
+10:20 | F-2 | Data loaders created. Starting model training...
+10:21 | 	E: 0 | Val loss: 0.6865595656056558 | P_counter: 0
+10:22 | 	E: 1 | Val loss: 0.6741218874531407 | P_counter: 0
+10:23 | 	E: 2 | Val loss: 0.6591814314165423 | P_counter: 0
+10:23 | 	E: 3 | Val loss: 0.6460471191713887 | P_counter: 0
+10:24 | 	E: 4 | Val loss: 0.6315345706478241 | P_counter: 0
+10:25 | 	E: 5 | Val loss: 0.6174433615899855 | P_counter: 0
+10:26 | 	E: 6 | Val loss: 0.6834500739651341 | P_counter: 0
+10:26 | 	E: 7 | Val loss: 0.6431157204412645 | P_counter: 1
+10:27 | 	E: 8 | Val loss: 0.5916586191423477 | P_counter: 2
+10:28 | 	E: 9 | Val loss: 0.573866440403846 | P_counter: 0
+10:28 | best_val_loss: 0.5739
+10:28 | inner_loop_results: [0.5506897047162056, 0.6166523022036399, 0.573866440403846]
+10:28 | FOLD 2 | ParamID 6 | Avg Val Loss: 0.5804
+-------------------------------  PARAM ID  -7-  ---------------------------------
+-------------------------------  PARAM ID  -8-  ---------------------------------
+-------------------------------  PARAM ID  -9-  ---------------------------------
+19:36 | {'paramID': 9, 'LR': 0.0008, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+19:36 | 	E: 0 | Val loss: 0.6805720627307892 | P_counter: 0
+19:37 | 	E: 1 | Val loss: 0.6714445054531097 | P_counter: 0
+19:38 | 	E: 2 | Val loss: 0.6621211022138596 | P_counter: 0
+19:38 | 	E: 3 | Val loss: 0.6500382125377655 | P_counter: 0
+19:39 | 	E: 4 | Val loss: 0.6407872587442398 | P_counter: 0
+19:40 | 	E: 5 | Val loss: 0.6421809643507004 | P_counter: 1
+19:40 | 	E: 6 | Val loss: 0.6507541537284851 | P_counter: 2
+19:41 | 	E: 7 | Val loss: 0.6101385951042175 | P_counter: 0
+19:42 | 	E: 8 | Val loss: 0.598895899951458 | P_counter: 0
+19:42 | 	E: 9 | Val loss: 0.5960675403475761 | P_counter: 0
+19:42 | best_val_loss: 0.5961
+19:43 | 	E: 0 | Val loss: 0.6842978885096889 | P_counter: 0
+19:43 | 	E: 1 | Val loss: 0.6742697877268637 | P_counter: 0
+19:44 | 	E: 2 | Val loss: 0.6636480400639195 | P_counter: 0
+19:45 | 	E: 3 | Val loss: 0.655054061643539 | P_counter: 0
+19:45 | 	E: 4 | Val loss: 0.6488988168777958 | P_counter: 0
+19:46 | 	E: 5 | Val loss: 0.6366062568080041 | P_counter: 0
+19:47 | 	E: 6 | Val loss: 0.6249444234755731 | P_counter: 0
+19:47 | 	E: 7 | Val loss: 0.6206569344766678 | P_counter: 0
+19:48 | 	E: 8 | Val loss: 0.6754083210422147 | P_counter: 1
+19:48 | 	E: 9 | Val loss: 0.6049175300905781 | P_counter: 0
+19:48 | best_val_loss: 0.6049
+19:49 | 	E: 0 | Val loss: 0.6882379554933117 | P_counter: 0
+19:50 | 	E: 1 | Val loss: 0.677829006025868 | P_counter: 0
+19:50 | 	E: 2 | Val loss: 0.6688259397783587 | P_counter: 0
+19:51 | 	E: 3 | Val loss: 0.6605991509652906 | P_counter: 0
+19:51 | 	E: 4 | Val loss: 0.6516148371081198 | P_counter: 0
+19:52 | 	E: 5 | Val loss: 0.6426316192073207 | P_counter: 0
+19:53 | 	E: 6 | Val loss: 0.6345212863337609 | P_counter: 0
+19:53 | 	E: 7 | Val loss: 0.64581698179245 | P_counter: 1
+19:54 | 	E: 8 | Val loss: 0.6241241828087838 | P_counter: 0
+19:54 | 	E: 9 | Val loss: 0.6210195306808718 | P_counter: 0
+19:54 | best_val_loss: 0.6210
+19:54 | inner_loop_results: [0.5960675403475761, 0.6049175300905781, 0.6210195306808718]
+19:54 | FOLD 2 | ParamID 9 | Avg Val Loss: 0.6073
+############################### OUTER FOLD -3- ############################################
+-------------------------------  PARAM ID  -1-  ---------------------------------
+10:28 | {'paramID': 1, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+10:28 | F-0 | Data loaders created. Starting model training...
+10:29 | 	E: 0 | Val loss: 0.6877084076404572 | P_counter: 0
+10:29 | 	E: 1 | Val loss: 0.6739232391119003 | P_counter: 0
+10:30 | 	E: 2 | Val loss: 0.6527301222085953 | P_counter: 0
+10:31 | 	E: 3 | Val loss: 0.6320445537567139 | P_counter: 0
+10:32 | 	E: 4 | Val loss: 0.6127049028873444 | P_counter: 0
+10:32 | 	E: 5 | Val loss: 0.6033999770879745 | P_counter: 0
+10:33 | 	E: 6 | Val loss: 0.5862247347831726 | P_counter: 0
+10:34 | 	E: 7 | Val loss: 0.571716919541359 | P_counter: 0
+10:35 | 	E: 8 | Val loss: 0.5687353610992432 | P_counter: 0
+10:36 | 	E: 9 | Val loss: 0.5677699446678162 | P_counter: 0
+10:36 | best_val_loss: 0.5678
+10:36 | F-1 | Data loaders created. Starting model training...
+10:36 | 	E: 0 | Val loss: 0.6924445686801788 | P_counter: 0
+10:37 | 	E: 1 | Val loss: 0.6832772089589026 | P_counter: 0
+10:38 | 	E: 2 | Val loss: 0.6762465988436053 | P_counter: 0
+10:39 | 	E: 3 | Val loss: 0.663773569368547 | P_counter: 0
+10:39 | 	E: 4 | Val loss: 0.6604856252670288 | P_counter: 0
+10:40 | 	E: 5 | Val loss: 0.6643349643676512 | P_counter: 0
+10:41 | 	E: 6 | Val loss: 0.655889182321487 | P_counter: 1
+10:42 | 	E: 7 | Val loss: 0.6310171119628414 | P_counter: 0
+10:42 | 	E: 8 | Val loss: 0.6224635974053414 | P_counter: 0
+10:43 | 	E: 9 | Val loss: 0.6112504265000743 | P_counter: 0
+10:43 | best_val_loss: 0.6113
+10:43 | F-2 | Data loaders created. Starting model training...
+10:44 | 	E: 0 | Val loss: 0.6867262990243973 | P_counter: 0
+10:45 | 	E: 1 | Val loss: 0.6809193222753464 | P_counter: 0
+10:45 | 	E: 2 | Val loss: 0.6709753447963346 | P_counter: 0
+10:46 | 	E: 3 | Val loss: 0.6591809468884622 | P_counter: 0
+10:47 | 	E: 4 | Val loss: 0.6460131560602496 | P_counter: 0
+10:48 | 	E: 5 | Val loss: 0.632361150556995 | P_counter: 0
+10:49 | 	E: 6 | Val loss: 0.6234179177591878 | P_counter: 0
+10:49 | 	E: 7 | Val loss: 0.6128295313927435 | P_counter: 0
+10:50 | 	E: 8 | Val loss: 0.6041576497016414 | P_counter: 0
+10:51 | 	E: 9 | Val loss: 0.5902624534022424 | P_counter: 0
+10:51 | best_val_loss: 0.5903
+10:51 | inner_loop_results: [0.5677699446678162, 0.6112504265000743, 0.5902624534022424]
+10:51 | FOLD 3 | ParamID 1 | Avg Val Loss: 0.5898
+-------------------------------  PARAM ID  -2-  ---------------------------------
+10:51 | {'paramID': 2, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.3, 'epochs': 10}
+10:51 | F-0 | Data loaders created. Starting model training...
+10:52 | 	E: 0 | Val loss: 0.6888421922922134 | P_counter: 0
+10:52 | 	E: 1 | Val loss: 0.6821858435869217 | P_counter: 0
+10:53 | 	E: 2 | Val loss: 0.6723229140043259 | P_counter: 0
+10:54 | 	E: 3 | Val loss: 0.6626733839511871 | P_counter: 0
+10:55 | 	E: 4 | Val loss: 0.6520945429801941 | P_counter: 0
+10:56 | 	E: 5 | Val loss: 0.6426790803670883 | P_counter: 0
+10:56 | 	E: 6 | Val loss: 0.632341593503952 | P_counter: 0
+10:57 | 	E: 7 | Val loss: 0.6184941083192825 | P_counter: 0
+10:58 | 	E: 8 | Val loss: 0.6011885702610016 | P_counter: 0
+10:59 | 	E: 9 | Val loss: 0.5929406881332397 | P_counter: 0
+10:59 | best_val_loss: 0.5929
+10:59 | F-1 | Data loaders created. Starting model training...
+11:00 | 	E: 0 | Val loss: 0.6999076989389235 | P_counter: 0
+11:00 | 	E: 1 | Val loss: 0.6910109366140058 | P_counter: 0
+11:01 | 	E: 2 | Val loss: 0.6824356932793895 | P_counter: 0
+11:02 | 	E: 3 | Val loss: 0.6771873677930524 | P_counter: 0
+11:03 | 	E: 4 | Val loss: 0.671971567215458 | P_counter: 0
+11:04 | 	E: 5 | Val loss: 0.6679628702902025 | P_counter: 0
+11:05 | 	E: 6 | Val loss: 0.6589302978207988 | P_counter: 0
+11:06 | 	E: 7 | Val loss: 0.6564538613442452 | P_counter: 0
+11:06 | 	E: 8 | Val loss: 0.6456458972346398 | P_counter: 0
+11:07 | 	E: 9 | Val loss: 0.6413552934123624 | P_counter: 0
+11:07 | best_val_loss: 0.6414
+11:07 | F-2 | Data loaders created. Starting model training...
+11:08 | 	E: 0 | Val loss: 0.6923433369205844 | P_counter: 0
+11:09 | 	E: 1 | Val loss: 0.6837214827537537 | P_counter: 0
+11:10 | 	E: 2 | Val loss: 0.6720132635485742 | P_counter: 0
+11:10 | 	E: 3 | Val loss: 0.6593381762504578 | P_counter: 0
+11:11 | 	E: 4 | Val loss: 0.648235147999179 | P_counter: 0
+11:12 | 	E: 5 | Val loss: 0.6393601990515186 | P_counter: 0
+11:13 | 	E: 6 | Val loss: 0.6291938347201194 | P_counter: 0
+11:14 | 	E: 7 | Val loss: 0.6246548218111838 | P_counter: 0
+11:14 | 	E: 8 | Val loss: 0.6148180615517401 | P_counter: 0
+11:15 | 	E: 9 | Val loss: 0.6113081420621564 | P_counter: 0
+11:15 | best_val_loss: 0.6113
+11:15 | inner_loop_results: [0.5929406881332397, 0.6413552934123624, 0.6113081420621564]
+11:15 | FOLD 3 | ParamID 2 | Avg Val Loss: 0.6152
+-------------------------------  PARAM ID  -3-  ---------------------------------
+11:15 | {'paramID': 3, 'LR': 0.0005, 'WD': 0.0001, 'DR': 0.4, 'epochs': 10}
+11:15 | F-0 | Data loaders created. Starting model training...
+11:16 | 	E: 0 | Val loss: 0.6855477690696716 | P_counter: 0
+11:17 | 	E: 1 | Val loss: 0.6767281144857407 | P_counter: 0
+11:18 | 	E: 2 | Val loss: 0.6658754795789719 | P_counter: 0
+11:18 | 	E: 3 | Val loss: 0.6523454785346985 | P_counter: 0
+11:19 | 	E: 4 | Val loss: 0.6413803398609161 | P_counter: 0
+11:20 | 	E: 5 | Val loss: 0.6357922554016113 | P_counter: 0
+11:21 | 	E: 6 | Val loss: 0.622457355260849 | P_counter: 0
+11:21 | 	E: 7 | Val loss: 0.6179012507200241 | P_counter: 0
+11:22 | 	E: 8 | Val loss: 0.6007950752973557 | P_counter: 0
+11:23 | 	E: 9 | Val loss: 0.5914360731840134 | P_counter: 0
+11:23 | best_val_loss: 0.5914
+11:23 | F-1 | Data loaders created. Starting model training...
+11:24 | 	E: 0 | Val loss: 0.687090277671814 | P_counter: 0
+11:25 | 	E: 1 | Val loss: 0.6828254672788805 | P_counter: 0
+11:25 | 	E: 2 | Val loss: 0.6780157704507151 | P_counter: 0
+11:26 | 	E: 3 | Val loss: 0.6734560593481986 | P_counter: 0
+11:27 | 	E: 4 | Val loss: 0.6717727914933236 | P_counter: 0
+11:28 | 	E: 5 | Val loss: 0.6677580821898675 | P_counter: 0
+11:28 | 	E: 6 | Val loss: 0.662491008158653 | P_counter: 0
+11:29 | 	E: 7 | Val loss: 0.6617336792330588 | P_counter: 0
+11:30 | 	E: 8 | Val loss: 0.6546569678091234 | P_counter: 0
+11:31 | 	E: 9 | Val loss: 0.6516215128283347 | P_counter: 0
+11:31 | best_val_loss: 0.6516
+11:31 | F-2 | Data loaders created. Starting model training...
+11:32 | 	E: 0 | Val loss: 0.6930275559425354 | P_counter: 0
+11:32 | 	E: 1 | Val loss: 0.6874937434350291 | P_counter: 0
+11:33 | 	E: 2 | Val loss: 0.6784174230790907 | P_counter: 0
+11:34 | 	E: 3 | Val loss: 0.6669913472667817 | P_counter: 0
+11:35 | 	E: 4 | Val loss: 0.6532324475626792 | P_counter: 0
+11:36 | 	E: 5 | Val loss: 0.6417723740300825 | P_counter: 0
+11:36 | 	E: 6 | Val loss: 0.6282652731864683 | P_counter: 0
+11:37 | 	E: 7 | Val loss: 0.6240672296093356 | P_counter: 0
+11:38 | 	E: 8 | Val loss: 0.6090681052977039 | P_counter: 0
+11:39 | 	E: 9 | Val loss: 0.5984167033626188 | P_counter: 0
+11:39 | best_val_loss: 0.5984
+11:39 | inner_loop_results: [0.5914360731840134, 0.6516215128283347, 0.5984167033626188]
+11:39 | FOLD 3 | ParamID 3 | Avg Val Loss: 0.6138
+-------------------------------  PARAM ID  -4-  ---------------------------------
+11:39 | {'paramID': 4, 'LR': 0.0005, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+11:39 | F-0 | Data loaders created. Starting model training...
+11:40 | 	E: 0 | Val loss: 0.6885058283805847 | P_counter: 0
+11:41 | 	E: 1 | Val loss: 0.6857289522886276 | P_counter: 0
+11:42 | 	E: 2 | Val loss: 0.6799534559249878 | P_counter: 0
+11:43 | 	E: 3 | Val loss: 0.6710589528083801 | P_counter: 0
+11:44 | 	E: 4 | Val loss: 0.6643531769514084 | P_counter: 0
+11:45 | 	E: 5 | Val loss: 0.6578689217567444 | P_counter: 0
+11:45 | 	E: 6 | Val loss: 0.6506644785404205 | P_counter: 0
+11:46 | 	E: 7 | Val loss: 0.6445174515247345 | P_counter: 0
+11:47 | 	E: 8 | Val loss: 0.6413467526435852 | P_counter: 0
+11:48 | 	E: 9 | Val loss: 0.632180318236351 | P_counter: 0
+11:48 | best_val_loss: 0.6322
+11:48 | F-1 | Data loaders created. Starting model training...
+11:49 | 	E: 0 | Val loss: 0.6886450590625885 | P_counter: 0
+11:50 | 	E: 1 | Val loss: 0.680198690583629 | P_counter: 0
+11:50 | 	E: 2 | Val loss: 0.6712650137562906 | P_counter: 0
+11:51 | 	E: 3 | Val loss: 0.6685587783013621 | P_counter: 0
+11:52 | 	E: 4 | Val loss: 0.6570848245774547 | P_counter: 0
+11:53 | 	E: 5 | Val loss: 0.647884597701411 | P_counter: 0
+11:54 | 	E: 6 | Val loss: 0.6399078561413672 | P_counter: 0
+11:54 | 	E: 7 | Val loss: 0.6340956264926542 | P_counter: 0
+11:55 | 	E: 8 | Val loss: 0.6230061131138955 | P_counter: 0
+11:56 | 	E: 9 | Val loss: 0.6211654082421334 | P_counter: 0
+11:56 | best_val_loss: 0.6212
+11:56 | F-2 | Data loaders created. Starting model training...
+11:57 | 	E: 0 | Val loss: 0.6889485601455935 | P_counter: 0
+11:58 | 	E: 1 | Val loss: 0.6745458572141586 | P_counter: 0
+11:59 | 	E: 2 | Val loss: 0.6569391219846664 | P_counter: 0
+11:59 | 	E: 3 | Val loss: 0.6429460644721985 | P_counter: 0
+12:00 | 	E: 4 | Val loss: 0.6231140609710447 | P_counter: 0
+12:01 | 	E: 5 | Val loss: 0.6123331400655931 | P_counter: 0
+12:02 | 	E: 6 | Val loss: 0.6056761068682517 | P_counter: 0
+12:03 | 	E: 7 | Val loss: 0.5894959780477709 | P_counter: 0
+12:04 | 	E: 8 | Val loss: 0.5809524616887493 | P_counter: 0
+12:04 | 	E: 9 | Val loss: 0.564165920980515 | P_counter: 0
+12:04 | best_val_loss: 0.5642
+12:04 | inner_loop_results: [0.632180318236351, 0.6211654082421334, 0.564165920980515]
+12:04 | FOLD 3 | ParamID 4 | Avg Val Loss: 0.6058
+-------------------------------  PARAM ID  -5-  ---------------------------------
+12:04 | {'paramID': 5, 'LR': 0.0002, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+12:04 | F-0 | Data loaders created. Starting model training...
+12:05 | 	E: 0 | Val loss: 0.694483682513237 | P_counter: 0
+12:06 | 	E: 1 | Val loss: 0.6904056966304779 | P_counter: 0
+12:07 | 	E: 2 | Val loss: 0.6847200691699982 | P_counter: 0
+12:07 | 	E: 3 | Val loss: 0.6778363734483719 | P_counter: 0
+12:08 | 	E: 4 | Val loss: 0.6714669018983841 | P_counter: 0
+12:09 | 	E: 5 | Val loss: 0.6583479940891266 | P_counter: 0
+12:09 | 	E: 6 | Val loss: 0.647666335105896 | P_counter: 0
+12:10 | 	E: 7 | Val loss: 0.6377861052751541 | P_counter: 0
+12:11 | 	E: 8 | Val loss: 0.6304083317518234 | P_counter: 0
+12:12 | 	E: 9 | Val loss: 0.6217383295297623 | P_counter: 0
+12:12 | best_val_loss: 0.6217
+12:12 | F-1 | Data loaders created. Starting model training...
+12:13 | 	E: 0 | Val loss: 0.6868539683280452 | P_counter: 0
+12:13 | 	E: 1 | Val loss: 0.6832110651077763 | P_counter: 0
+12:14 | 	E: 2 | Val loss: 0.6779038675369755 | P_counter: 0
+12:15 | 	E: 3 | Val loss: 0.6728322102177527 | P_counter: 0
+12:16 | 	E: 4 | Val loss: 0.6692557796355216 | P_counter: 0
+12:16 | 	E: 5 | Val loss: 0.6649143965013565 | P_counter: 0
+12:17 | 	E: 6 | Val loss: 0.6607517273195328 | P_counter: 0
+12:18 | 	E: 7 | Val loss: 0.6557424875997728 | P_counter: 0
+12:18 | 	E: 8 | Val loss: 0.6549728512763977 | P_counter: 0
+12:19 | 	E: 9 | Val loss: 0.6534115018383149 | P_counter: 0
+12:19 | best_val_loss: 0.6534
+12:19 | F-2 | Data loaders created. Starting model training...
+12:20 | 	E: 0 | Val loss: 0.6874157113413657 | P_counter: 0
+12:21 | 	E: 1 | Val loss: 0.682689610988863 | P_counter: 0
+12:21 | 	E: 2 | Val loss: 0.6745908779482688 | P_counter: 0
+12:22 | 	E: 3 | Val loss: 0.6662296268247789 | P_counter: 0
+12:23 | 	E: 4 | Val loss: 0.6572113748519651 | P_counter: 0
+12:24 | 	E: 5 | Val loss: 0.6493462247233237 | P_counter: 0
+12:24 | 	E: 6 | Val loss: 0.6394491157224101 | P_counter: 0
+12:25 | 	E: 7 | Val loss: 0.6299821042245434 | P_counter: 0
+12:26 | 	E: 8 | Val loss: 0.6216013316185244 | P_counter: 0
+12:27 | 	E: 9 | Val loss: 0.6138879003063324 | P_counter: 0
+12:27 | best_val_loss: 0.6139
+12:27 | inner_loop_results: [0.6217383295297623, 0.6534115018383149, 0.6138879003063324]
+12:27 | FOLD 3 | ParamID 5 | Avg Val Loss: 0.6297
+-------------------------------  PARAM ID  -6-  ---------------------------------
+12:27 | {'paramID': 6, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+12:27 | F-0 | Data loaders created. Starting model training...
+12:27 | 	E: 0 | Val loss: 0.6869787722826004 | P_counter: 0
+12:28 | 	E: 1 | Val loss: 0.6778249144554138 | P_counter: 0
+12:29 | 	E: 2 | Val loss: 0.6626122742891312 | P_counter: 0
+12:30 | 	E: 3 | Val loss: 0.6440331637859344 | P_counter: 0
+12:30 | 	E: 4 | Val loss: 0.628780260682106 | P_counter: 0
+12:31 | 	E: 5 | Val loss: 0.6123335510492325 | P_counter: 0
+12:32 | 	E: 6 | Val loss: 0.597733199596405 | P_counter: 0
+12:33 | 	E: 7 | Val loss: 0.5763432383537292 | P_counter: 0
+12:34 | 	E: 8 | Val loss: 0.557218387722969 | P_counter: 0
+---- MemoryError occurred here ---- reran pipeline ---
+14:35 | {'paramID': 6, 'LR': 0.0008, 'WD': 0.0001, 'DR': 0.2, 'epochs': 10}
+14:35 | F-0 | Data loaders created. Starting model training...
+14:36 | 	E: 0 | Val loss: 0.6853781193494797 | P_counter: 0
+14:36 | 	E: 1 | Val loss: 0.6705732643604279 | P_counter: 0
+14:37 | 	E: 2 | Val loss: 0.6502561867237091 | P_counter: 0
+14:37 | 	E: 3 | Val loss: 0.632250189781189 | P_counter: 0
+14:38 | 	E: 4 | Val loss: 0.6057948470115662 | P_counter: 0
+14:38 | 	E: 5 | Val loss: 0.6253263503313065 | P_counter: 0
+14:38 | 	E: 6 | Val loss: 0.5716843605041504 | P_counter: 1
+14:39 | 	E: 7 | Val loss: 0.5741202533245087 | P_counter: 0
+14:39 | 	E: 8 | Val loss: 0.517653226852417 | P_counter: 1
+14:40 | 	E: 9 | Val loss: 0.6927651613950729 | P_counter: 0
+14:40 | best_val_loss: 0.5177
+14:40 | F-1 | Data loaders created. Starting model training...
+14:40 | 	E: 0 | Val loss: 0.6875758651764162 | P_counter: 0
+14:41 | 	E: 1 | Val loss: 0.6749940476109905 | P_counter: 0
+14:41 | 	E: 2 | Val loss: 0.6682814013573432 | P_counter: 0
+14:42 | 	E: 3 | Val loss: 0.667821591900241 | P_counter: 0
+14:42 | 	E: 4 | Val loss: 0.6637721619298381 | P_counter: 0
+14:43 | 	E: 5 | Val loss: 0.652696761392778 | P_counter: 0
+14:43 | 	E: 6 | Val loss: 0.652304345561612 | P_counter: 0
+14:43 | 	E: 7 | Val loss: 0.6590185684542502 | P_counter: 0
+14:44 | 	E: 8 | Val loss: 0.637926588135381 | P_counter: 1
+14:44 | 	E: 9 | Val loss: 0.675730493760878 | P_counter: 0
+14:44 | best_val_loss: 0.6379
+14:44 | F-2 | Data loaders created. Starting model training...
+14:45 | 	E: 0 | Val loss: 0.6854253449747639 | P_counter: 0
+14:45 | 	E: 1 | Val loss: 0.6749952723903041 | P_counter: 0
+14:46 | 	E: 2 | Val loss: 0.6559338858050685 | P_counter: 0
+14:46 | 	E: 3 | Val loss: 0.636267892775997 | P_counter: 0
+14:47 | 	E: 4 | Val loss: 0.6139549612998962 | P_counter: 0
+14:47 | 	E: 5 | Val loss: 0.596744018216287 | P_counter: 0
+14:48 | 	E: 6 | Val loss: 0.5804681201134959 | P_counter: 0
+14:48 | 	E: 7 | Val loss: 0.5912653515415807 | P_counter: 0
+14:49 | 	E: 8 | Val loss: 0.58646140175481 | P_counter: 1
+14:49 | 	E: 9 | Val loss: 0.5491764583895283 | P_counter: 2
+14:49 | best_val_loss: 0.5492
+14:49 | inner_loop_results: [0.517653226852417, 0.637926588135381, 0.5491764583895283]
+14:49 | FOLD 3 | ParamID 6 | Avg Val Loss: 0.5683
+-------------------------------  PARAM ID  -7-  ---------------------------------
+
+-------------------------------  PARAM ID  -8-  ---------------------------------
+-------------------------------  PARAM ID  -9-  ---------------------------------
+19:54 | {'paramID': 9, 'LR': 0.0008, 'WD': 1e-06, 'DR': 0.2, 'epochs': 10}
+19:55 | 	E: 0 | Val loss: 0.6880568414926529 | P_counter: 0
+19:56 | 	E: 1 | Val loss: 0.6782174408435822 | P_counter: 0
+19:56 | 	E: 2 | Val loss: 0.6643982976675034 | P_counter: 0
+19:57 | 	E: 3 | Val loss: 0.6459577828645706 | P_counter: 0
+19:57 | 	E: 4 | Val loss: 0.6223950237035751 | P_counter: 0
+19:58 | 	E: 5 | Val loss: 0.6076567322015762 | P_counter: 0
+19:58 | 	E: 6 | Val loss: 0.5965887606143951 | P_counter: 0
+19:59 | 	E: 7 | Val loss: 0.5562985241413116 | P_counter: 0
+20:00 | 	E: 8 | Val loss: 0.530927412211895 | P_counter: 0
+20:00 | 	E: 9 | Val loss: 0.5588890612125397 | P_counter: 1
+20:00 | best_val_loss: 0.5309
+20:01 | 	E: 0 | Val loss: 0.6777815030467126 | P_counter: 0
+20:01 | 	E: 1 | Val loss: 0.6639771288441073 | P_counter: 0
+20:02 | 	E: 2 | Val loss: 0.6515514293024617 | P_counter: 0
+20:03 | 	E: 3 | Val loss: 0.6494354278810562 | P_counter: 0
+20:03 | 	E: 4 | Val loss: 0.6286267715115701 | P_counter: 0
+20:04 | 	E: 5 | Val loss: 0.6167464871560374 | P_counter: 0
+20:04 | 	E: 6 | Val loss: 0.6003098257126347 | P_counter: 0
+20:05 | 	E: 7 | Val loss: 0.5951055422905953 | P_counter: 0
+20:06 | 	E: 8 | Val loss: 0.5877037634772639 | P_counter: 0
+20:06 | 	E: 9 | Val loss: 0.6292202674573467 | P_counter: 1
+20:06 | best_val_loss: 0.5877
+20:07 | 	E: 0 | Val loss: 0.6880017999679812 | P_counter: 0
+20:08 | 	E: 1 | Val loss: 0.6709132617519747 | P_counter: 0
+20:08 | 	E: 2 | Val loss: 0.650884461018347 | P_counter: 0
+20:09 | 	E: 3 | Val loss: 0.6301598798844122 | P_counter: 0
+20:09 | 	E: 4 | Val loss: 0.6083635399418492 | P_counter: 0
+20:10 | 	E: 5 | Val loss: 0.588442950479446 | P_counter: 0
+20:11 | 	E: 6 | Val loss: 0.5650739208344491 | P_counter: 0
+20:11 | 	E: 7 | Val loss: 0.5474008225625561 | P_counter: 0
+20:12 | 	E: 8 | Val loss: 0.5201501019539372 | P_counter: 0
+20:12 | 	E: 9 | Val loss: 0.5097483627257808 | P_counter: 0
+20:12 | best_val_loss: 0.5097
+20:12 | inner_loop_results: [0.530927412211895, 0.5877037634772639, 0.5097483627257808]
+20:12 | FOLD 3 | ParamID 9 | Avg Val Loss: 0.5428
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

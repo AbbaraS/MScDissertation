@@ -1,0 +1,98 @@
+[
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 1,
+    "HPset": 11,
+    "LR": 0.0002,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 1,
+    "HPset": 12,
+    "LR": 0.0005,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 2,
+    "HPset": 11,
+    "LR": 0.0002,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 2,
+    "HPset": 12,
+    "LR": 0.0005,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 3,
+    "HPset": 11,
+    "LR": 0.0002,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 3,
+    "HPset": 12,
+    "LR": 0.0005,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 4,
+    "HPset": 11,
+    "LR": 0.0002,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  },
+  {
+    "Model": "MultiViewCNN",
+    "OUTER_FOLD": 4,
+    "HPset": 12,
+    "LR": 0.0005,
+    "WD": 1e-06,
+    "DR": 0.2,
+    "P": 8,
+    "Epochs": 50,
+    "trained": false,
+    "evaluated": false
+  }
+]

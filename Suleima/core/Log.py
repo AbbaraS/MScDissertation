@@ -6,90 +6,75 @@ import os
 
 
 
-def setup_loggers():
-	root_logger = logging.getLogger('root')
-	INNERtrain = logging.getLogger('INNER_train')
-	OUTtrain = logging.getLogger('OUTER_train')
-	evaluate = logging.getLogger('OUTER_evaluate')
+def setup_logger(logtype):
+	base_path = "logs/"
+	types = ['INNER_train', 'OUTER_train', 'OUTER_evaluate', 'Close', 'OUTER']
+	if logtype not in types:
+		print(f"Invalid log type: {logtype}. Choose from {types}.")
+		return
 
-	root_logger.setLevel(logging.INFO)
-	INNERtrain.setLevel(logging.INFO)
-	OUTtrain.setLevel(logging.INFO)
-	evaluate.setLevel(logging.INFO)
-
-	root_logger.propagate = False
-	evaluate.propagate = False
-	INNERtrain.propagate = False
-	OUTtrain.propagate = False
-
-	if not root_logger.hasHandlers():
-		root_logger.propagate = False
-		app_handler = logging.FileHandler('main.log', mode='a')
-		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
-
-		console_handler = logging.StreamHandler(sys.stdout)
-		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
-		root_logger.addHandler(app_handler)
-		root_logger.addHandler(console_handler)
-
-	if not INNERtrain.hasHandlers():
-		INNERtrain.propagate = False
-		train_handler = logging.FileHandler('INNER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		INNERtrain.addHandler(train_handler)
-
-	if not OUTtrain.hasHandlers():
+	if logtype == 'INNER_train':
+		INNtrain = logging.getLogger('INNER_train')
+		INNtrain.setLevel(logging.INFO)
+		INNtrain.propagate = False
+		if not INNtrain.hasHandlers():
+			log_file = 'INNER_train.log'
+			log_path = os.path.join(base_path, log_file)
+			INNtrain.propagate = False
+			train_handler = logging.FileHandler(log_path, mode='a')		#REMEMBER: 'a' mode to append logs
+			train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s  ', datefmt='%D - %H:%M'))
+			INNtrain.addHandler(train_handler)
+	elif logtype == 'OUTER_train':
+		OUTtrain = logging.getLogger('OUTER_train')
+		OUTtrain.setLevel(logging.INFO)
 		OUTtrain.propagate = False
-		train_handler = logging.FileHandler('OUTER_training.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		OUTtrain.addHandler(train_handler)
-
-	if not evaluate.hasHandlers():
+		if not OUTtrain.hasHandlers():
+			log_file = 'OUTER_train.log'
+			log_path = os.path.join(base_path, log_file)
+			OUTtrain.propagate = False
+			train_handler = logging.FileHandler(log_path, mode='a')		#REMEMBER: 'a' mode to append logs
+			train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s  ', datefmt='%D - %H:%M'))
+			OUTtrain.addHandler(train_handler)
+	elif logtype == 'OUTER_evaluate':
+		evaluate = logging.getLogger('OUTER_evaluate')
+		evaluate.setLevel(logging.INFO)
 		evaluate.propagate = False
-		evaluate_handler = logging.FileHandler('OUTER_evaluating.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		evaluate.addHandler(evaluate_handler)
-
-
-
-
-def setup_loggers5K():
-	root_logger = logging.getLogger('root')
-
-	OUTtrain = logging.getLogger('OUTER_5Ktrain')
-	evaluate = logging.getLogger('OUTER_5Kevaluate')
-
-	root_logger.setLevel(logging.INFO)
-
-	OUTtrain.setLevel(logging.INFO)
-	evaluate.setLevel(logging.INFO)
-
-	root_logger.propagate = False
-	evaluate.propagate = False
-
-	OUTtrain.propagate = False
-
-	if not root_logger.hasHandlers():
-		root_logger.propagate = False
-		app_handler = logging.FileHandler('main.log', mode='a')
-		app_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
-
-		console_handler = logging.StreamHandler(sys.stdout)
-		console_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s', datefmt='%H:%M'))
-		root_logger.addHandler(app_handler)
-		root_logger.addHandler(console_handler)
-
-	if not OUTtrain.hasHandlers():
+		if not evaluate.hasHandlers():
+			log_file = 'OUTER_evaluat.log'
+			log_path = os.path.join(base_path, log_file)
+			evaluate.propagate = False
+			evaluate_handler = logging.FileHandler(log_path, mode='a')		#REMEMBER: 'a' mode to append logs
+			evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s  ', datefmt='%D - %H:%M'))
+			evaluate.addHandler(evaluate_handler)
+	elif logtype == 'Close':
+		logging.shutdown()
+		print("Logging files have been closed.")
+	elif logtype == 'OUTER':
+		evaluate = logging.getLogger('OUTER_evaluate')
+		evaluate.setLevel(logging.INFO)
+		evaluate.propagate = False
+		if not evaluate.hasHandlers():
+			log_file = 'OUTER_evaluat.log'
+			log_path = os.path.join(base_path, log_file)
+			evaluate.propagate = False
+			evaluate_handler = logging.FileHandler(log_path, mode='a')		#REMEMBER: 'a' mode to append logs
+			evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s  ', datefmt='%D - %H:%M'))
+			evaluate.addHandler(evaluate_handler)
+		OUTtrain = logging.getLogger('OUTER_train')
+		OUTtrain.setLevel(logging.INFO)
 		OUTtrain.propagate = False
-		train_handler = logging.FileHandler('OUTER_5Ktrain.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		OUTtrain.addHandler(train_handler)
+		if not OUTtrain.hasHandlers():
+			log_file = 'OUTER_train.log'
+			log_path = os.path.join(base_path, log_file)
+			OUTtrain.propagate = False
+			train_handler = logging.FileHandler(log_path, mode='a')		#REMEMBER: 'a' mode to append logs
+			train_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s  ', datefmt='%D - %H:%M'))
+			OUTtrain.addHandler(train_handler)
 
-	if not evaluate.hasHandlers():
-		evaluate.propagate = False
-		evaluate_handler = logging.FileHandler('OUTER_5Kevaluate.log', mode='a')		#REMEMBER: 'a' mode to append logs
-		evaluate_handler.setFormatter(logging.Formatter('%(asctime)s ;		 %(message)s', datefmt='%H:%M'))
-		evaluate.addHandler(evaluate_handler)
+
+
+
+
 
 
 

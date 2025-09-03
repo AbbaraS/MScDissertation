@@ -28,11 +28,11 @@ def get_dataset_stats(datalist):
 			'AGEstd':  float(np.std(ages))}
 
 
-def create_folds_stats(OUTER_K=5, INNER_K=3):
+def create_folds_stats(main_dataset, OUTER_K=4, INNER_K=3):
 
 	OUTER_cv = StratifiedKFold(n_splits=OUTER_K, shuffle=True, random_state=42)
 	INNER_cv = StratifiedKFold(n_splits=INNER_K, shuffle=True, random_state=42)
-	main_dataset = load_from_json(filename="NCV_5_3_folds/data_info_5-3NCV.json")
+	#main_dataset = load_from_json(filename="NCV_5_3_folds/data_info_5-3NCV.json")
 	main_training_set = [i for i in main_dataset if i["pool"] == "main"]
 	main_training_labels = [i["label"] for i in main_training_set]
 	all_folds_data = []
@@ -67,7 +67,8 @@ def create_folds_stats(OUTER_K=5, INNER_K=3):
 
 		all_folds_data.append(outer_fold_data)
 
-	with open("NCV_5_3_folds/folds_indices_stats.pkl", "wb") as f:
+	#with open("NCV_5_3_folds/folds_indices_stats.pkl", "wb") as f:
+	with open("training/folds_indices_stats.pkl", "wb") as f:
 		pickle.dump(all_folds_data, f)
 
 
@@ -96,7 +97,7 @@ def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
 	for the specified fold.
 	"""
 	#with open("training/folds_indices_stats.pkl", "rb") as f:
-	with open("NCV_5_3_folds/folds_indices_stats.pkl", "rb") as f:
+	with open("training/folds_indices_stats.pkl", "rb") as f:
 		all_folds_data = pickle.load(f)
 	if outer_fold_id is None and inner_fold_id is None:
 		return all_folds_data

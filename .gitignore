@@ -5,7 +5,8 @@ Suleima/model.log
 Suleima/folds.log
 Suleima/training/*
 **.log
-
+5K_3K/
+Report/
 Suleima/pth_models/*
 Suleima/pth_models_5K/*
 Suleima/training/*
