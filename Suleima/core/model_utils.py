@@ -17,6 +17,293 @@ from core.globals import *
 
 
 
+
+def gradcam_eval(
+	model,
+	loader,
+	target_layers,        # e.g., {"axial": model.axial_branch.bn3, ...}
+	TH=0.5,
+	case_ids_filter=None, # optional subset by CaseID(s)
+	target="pred",        # "pred" | "pos" | "neg"
+	max_cases=None,
+	save_npz_path=None,
+):
+	device = next(model.parameters()).device
+	model.eval()  # deterministic BN/Dropout
+
+	# Hook buffers (per view)
+	feats, grads = {k: None for k in target_layers}, {k: None for k in target_layers}
+	handles = []
+
+	def fwd_hook_factory(key):
+		def _hook(m, inp, out):
+			feats[key] = out           # [N,C,h,w]
+		return _hook
+
+	def bwd_hook_factory(key):
+		def _hook(m, gin, gout):
+			grads[key] = gout[0]       # [N,C,h,w] (∂y/∂feature)
+		return _hook
+
+	for k, layer in target_layers.items():
+		handles.append(layer.register_forward_hook(fwd_hook_factory(k)))
+		handles.append(layer.register_full_backward_hook(bwd_hook_factory(k)))
+
+	# Collectors
+	case_ids_all, y_true_all, y_prob_all, y_logit_all, y_hat_all = [], [], [], [], []
+	cams_per_view = {k: [] for k in target_layers}  # view -> list of 2D np arrays
+
+	seen = 0
+	with torch.enable_grad():  # gradients needed for Grad-CAM
+		for batch in loader:
+			axi = batch["axial_image"].to(device)
+			cor = batch["coronal_image"].to(device)
+			sag = batch["sagittal_image"].to(device)
+			met = batch["meta"].to(device)
+			lbl = batch["label"].to(device).view(-1, 1).float()
+			cids = list(batch["CaseID"])
+
+			# Optional subsetting by CaseID
+			if case_ids_filter is not None:
+				mask_list = [cid in case_ids_filter for cid in cids]
+				if not any(mask_list):
+					continue
+				mask = torch.tensor(mask_list, dtype=torch.bool, device=device)
+				axi, cor, sag, met, lbl = axi[mask], cor[mask], sag[mask], met[mask], lbl[mask]
+				cids = [cid for cid, keep in zip(cids, mask_list) if keep]
+
+			if axi.numel() == 0:
+				continue
+
+			# -------- Forward pass (batch) --------
+			logits = model(axi, cor, sag, met)                 # [N,1]
+			prob_vec = torch.sigmoid(logits).squeeze(1)        # [N]
+			pred_vec = (prob_vec >= TH).long()                 # [N]
+
+			# -------- BATCH-WISE BACKWARD HERE --------
+			# Build signs per sample for the chosen target, then one backward for the whole batch
+			logit_vec = logits.squeeze(1)                      # [N]
+			if target == "pred":
+				signs = torch.where(pred_vec == 1,
+									 torch.ones_like(logit_vec),
+									 -torch.ones_like(logit_vec))
+			elif target == "pos":
+				signs = torch.ones_like(logit_vec)
+			elif target == "neg":
+				signs = -torch.ones_like(logit_vec)
+			else:
+				raise ValueError("target must be 'pred', 'pos', or 'neg'")
+
+			model.zero_grad(set_to_none=True)
+			objective = (signs * logit_vec).sum()
+			objective.backward()   # grads for the entire batch at once
+			# -------- END BATCH-WISE BACKWARD --------
+
+			# Build CAMs per view for each sample using the captured feats/grads
+			N = logits.shape[0]
+			# If you want to cap total processed cases, compute remaining count:
+			take = N if (max_cases is None) else max(0, min(N, max_cases - seen))
+
+			for i in range(take):
+				for view, x_in in (("axial", axi), ("coronal", cor), ("sagittal", sag)):
+					if feats[view] is None or grads[view] is None:
+						cams_per_view.setdefault(view, []).append(None)
+						continue
+
+					Fview = feats[view][i]                 # [C,h,w]
+					Gview = grads[view][i]                 # [C,h,w]
+					w = Gview.mean(dim=(1, 2), keepdim=True)     # [C,1,1]
+					cam = F.relu((w * Fview).sum(dim=0))         # [h,w]
+					# normalize and upsample to that view's input spatial size
+					m = cam.max()
+					cam = cam / (m + 1e-12) if m > 0 else cam
+					Hin, Win = x_in.shape[-2], x_in.shape[-1]
+					cam_up = F.interpolate(cam[None, None], size=(Hin, Win),
+										   mode="bilinear", align_corners=False).squeeze().detach()
+					cams_per_view[view].append(cam_up.cpu().numpy())
+
+				# Bookkeeping for this sample
+				case_ids_all.append(cids[i])
+				y_true_all.append(int(lbl[i].item()))
+				y_prob_all.append(float(prob_vec[i].item()))
+				y_logit_all.append(float(logit_vec[i].item()))
+				y_hat_all.append(int(pred_vec[i].item()))
+				seen += 1
+
+			if max_cases is not None and seen >= max_cases:
+				break
+
+	# Clean up hooks
+	for h in handles:
+		h.remove()
+
+
+	results = {
+		"case_ids": case_ids_all,
+		"y_true": np.asarray(y_true_all, dtype=int) ,
+		"y_prob": np.asarray(y_prob_all, dtype=float) ,
+		"y_logit": np.asarray(y_logit_all, dtype=float) ,
+		"y_hat": np.asarray(y_hat_all, dtype=int) ,
+		#"y_true":  y_true_all.tolist() ,
+		#"y_prob":  y_prob_all.tolist() ,
+		#"y_logit": y_logit_all.tolist(),
+		#"y_hat":   y_hat_all.tolist()  ,
+		"TH_used": float(TH),
+		"cams": cams_per_view,   # dict: view -> list of HxW arrays (aligned with case_ids order)
+		"target_mode": target,
+	}
+	if save_npz_path:
+		# store ragged list of arrays using dtype=object for cams
+		np.savez_compressed(
+			save_npz_path,
+			case_ids=np.array(case_ids_all, dtype=object),
+			y_true=results["y_true"],
+			y_prob=results["y_prob"],
+			y_logit=results["y_logit"],
+			y_hat=results["y_hat"],
+			TH_used=results["TH_used"],
+			target_mode=results["target_mode"],
+			cams_axial=np.array(cams_per_view.get("axial", []), dtype=object),
+			cams_coronal=np.array(cams_per_view.get("coronal", []), dtype=object),
+			cams_sagittal=np.array(cams_per_view.get("sagittal", []), dtype=object),
+		)
+	return results
+
+import numpy as np, matplotlib.pyplot as plt, torch
+import matplotlib.cm as cm
+
+def tensor_to_imgchw(x):
+	"""x: torch.Tensor [C,H,W] on any device; returns float32 HxWxC in [0,1] (min-max per image)."""
+	x = x.detach().float().cpu()
+	# min-max normalise per image to [0,1] for display (safe if already [0,1])
+	vmin, vmax = x.min(), x.max()
+	if (vmax - vmin) > 1e-12:
+		x = (x - vmin) / (vmax - vmin)
+	return x.permute(1, 2, 0).numpy()
+
+def unnormalize(img, mean=None, std=None):
+	"""Optional: invert dataset normalisation (channel-wise). img: HxWxC float [0,1] or z-scored."""
+	if mean is None or std is None:
+		return img
+	mean = np.array(mean).reshape(1,1,-1); std = np.array(std).reshape(1,1,-1)
+	out = img * std + mean
+	# re-normalise into [0,1] for display
+	lo, hi = out.min(), out.max()
+	return (out - lo) / (hi - lo + 1e-12)
+
+def overlay_cam(img, cam, alpha=0.35, cmap_name="jet"):
+	"""
+	img: HxWxC in [0,1]; cam: HxW in [0,1].
+	Returns an HxWxC float image with CAM heatmap overlaid.
+	"""
+	cmap = cm.get_cmap(cmap_name)
+	heat = cmap(cam)[..., :3]                 # HxWx3 RGB heatmap
+	# If img has 1 channel, repeat to 3 for overlay
+	if img.shape[2] == 1:
+		base = np.repeat(img, 3, axis=2)
+	else:
+		base = img[..., :3]
+	return (1 - alpha) * base + alpha * heat
+
+def find_case_in_batch(cids_list, target_cid):
+	"""Return index of target_cid in list (or None)."""
+	for i, cid in enumerate(cids_list):
+		if cid == target_cid:
+			return i
+	return None
+
+def show_case_cams(results, loader, case_id, mean=None, std=None, save_path=None):
+	"""
+	results: dict returned by gradcam_eval (with results['cams'] and results['case_ids'])
+	loader : your test DataLoader (to fetch original images at display size)
+	case_id: string/int matching CaseID
+	mean/std: optional channel stats to unnormalize for nicer visuals
+	"""
+	# Locate the CAMs and metadata for this case
+	idx = results["case_ids"].index(case_id)
+	cams = results["cams"]  # dict: 'axial','coronal','sagittal' -> list of HxW arrays
+	cam_ax, cam_co, cam_sa = cams.get("axial", [None])[idx], cams.get("coronal", [None])[idx], cams.get("sagittal", [None])[idx]
+	y, p = results["y_true"][idx], results["y_prob"][idx]
+	yhat, th = results["y_hat"][idx], results["TH_used"]
+	title = f"Case {case_id} | y={y}, p={p:.3f}, ŷ={yhat} @ TH={th}"
+
+	# Find the raw images from the loader
+	img_ax = img_co = img_sa = None
+	for batch in loader:
+		cids = list(batch["CaseID"])
+		j = find_case_in_batch(cids, case_id)
+		if j is None:
+			continue
+		# take the j-th sample from this batch
+		img_ax = tensor_to_imgchw(batch["axial_image"][j])
+		img_co = tensor_to_imgchw(batch["coronal_image"][j])
+		img_sa = tensor_to_imgchw(batch["sagittal_image"][j])
+		break
+	if img_ax is None:
+		raise ValueError(f"CaseID {case_id} not found in loader.")
+
+	# Optional: invert dataset normalisation (supply mean/std if you used them)
+	img_ax = unnormalize(img_ax, mean, std)
+	img_co = unnormalize(img_co, mean, std)
+	img_sa = unnormalize(img_sa, mean, std)
+
+	# Build overlays (gracefully handle None CAMs)
+	ov_ax = overlay_cam(img_ax, cam_ax) if cam_ax is not None else img_ax
+	ov_co = overlay_cam(img_co, cam_co) if cam_co is not None else img_co
+	ov_sa = overlay_cam(img_sa, cam_sa) if cam_sa is not None else img_sa
+
+	# Plot
+	fig, axs = plt.subplots(1, 3, figsize=(12, 4))
+	for ax, im, lbl in zip(axs, [ov_ax, ov_co, ov_sa], ["Axial", "Coronal", "Sagittal"]):
+		ax.imshow(im)
+		ax.set_title(lbl); ax.axis("off")
+	fig.suptitle(title, fontsize=11)
+	fig.tight_layout(rect=[0,0,1,0.95])
+
+	if save_path:
+		fig.savefig(save_path, dpi=300, bbox_inches="tight")
+	return fig, axs
+
+def gallery(results, loader, where=lambda y, yhat: True, order_by="conf", K=6, mean=None, std=None, save_path=None):
+	"""
+	where: predicate(y, yhat) to filter cases (e.g., FN: lambda y,yh: (y==1 and yh==0))
+	order_by: "conf"=|p-0.5| descending, or "p"=probability descending
+	"""
+	ids = results["case_ids"]
+	y   = results["y_true"]
+	yh  = results["y_hat"]
+	p   = results["y_prob"]
+
+	idxs = [i for i,(yi,yhi) in enumerate(zip(y,yh)) if where(yi, yhi)]
+	if not idxs:
+		print("No cases match the predicate.")
+		return None, None
+
+	scores = np.abs(p[idxs]-0.5) if order_by=="conf" else p[idxs]
+	order = np.argsort(-scores)
+	idxs = [idxs[i] for i in order[:K]]
+
+	cols = 3  # 3 views
+	rows = len(idxs)
+	fig, axs = plt.subplots(rows, cols, figsize=(cols*4, rows*3))
+	axs = np.atleast_2d(axs)
+
+	for r, i in enumerate(idxs):
+		cid, yi, pi, yhi = ids[i], y[i], p[i], yh[i]
+		# draw images
+		fig_row = show_case_cams(results, loader, cid, mean, std)[0]  # returns a fig; we instead reuse logic below if you prefer speed
+		plt.close(fig_row)  # we don't need the single-case fig if using a grid; to keep simple, call show_case_cams above and skip grid assembly.
+	# Simpler: just call show_case_cams in a loop and save per-case PNGs.
+
+	# (If you want a real grid in one figure, refactor show_case_cams to return the raw overlays and blit them into axs[r,c].)
+	return None, None
+
+
+
+
+
+
+
 def TRAIN_MODEL(model, train_loader, val_loader, hypers):
 	log = logging.getLogger('OUTER_train')
 	log.info(f"		 ExpID; HP_Set;  Fold;   Epoch;   TrainLoss;   		 TrainAcc;             ValLoss;              	ValAcc; 	LR")

@@ -64,6 +64,44 @@ class DataLoaderFactory:
 
 		return train_loader, val_loader
 
+
+	def create_inner_loadersSingleView(self, outer_fold_id, inner_fold_id):
+		"""
+		Generates train and validation dataloaders for a specific inner fold.
+		"""
+		main = [i for i in self.main_dataset if i["pool"] == 'main']
+		with open("training/folds_indices_stats.pkl", "rb") as f:
+			all_folds_data = pickle.load(f)
+		# --- 1. Get the correct data for the specified fold ---
+		outer_fold_struct = all_folds_data[outer_fold_id]
+		#outer_fold_struct = self.all_folds_data[outer_fold_id]
+		inner_fold_struct = outer_fold_struct['INNER_FOLDS'][inner_fold_id]
+
+		# The outer_train_pool is the dataset from which inner folds are made
+		outer_train_pool = [main[i] for i in outer_fold_struct['OUTER_FOLD_TRAIN_idx']]
+
+		# Get the specific train/val data for the inner fold
+		# Note: The indices are local to the outer_train_pool
+		train_fold_data = [outer_train_pool[i] for i in inner_fold_struct['INNER_FOLD_TRAIN_idx']]
+		val_fold_data = [outer_train_pool[i] for i in inner_fold_struct['INNER_FOLD_VAL_idx']]
+
+		# --- 2. Get the pre-calculated stats and create transforms ---
+		# It's crucial to use the stats calculated from the *inner* training set
+		# to avoid any data leakage from the inner validation set.
+		inner_stats = inner_fold_struct['INNER_FOLD_stats']
+
+		train_transforms = get_train_transforms(inner_stats)
+		val_transforms = get_val_test_transforms(inner_stats)
+
+		# --- 3. Create Dataset and DataLoader objects ---
+		train_dataset = SingleViewDataset(train_fold_data, train_transforms, inner_stats)
+		val_dataset = SingleViewDataset(val_fold_data, val_transforms, inner_stats)
+
+		train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=self.num_workers)
+		val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False, num_workers=self.num_workers)
+
+		return train_loader, val_loader
+
 	def create_outer_loadersSingleView(self, outer_fold_id):
 		"""
 		Generates train and test dataloaders for a specific outer fold.
@@ -216,19 +254,11 @@ def get_fold_stats(outer_fold_id=None, inner_fold_id=None):
 		inner_fold_data = outer_fold_data['INNER_FOLDS'][inner_fold_id]
 		return outer_fold_data['OUTER_FOLD_stats'], inner_fold_data['INNER_FOLD_stats']
 
-
-
-
-
-def clamp_hu_values(image_tensor):
-	return torch.clamp(image_tensor, min=-175.0, max=250.0)
-
 def get_base_transforms(stats, shape=(64, 64, 64)):
 	"""Returns the list of base transforms without augmentation."""
 	return [
 		EnsureChannelFirstd(keys=["image", "mask"]),
 		Orientationd(keys=["image", "mask"], axcodes="LAS"),
-		#Lambdad(keys=["image"], func=clamp_hu_values),
 		CropForegroundd(keys=["image", "mask"], source_key="mask"),
 		NormalizeIntensityd(keys=["image"], subtrahend=stats['HUmean'], divisor=stats['HUstd']),
 		Resized(keys=["image", "mask"], spatial_size=shape, mode=("bilinear", "nearest")),
@@ -336,9 +366,9 @@ class SingleViewDataset(Dataset):
 		# Sagittal, Coronal, and Axial planes.
 
 		# Axial slices (from the Depth axis)
-		axial1 = image_3d[0, :, :, slice_indices['Axial'][0]]
-		axial2 = image_3d[0, :, :, slice_indices['Axial'][1]]
-		axial3 = image_3d[0, :, :, slice_indices['Axial'][2]]
+		#axial1 = image_3d[0, :, :, slice_indices['Axial'][0]]
+		#axial2 = image_3d[0, :, :, slice_indices['Axial'][1]]
+		#axial3 = image_3d[0, :, :, slice_indices['Axial'][2]]
 
 		## Coronal slices (from the Width axis)
 		#coronal1 = image_3d[0, :, slice_indices['Coronal'][0], :]

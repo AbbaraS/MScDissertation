@@ -6,10 +6,10 @@
     "LR": 0.0008,
     "WD": 1e-06,
     "DR": 0.3,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -18,10 +18,10 @@
     "LR": 0.0005,
     "WD": 1e-06,
     "DR": 0.4,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -30,10 +30,10 @@
     "LR": 0.0005,
     "WD": 0.0001,
     "DR": 0.2,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -42,10 +42,10 @@
     "LR": 0.0005,
     "WD": 1e-06,
     "DR": 0.3,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -54,10 +54,10 @@
     "LR": 0.0008,
     "WD": 0.0001,
     "DR": 0.2,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -66,10 +66,10 @@
     "LR": 0.0005,
     "WD": 1e-06,
     "DR": 0.4,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -78,10 +78,10 @@
     "LR": 0.0008,
     "WD": 1e-06,
     "DR": 0.3,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -90,10 +90,10 @@
     "LR": 0.0008,
     "WD": 0.0001,
     "DR": 0.2,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
-    "trained": true,
-    "evaluated": true
+    "trained": false,
+    "evaluated": false
   },
   {
     "Model": "MultiViewCNN",
@@ -102,57 +102,9 @@
     "LR": 0.0008,
     "WD": 0.0001,
     "DR": 0.3,
-    "P": 4,
-    "Epochs": 50,
-    "trained": true,
-    "evaluated": true
-  },
-  {
-    "Model": "MultiViewCNN",
-    "OUTER_FOLD": 1,
-    "HPset": "8",
-    "LR": 0.0005,
-    "WD": 0.0001,
-    "DR": 0.2,
-    "P": 4,
+    "P": 8,
     "Epochs": 50,
     "trained": false,
-    "evaluated": false
-  },
-  {
-    "Model": "MultiViewCNN",
-    "OUTER_FOLD": 2,
-    "HPset": "16",
-    "LR": 0.0008,
-    "WD": 0.0001,
-    "DR": 0.3,
-    "P": 4,
-    "Epochs": 50,
-    "trained": false,
-    "evaluated": false
-  },
-  {
-    "Model": "MultiViewCNN",
-    "OUTER_FOLD": 3,
-    "HPset": "8",
-    "LR": 0.0005,
-    "WD": 0.0001,
-    "DR": 0.2,
-    "P": 4,
-    "Epochs": 50,
-    "trained": false,
-    "evaluated": false
-  },
-  {
-    "Model": "MultiViewCNN",
-    "OUTER_FOLD": 4,
-    "HPset": "7",
-    "LR": 0.0005,
-    "WD": 1e-06,
-    "DR": 0.2,
-    "P": 4,
-    "Epochs": 50,
-    "trained": true,
     "evaluated": false
   }
 ]

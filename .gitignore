@@ -10,7 +10,14 @@ Report/
 Suleima/pth_models/*
 Suleima/pth_models_5K/*
 Suleima/training/*
-Suleima//NCV_5_3_folds/*
+Suleima/NCV_5_3_folds/*
+Suleima/old_pth_models/*
+Suleima/cams_npz/*
+Suleima/experimental_data/**.csv
+Suleima/experimental_data/**.json
+Suleima/experimental_data/**.jsonl
+Suleima/experimental_data/figures/
+
 # Ignore everything inside Takotsubo-Syndrome/
 Takotsubo-Syndrome/*
 
